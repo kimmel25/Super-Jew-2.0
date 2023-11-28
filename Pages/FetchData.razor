@@ -3,7 +3,11 @@
 <PageTitle>Weather forecast</PageTitle>
 
 @using Super_Jew_2._0.Data
+@using Super_Jew_2._0.Backend
 @inject WeatherForecastService ForecastService
+@inject Super_Jew_2._0.Backend.Class eee
+
+
 
 <h1>Weather forecast</h1>
 
@@ -40,9 +44,17 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private Class dovi;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        dovi = new Class();
+        dovi.foo();
+
+    }
+
+    public void bar (){
+        
     }
 }
