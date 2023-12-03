@@ -1,0 +1,43 @@
+﻿@page "/myshuls"
+
+<h3><span class="myshuls-title">MyShuls</span>&trade;</h3>
+
+
+@if (shulCards != null)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulCards)
+            {
+                <div class="col-sm-4">
+                    <ShulCard ShulName="@shul"
+                              IsFullCard="@IsShulExpanded(shul)"
+                              OnCardClick="() => HandleCardClick(shul)" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private int numberOfShulsSubscribed = 5; // Hardcoded value 
+    private List<string> shulCards;
+    private string expandedShulName;
+
+    protected override void OnInitialized()
+    {
+        shulCards = Enumerable.Range(1, numberOfShulsSubscribed)
+                              .Select(index => $"Shul {index}")
+                              .ToList();
+    }
+
+    private void HandleCardClick(string shulName)
+    {
+        expandedShulName = shulName == expandedShulName ? null : shulName;
+    }
+
+    private bool IsShulExpanded(string shulName)
+    {
+        return shulName == expandedShulName;
+    }
+}

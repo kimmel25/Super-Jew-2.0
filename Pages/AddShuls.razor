@@ -1,0 +1,50 @@
+﻿@page "/addshuls"
+
+<h3><span class="myshuls-title">Add Shuls</span>&trade;</h3>
+
+
+@if (shulList != null)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulList)
+            {
+                <div class="col-sm-4">
+                    <AddShulCard ShulName="@shul.Name"
+                                 IsFullCard="@IsShulExpanded(shul.Name)"
+                                 OnCardClick="() => HandleCardClick(shul.Name)" />
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+
+@code {
+    private List<Shul> shulList = new List<Shul>
+    {
+        // Sample data
+        new Shul { Name = "Shul 1", DataField1 = "Info 1", DataField2 = "Info 2" },
+        new Shul { Name = "Shul 2", DataField1 = "Info 1", DataField2 = "Info 2" },
+        
+    };
+    private string expandedShulName;
+
+    private void HandleCardClick(string shulName)
+    {
+        expandedShulName = shulName == expandedShulName ? null : shulName;
+    }
+
+    private bool IsShulExpanded(string shulName)
+    {
+        return shulName == expandedShulName;
+    }
+
+    class Shul
+    {
+        public string Name { get; set; }
+        public string DataField1 { get; set; }
+        public string DataField2 { get; set; }
+    }
+}

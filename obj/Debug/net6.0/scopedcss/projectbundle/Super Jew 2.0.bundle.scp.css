@@ -1,3 +1,208 @@
+/* _content/Super Jew 2.0/Pages/AddShulCard.razor.rz.scp.css */
+body[b-9pn3ni3eml] {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+}
+
+.card[b-9pn3ni3eml] {
+    width: 300px;
+    border-radius: 20px;
+    border: 2px solid #add8e6; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px; 
+}
+
+.card-header[b-9pn3ni3eml] {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.data-field[b-9pn3ni3eml] {
+    font-size: 18px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.card-container[b-9pn3ni3eml] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+    padding: 20px; 
+}
+
+.card-name-box[b-9pn3ni3eml] {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    background-color: #add8e6; 
+    border-radius: 10px; 
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease-in-out; 
+    /* Text styling */
+    color: #333; 
+    font-weight: bold;
+}
+
+    .card-name-box:hover[b-9pn3ni3eml] {
+        background-color: #9acfea; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+.btn[b-9pn3ni3eml] {
+    color: #555;
+    font-family: 'Finlandica', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 3px solid #ef0f34;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
+    .btn:focus[b-9pn3ni3eml] {
+        color: #555;
+    }
+
+    .btn:hover[b-9pn3ni3eml] {
+        color: #fff;
+    }
+
+    .btn[b-9pn3ni3eml]:before {
+        content: "";
+        background: #ef0f34;
+        height: 10px;
+        width: 10px;
+        border-radius: 6px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: -1;
+        transition: all 0.3s ease 0s;
+    }
+
+    .btn:hover[b-9pn3ni3eml]:before {
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+    }
+
+@media only screen and (max-width: 767px) {
+    .btn[b-9pn3ni3eml] {
+        margin-bottom: 30px;
+    }
+}
+/* _content/Super Jew 2.0/Pages/AddShuls.razor.rz.scp.css */
+.shul-list[b-m8hys72w5t] {
+    padding: 10px;
+}
+
+.shul-item[b-m8hys72w5t] {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 10px;
+    margin: 5px auto; 
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    max-width: 200px; 
+    height: 100px; 
+    background-color: #9932CC;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.shul-details[b-m8hys72w5t] {
+    margin-top: 10px;
+    border-top: 1px solid #eee; 
+    padding-top: 10px;
+}
+
+.shul-item:hover[b-m8hys72w5t] {
+    background-color: #dcedc8; 
+}
+/* _content/Super Jew 2.0/Pages/ShulCard.razor.rz.scp.css */
+body[b-gu853cxgv6] {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+}
+
+.card[b-gu853cxgv6] {
+    width: 300px;
+    border-radius: 20px;
+    border: 2px solid #add8e6; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px; 
+   
+}
+
+.card-header[b-gu853cxgv6] {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.data-field[b-gu853cxgv6] {
+    font-size: 18px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+.card-container[b-gu853cxgv6] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Creates columns */
+    gap: 20px; /* space between cards */
+    padding: 20px; 
+}
+.card-name-box[b-gu853cxgv6] {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    background-color: #add8e6; 
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease-in-out; 
+    /* Text styling */
+    color: #333; 
+    font-weight: bold;
+}
+
+    .card-name-box:hover[b-gu853cxgv6] {
+        background-color: #9acfea; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    }
+
+
 /* _content/Super Jew 2.0/Shared/MainLayout.razor.rz.scp.css */
 .page[b-2r3hd0xphq] {
     position: relative;
