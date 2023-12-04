@@ -12,10 +12,15 @@ namespace Super_Jew_2._0.Backend.Database
     public class DataBaseConnectivity
     {
 
-        // private var databaseConnectionString = new ConfigurationBuilder()
-        //     .AddUserSecrets<PackagePilotContext>(true)
-        //     .Build()["DatabaseConnectionString"];
-        private string _connectionString = "server=localhost;port=3306;database=myDatabase;user=root;password=myPassword;";
+        DataBaseConnectivity()
+        {
+            var databaseConnectionString = new ConfigurationBuilder()
+           .AddUserSecrets<string>(true)
+           .Build()["DatabaseConnectionString"];
+            string _connectionString = "server=localhost;port=3306;database=myDatabase;user=root;password=myPassword;";
+
+        }
+
 
         // Set your database connection string here
 
