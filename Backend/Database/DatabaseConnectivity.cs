@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace Super_Jew_2._0.Backend.Database
 {
     public class DataBaseConnectivity
     {
-        
+
         // private var databaseConnectionString = new ConfigurationBuilder()
         //     .AddUserSecrets<PackagePilotContext>(true)
         //     .Build()["DatabaseConnectionString"];
@@ -18,9 +19,9 @@ namespace Super_Jew_2._0.Backend.Database
 
         // Set your database connection string here
 
-        
 
-        public  User? GetUserByPassword(string username, string password)
+
+        public User? GetUserByPassword(string username, string password)
         {
             User? user = null;
 
