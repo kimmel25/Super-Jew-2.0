@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Super Jew 2.0.bundle.scp.css"
     },
     {
+      "Id": "C:\\Projects\\Super-Jew-2.0\\wwwroot\\SupermanJewish.jpg",
+      "PackagePath": "staticwebassets\\SupermanJewish.jpg"
+    },
+    {
       "Id": "C:\\Projects\\Super-Jew-2.0\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },

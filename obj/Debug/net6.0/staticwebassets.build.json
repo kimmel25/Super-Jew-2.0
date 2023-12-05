@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6h1j/mSFPVtLU1qZv/E20cFBQGAcvefNTkxTjwLYaOQ=",
+  "Hash": "kOkLoKDsJloNjE2CPPn8fduTaAMqrdNSitfTum+EGq8=",
   "Source": "Super Jew 2.0",
   "BasePath": "_content/Super Jew 2.0",
   "Mode": "Default",
@@ -270,6 +270,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Projects\\Super-Jew-2.0\\wwwroot\\SupermanJewish.jpg",
+      "SourceId": "Super Jew 2.0",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\Super-Jew-2.0\\wwwroot\\",
+      "BasePath": "_content/Super Jew 2.0",
+      "RelativePath": "SupermanJewish.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\SupermanJewish.jpg"
     }
   ]
 }

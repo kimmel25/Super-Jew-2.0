@@ -32,10 +32,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Super-Jew-2.0/Pages/MyShuls.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXlTaHVscy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Projects/Super-Jew-2.0/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -43,6 +39,26 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Projects/Super-Jew-2.0/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Super-Jew-2.0/Pages/AddShulCard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkU2h1bENhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-9pn3ni3eml
+
+[C:/Projects/Super-Jew-2.0/Pages/AddShuls.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkU2h1bHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-m8hys72w5t
+
+[C:/Projects/Super-Jew-2.0/Pages/GabbaiRegistration.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FiYmFpUmVnaXN0cmF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-j4dc6xk5pt
+
+[C:/Projects/Super-Jew-2.0/Pages/GabbaiSignUp.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FiYmFpU2lnblVwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-j06nc7cout
+
+[C:/Projects/Super-Jew-2.0/Pages/MyShuls.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXlTaHVscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-j5ce8kqjsh
 
 [C:/Projects/Super-Jew-2.0/Pages/ShulCard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2h1bENhcmQucmF6b3I=

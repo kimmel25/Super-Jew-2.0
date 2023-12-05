@@ -140,6 +140,216 @@ body[b-9pn3ni3eml] {
 .shul-item:hover[b-m8hys72w5t] {
     background-color: #dcedc8; 
 }
+
+.button-92[b-m8hys72w5t] {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    --c: #fff;
+    /* text color */
+    background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p,100%)/300% no-repeat, #004dff;
+    /* background color */
+    color: #0000;
+    border: none;
+    transform: perspective(500px) rotateY(calc(20deg*var(--_i,-1)));
+    text-shadow: calc(var(--_i,-1)* 0.08em) -.01em 0 var(--c), calc(var(--_i,-1)*-0.08em) .01em 2px #0004;
+    outline-offset: .1em;
+    transition: 0.3s;
+}
+
+.button-92:hover[b-m8hys72w5t],
+.button-92:focus-visible[b-m8hys72w5t] {
+    --_p: 0%;
+    --_i: 1;
+}
+
+.button-92:active[b-m8hys72w5t] {
+    text-shadow: none;
+    color: var(--c);
+    box-shadow: inset 0 0 9e9q #0005;
+    transition: 0s;
+}
+
+.button-92[b-m8hys72w5t] {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
+    cursor: pointer;
+    padding: .1em .3em;
+}
+/* _content/Super Jew 2.0/Pages/GabbaiRegistration.razor.rz.scp.css */
+body[b-j4dc6xk5pt] {
+    text-align: center;
+    font-family: 'Roboto', sans-serif; /* Custom font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ADD8E6; /* Light blue background */
+}
+
+.message p[b-j4dc6xk5pt] {
+    color: #00008B; /* Dark blue color */
+    font-weight: bold; /* Bold text */
+}
+
+img[b-j4dc6xk5pt] {
+    max-width: 200px;
+    height: auto;
+}
+/* _content/Super Jew 2.0/Pages/GabbaiSignUp.razor.rz.scp.css */
+body[b-j06nc7cout] {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container[b-j06nc7cout] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px; /* Space between grid items */
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+form[b-j06nc7cout] {
+    display: flex;
+    flex-direction: column;
+}
+
+h2[b-j06nc7cout] {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label[b-j06nc7cout] {
+    margin-bottom: 5px;
+}
+
+input[type="text"][b-j06nc7cout],
+input[type="email"][b-j06nc7cout],
+input[type="password"][b-j06nc7cout],
+input[type="shul"][b-j06nc7cout]
+{
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button[b-j06nc7cout] {
+    background: #004dff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    button:hover[b-j06nc7cout] {
+        background: #0031cc;
+    }
+.btn[b-j06nc7cout] {
+    color: #555;
+    font-family: 'Finlandica', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 3px solid #ef0f34;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
+    .btn:focus[b-j06nc7cout] {
+        color: #555;
+    }
+
+    .btn:hover[b-j06nc7cout] {
+        color: #fff;
+    }
+
+    .btn[b-j06nc7cout]:before {
+        content: "";
+        background: #ef0f34;
+        height: 10px;
+        width: 10px;
+        border-radius: 6px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: -1;
+        transition: all 0.3s ease 0s;
+    }
+
+    .btn:hover[b-j06nc7cout]:before {
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+    }
+
+@media only screen and (max-width: 767px) {
+    .btn[b-j06nc7cout] {
+        margin-bottom: 30px;
+    }
+}
+
+/* _content/Super Jew 2.0/Pages/MyShuls.razor.rz.scp.css */
+
+
+.button-92[b-j5ce8kqjsh] {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    --c: #fff;
+    /* text color */
+    background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p,100%)/300% no-repeat, #004dff;
+    /* background color */
+    color: #0000;
+    border: none;
+    transform: perspective(500px) rotateY(calc(20deg*var(--_i,-1)));
+    text-shadow: calc(var(--_i,-1)* 0.08em) -.01em 0 var(--c), calc(var(--_i,-1)*-0.08em) .01em 2px #0004;
+    outline-offset: .1em;
+    transition: 0.3s;
+}
+
+.button-92:hover[b-j5ce8kqjsh],
+.button-92:focus-visible[b-j5ce8kqjsh] {
+    --_p: 0%;
+    --_i: 1;
+}
+
+.button-92:active[b-j5ce8kqjsh] {
+    text-shadow: none;
+    color: var(--c);
+    box-shadow: inset 0 0 9e9q #0005;
+    transition: 0s;
+}
+
+.button-92[b-j5ce8kqjsh] {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0;
+    cursor: pointer;
+    padding: .1em .3em;
+}
+
+
 /* _content/Super Jew 2.0/Pages/ShulCard.razor.rz.scp.css */
 body[b-gu853cxgv6] {
     font-family: Arial, sans-serif;

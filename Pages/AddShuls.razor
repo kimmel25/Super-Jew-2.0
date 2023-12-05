@@ -1,4 +1,5 @@
 ﻿@page "/addshuls"
+@inject NavigationManager NavigationManager
 
 <h3><span class="myshuls-title">Add Shuls</span>&trade;</h3>
 
@@ -20,6 +21,9 @@
 
 }
 
+<button class="button-92" role="button" @onclick="NavigateToGabbai">Don't see your Shul? Click here!</button>
+
+
 
 @code {
     private List<Shul> shulList = new List<Shul>
@@ -27,9 +31,15 @@
         // Sample data
         new Shul { Name = "Shul 1", DataField1 = "Info 1", DataField2 = "Info 2" },
         new Shul { Name = "Shul 2", DataField1 = "Info 1", DataField2 = "Info 2" },
-        
+
     };
     private string expandedShulName;
+
+
+    private void NavigateToGabbai()
+    {
+        NavigationManager.NavigateTo("/gabbaisignup"); 
+    }
 
     private void HandleCardClick(string shulName)
     {
