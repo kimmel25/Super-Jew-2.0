@@ -413,6 +413,115 @@ body[b-gu853cxgv6] {
     }
 
 
+/* _content/Super Jew 2.0/Pages/UpdateShul.razor.rz.scp.css */
+body[b-m1hu2vo8wu] {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container[b-m1hu2vo8wu] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px; /* Space between grid items */
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+form[b-m1hu2vo8wu] {
+    display: flex;
+    flex-direction: column;
+}
+
+h2[b-m1hu2vo8wu] {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label[b-m1hu2vo8wu] {
+    margin-bottom: 5px;
+}
+
+input[type="text"][b-m1hu2vo8wu],
+input[type="email"][b-m1hu2vo8wu],
+input[type="password"][b-m1hu2vo8wu],
+input[type="shul"][b-m1hu2vo8wu] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button[b-m1hu2vo8wu] {
+    background: #004dff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    button:hover[b-m1hu2vo8wu] {
+        background: #0031cc;
+    }
+
+.btn[b-m1hu2vo8wu] {
+    color: #555;
+    font-family: 'Finlandica', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 3px solid #ef0f34;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
+    .btn:focus[b-m1hu2vo8wu] {
+        color: #555;
+    }
+
+    .btn:hover[b-m1hu2vo8wu] {
+        color: #fff;
+    }
+
+    .btn[b-m1hu2vo8wu]:before {
+        content: "";
+        background: #ef0f34;
+        height: 10px;
+        width: 10px;
+        border-radius: 6px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: -1;
+        transition: all 0.3s ease 0s;
+    }
+
+    .btn:hover[b-m1hu2vo8wu]:before {
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+    }
+
+@media only screen and (max-width: 767px) {
+    .btn[b-m1hu2vo8wu] {
+        margin-bottom: 30px;
+    }
+}
 /* _content/Super Jew 2.0/Shared/MainLayout.razor.rz.scp.css */
 .page[b-2r3hd0xphq] {
     position: relative;

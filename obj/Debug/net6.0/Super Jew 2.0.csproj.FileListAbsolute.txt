@@ -75,3 +75,4 @@ C:\Projects\Super-Jew-2.0\obj\Debug\net6.0\Super Jew 2.0.csproj.CopyComplete
 C:\Projects\Super-Jew-2.0\obj\Debug\net6.0\scopedcss\Pages\MyShuls.razor.rz.scp.css
 C:\Projects\Super-Jew-2.0\obj\Debug\net6.0\scopedcss\Pages\GabbaiSignUp.razor.rz.scp.css
 C:\Projects\Super-Jew-2.0\obj\Debug\net6.0\scopedcss\Pages\GabbaiRegistration.razor.rz.scp.css
+C:\Projects\Super-Jew-2.0\obj\Debug\net6.0\scopedcss\Pages\UpdateShul.razor.rz.scp.css
