@@ -8,8 +8,21 @@ public class User
     public string ReligiousDenomination { get; set; }
     public string AccountType { get; set; }
     public List<Shul> FollowedShuls { get; set; }
+    
 
-   
+    //Add on a Shul to a users profile 
+    public bool AddShul(string shulID)
+    {
+        
+
+
+        return true;
+    }
     
+
     
+    //need method to get user shulls for front end. 
+    //get Shulls
+    
+    //find user shull by id
 }
