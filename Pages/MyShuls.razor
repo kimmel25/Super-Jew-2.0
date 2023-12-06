@@ -1,0 +1,54 @@
+﻿@page "/myshuls"
+
+@inject NavigationManager NavigationManager
+
+<h3><span class="myshuls-title">MyShuls</span>&trade;</h3>
+
+
+@if (shulCards != null)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulCards)
+            {
+                <div class="col-sm-4">
+                    <ShulCard ShulName="@shul"
+                              IsFullCard="@IsShulExpanded(shul)"
+                              OnCardClick="() => HandleCardClick(shul)" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<button class="button-92" role="button" @onclick="NavigateToAddShuls">AddMore</button>
+
+
+@code {
+    private int numberOfShulsSubscribed = 5; // Hardcoded value 
+    private List<string> shulCards;
+    private string expandedShulName;
+
+
+    private void NavigateToAddShuls()
+    {
+        NavigationManager.NavigateTo("/addshuls"); 
+    }
+
+    protected override void OnInitialized()
+    {
+        shulCards = Enumerable.Range(1, numberOfShulsSubscribed)
+                              .Select(index => $"Shul {index}")
+                              .ToList();
+    }
+
+    private void HandleCardClick(string shulName)
+    {
+        expandedShulName = shulName == expandedShulName ? null : shulName;
+    }
+
+    private bool IsShulExpanded(string shulName)
+    {
+        return shulName == expandedShulName;
+    }
+}

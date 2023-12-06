@@ -1,0 +1,39 @@
+﻿@code {
+    [Parameter]
+    public string ShulName { get; set; }
+
+    [Parameter]
+    public bool IsFullCard { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnCardClick { get; set; }
+
+    private void CardClicked()
+    {
+        OnCardClick.InvokeAsync(null);
+    }
+}
+
+@if (IsFullCard)
+{
+    <div class="card" @onclick="CardClicked">
+        <div class="card-header">@ShulName</div>
+        <div class="data-field">Rabbi: </div>
+        <div class="data-field">Gabbai: </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="#" class="btn btn-lg">
+                        <span>Subsrcibe!</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-name-box" @onclick="CardClicked">@ShulName</div>
+}
+
