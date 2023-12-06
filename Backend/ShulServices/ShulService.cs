@@ -16,16 +16,19 @@ namespace Super_Jew_2._0.Backend.Services
             return _database.GetAvailableShuls();
         }
         
-        
         public User GetFollowedShulsForUser(string userId, string password)
         {
             return _database.GetUserByPassword(userId, password);
         }
         
-
         public bool AddShulToUserProfile(int userId, int shulId)
         {
             return _database.AddShulToUser(userId, shulId);
+        }
+        
+        public bool RemoveShulFromUserProfile(int userId, int shulId)
+        {
+            return _database.RemoveShulFromUser(userId, shulId);
         }
 
     }

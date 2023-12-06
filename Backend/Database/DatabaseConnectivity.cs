@@ -114,6 +114,21 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0; // returns true if it affected at least one record
             }
         }
+        
+        public bool RemoveShulFromUser(int userId, int shulId)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            using (var command = new MySqlCommand("RemoveShulFromUser", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("userId", userId);
+                command.Parameters.AddWithValue("shulId", shulId);
+
+                connection.Open();
+                var result = command.ExecuteNonQuery();
+                return result > 0; // returns true if it affected at least one record
+            }
+        }
 
     }
 }
