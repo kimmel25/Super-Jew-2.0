@@ -9,8 +9,11 @@ public class User
     
     public int UserID { get; set; }
     public string Username { get; set; }
+    
+    public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string ReligiousDenomination { get; set; }
     public string AccountType { get; set; }
     public List<Shul> FollowedShuls { get; set; }
 }
+

@@ -68,7 +68,6 @@ public static class DummyData
         
         var user1 = new User
         {
-            
             UserID = 00001,
             Username = "ykatz1",
             DateOfBirth = DateTime.Parse("2001-04-30"),
