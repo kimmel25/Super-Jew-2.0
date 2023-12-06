@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Super_Jew_2._0.Backend;
+using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Data;
 
 namespace Super_Jew_2._0
@@ -9,6 +10,26 @@ namespace Super_Jew_2._0
     {
         public static void Main(string[] args)
         {
+            //Test Console dummy data
+            Shul[] allShulls = ShulService.GetAllAvailableShuls();
+            foreach (var shul in allShulls)
+            {
+                Console.WriteLine(shul.ShulName + " " + shul.Location);
+            }
+
+            User user1 = ShulService.GetFollowedShulsForUser("ykatz1", "yk123");
+            Console.WriteLine(user1.UserID);
+            Console.WriteLine("Shuls For Username:" + user1.Username);
+            
+            List<Shul> user1Shuls = user1.FollowedShuls;
+            
+            foreach (var shul in user1Shuls)
+            {
+                Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
+            }
+            
+            
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

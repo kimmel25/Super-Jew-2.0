@@ -21,9 +21,6 @@ namespace Super_Jew_2._0.Backend.Database
         }
         
         // Set your database connection string here
-
-
-
         public User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -115,6 +112,7 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
         
+        //Todo take out shull on front end also???? or refresh user ?
         public bool RemoveShulFromUser(int userId, int shulId)
         {
             using var connection = new MySqlConnection(_connectionString);

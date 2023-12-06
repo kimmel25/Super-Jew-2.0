@@ -4,31 +4,37 @@ namespace Super_Jew_2._0.Backend.Services
 {
     public class ShulService
     {
+        
+        
         private readonly DataBaseConnectivity _database;
 
-        public ShulService(DataBaseConnectivity database)
+        public ShulService()//DataBaseConnectivity database)
         {
-            _database = database;
+            //_database = database;
         }
         
-        public List<Shul> GetAllAvailableShuls() //in future add zipcode option
+        public static Shul[] GetAllAvailableShuls() //in future add zipcode option
         {
-            return _database.GetAvailableShuls();
+            //return _database.GetAvailableShuls();
+            return DummyData.DummyData.GetAllAvailableShuls();
         }
         
-        public User GetFollowedShulsForUser(string userId, string password)
+        public static User GetFollowedShulsForUser(string userId, string password)
         {
-            return _database.GetUserByPassword(userId, password);
+            //return _database.GetUserByPassword(userId, password);
+            return DummyData.DummyData.GetUserByPassword(userId,password);
         }
         
-        public bool AddShulToUserProfile(int userId, int shulId)
+        public static bool AddShulToUserProfile(int userId, int shulId)
         {
-            return _database.AddShulToUser(userId, shulId);
+            //return Super_Jew_2._0.Backend.Database.DataBaseConnectivity.AddShulToUser(userId, shulId);
+            return false;
         }
         
-        public bool RemoveShulFromUserProfile(int userId, int shulId)
+        public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
-            return _database.RemoveShulFromUser(userId, shulId);
+            //return _database.RemoveShulFromUser(userId, shulId);
+            return false;
         }
 
     }
