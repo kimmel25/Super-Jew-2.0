@@ -1,0 +1,58 @@
+﻿@page "/gabbaisignup"
+@inject NavigationManager Nav
+
+<h3>Gabbai Sign Up</h3>
+
+<div class="container mt-4">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="shul">Shul Name:</label>
+                <input type="text" class="form-control" id="shul" name="shul" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="rabbi">Rabbi:</label>
+                <input type="text" class="form-control" id="rabbi" name="rabbi" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#" class="btn btn-lg" @onclick="NavigateTo">
+                    <span>Register!</span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@code {
+
+    private void NavigateTo()
+    {
+        Nav.NavigateTo("/gabbairegistration"); 
+    }
+}
