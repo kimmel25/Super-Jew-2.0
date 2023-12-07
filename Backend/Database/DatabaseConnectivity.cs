@@ -15,7 +15,7 @@ namespace Super_Jew_2._0.Backend.Database
         //static string _connectionString;
 
         private static string _newConnectionString =
-            "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Convert Zero Datetime=True;";
+            "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
         
         
         public static User? GetUserByPassword(string username, string password)
@@ -33,13 +33,13 @@ namespace Super_Jew_2._0.Backend.Database
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    
+
                     user ??= new User
                     {
                         UserID = reader.GetInt32("UserID"),
                         Username = reader.GetString("Username"),
                         //Name = reader.GetString("Name"),TODO add to database name
-                         DateOfBirth = reader.GetString("DateOfBirth"),
+                        DateOfBirth = reader.GetString("DateOfBirth"),
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
                     };
@@ -51,10 +51,11 @@ namespace Super_Jew_2._0.Backend.Database
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
-                        ShachrisTime = reader.GetString("ShachrisTime"),
-                        MinchaTime = reader.GetString("MinchaTime"),
-                        MaarivTime = reader.GetString("MaarivTime")
+                        //ShachrisTime = reader["ShachrisTime"] != DBNull.Value ? reader.GetDateTime("ShachrisTime").ToString("HH:mm:ss") : null,
+                        //MinchaTime = reader["MinchaTime"] != DBNull.Value ? reader.GetDateTime("MinchaTime").ToString("HH:mm:ss") : null,
+                        //MaarivTime = reader["MaarivTime"] != DBNull.Value ? reader.GetDateTime("MaarivTime").ToString("HH:mm:ss") : null
                     };
+
 
                     user.FollowedShuls.Add(shul);
                 }
