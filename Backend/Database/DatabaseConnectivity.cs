@@ -6,26 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using MySql.Data.Types;
 
 namespace Super_Jew_2._0.Backend.Database
 {
     public class DataBaseConnectivity
     {
-        string _connectionString;
-        DataBaseConnectivity()
-        {
-            var databaseConnectionString = new ConfigurationBuilder()
-           .AddUserSecrets<string>(true)
-           .Build()["DatabaseConnectionString"];
-            _connectionString = "server=localhost;port=3306;database=myDatabase;user=root;password=myPassword;";
-        }
+        //static string _connectionString;
+
+        private static string _newConnectionString =
+            "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Convert Zero Datetime=True;";
         
-        // Set your database connection string here
-        public User? GetUserByPassword(string username, string password)
+        
+        public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
 
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new MySqlConnection(_newConnectionString);
             using (var command = new MySqlCommand("GetUserByPassword", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -36,11 +33,13 @@ namespace Super_Jew_2._0.Backend.Database
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    
                     user ??= new User
                     {
                         UserID = reader.GetInt32("UserID"),
                         Username = reader.GetString("Username"),
-                        DateOfBirth = reader.GetDateTime("DateOfBirth"),
+                        //Name = reader.GetString("Name"),TODO add to database name
+                         DateOfBirth = reader.GetString("DateOfBirth"),
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
                     };
@@ -68,7 +67,7 @@ namespace Super_Jew_2._0.Backend.Database
         {
             List<Shul> availableShuls = new List<Shul>();
 
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new MySqlConnection(_newConnectionString);
             using (var command = new MySqlCommand("GetAvailableShuls", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -99,7 +98,7 @@ namespace Super_Jew_2._0.Backend.Database
         
         public bool AddShulToUser(int userId, int shulId)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new MySqlConnection(_newConnectionString);
             using (var command = new MySqlCommand("AddShulToUser", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -115,7 +114,7 @@ namespace Super_Jew_2._0.Backend.Database
         //Todo take out shull on front end also???? or refresh user ?
         public bool RemoveShulFromUser(int userId, int shulId)
         {
-            using var connection = new MySqlConnection(_connectionString);
+            using var connection = new MySqlConnection(_newConnectionString);
             using (var command = new MySqlCommand("RemoveShulFromUser", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
