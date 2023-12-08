@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
-using MySql.Data.Types;
 
 namespace Super_Jew_2._0.Backend.Database
 {
-    public class DataBaseConnectivity
+    public static class DataBaseConnectivity
     {
         //static string _connectionString;
 
-        private static string _newConnectionString =
+        private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
-        
         
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
 
-            using var connection = new MySqlConnection(_newConnectionString);
+            using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetUserByPassword", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -64,11 +57,11 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
         
-        public List<Shul> GetAvailableShuls() //string zipCode in future
+        public static List<Shul> GetAvailableShuls() //string zipCode in future
         {
             List<Shul> availableShuls = new List<Shul>();
 
-            using var connection = new MySqlConnection(_newConnectionString);
+            using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetAvailableShuls", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -97,9 +90,9 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
         
-        public bool AddShulToUser(int userId, int shulId)
+        public static bool AddShulToUser(int userId, int shulId)
         {
-            using var connection = new MySqlConnection(_newConnectionString);
+            using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("AddShulToUser", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -113,9 +106,9 @@ namespace Super_Jew_2._0.Backend.Database
         }
         
         //Todo take out shull on front end also???? or refresh user ?
-        public bool RemoveShulFromUser(int userId, int shulId)
+        public static bool RemoveShulFromUser(int userId, int shulId)
         {
-            using var connection = new MySqlConnection(_newConnectionString);
+            using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("RemoveShulFromUser", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
