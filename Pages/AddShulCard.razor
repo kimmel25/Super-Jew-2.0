@@ -1,12 +1,22 @@
-﻿@code {
+﻿@using Super_Jew_2._0.Backend
+
+@code {
     [Parameter]
-    public string ShulName { get; set; }
+    public Shul CurrentShul { get; set; }
 
     [Parameter]
     public bool IsFullCard { get; set; } = false;
 
     [Parameter]
+    public String Location { get; set;}
+
+    [Parameter]
+    public String ContactInfo { get; set; }
+
+
+    [Parameter]
     public EventCallback OnCardClick { get; set; }
+
 
     private void CardClicked()
     {
@@ -17,9 +27,9 @@
 @if (IsFullCard)
 {
     <div class="card" @onclick="CardClicked">
-        <div class="card-header">@ShulName</div>
-        <div class="data-field">Rabbi: </div>
-        <div class="data-field">Gabbai: </div>
+        <div class="card-header">@CurrentShul.ShulName</div>
+        <div class="data-field"><strong>Location:</strong> @CurrentShul.Location</div>
+        <div class="data-field"><strong>Gabbai:</strong> @CurrentShul.Location</div>
 
         <div class="container">
             <div class="row">
@@ -34,6 +44,6 @@
 }
 else
 {
-    <div class="card-name-box" @onclick="CardClicked">@ShulName</div>
+    <div class="card-name-box" @onclick="CardClicked">@CurrentShul.ShulName</div>
 }
 
