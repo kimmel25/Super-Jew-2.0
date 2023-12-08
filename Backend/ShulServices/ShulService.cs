@@ -5,7 +5,6 @@ namespace Super_Jew_2._0.Backend.Services
     public class ShulService
     {
 
-
         private readonly DataBaseConnectivity _database;
 
         public ShulService()//DataBaseConnectivity database)
@@ -18,6 +17,7 @@ namespace Super_Jew_2._0.Backend.Services
             //return _database.GetAvailableShuls();
             return DummyData.DummyData.GetAllAvailableShuls();
         }
+
 
         public static User GetFollowedShulsForUser(string userId, string password)
         {
