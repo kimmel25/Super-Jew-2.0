@@ -1,4 +1,4 @@
-
+﻿
 ﻿namespace Super_Jew_2._0.Backend.DummyData
 {
     public static class DummyData
@@ -71,7 +71,7 @@
             {
                 UserID = 00001,
                 Username = "ykatz1",
-                DateOfBirth = DateTime.Parse("2001-04-30"),
+                DateOfBirth = "2001-04-30",
                 ReligiousDenomination = "Very Very Orthodox, bgeder Chareidi",
                 AccountType = "User"
             };
@@ -83,7 +83,7 @@
             {
                 UserID = 00002,
                 Username = "mGreenberg",
-                DateOfBirth = DateTime.Parse("1995-05-20"),
+                DateOfBirth = "1995-05-20",
                 ReligiousDenomination = "Modern Orthodox",
                 AccountType = "User"
             };
@@ -95,7 +95,7 @@
             {
                 UserID = 00003,
                 Username = "rLevi1990",
-                DateOfBirth = DateTime.Parse("1990-10-12"),
+                DateOfBirth = "1990-10-12",
                 ReligiousDenomination = "Chasidish, Breslov",
                 AccountType = "User"
             };
@@ -107,7 +107,7 @@
             {
                 UserID = 00004,
                 Username = "sGoldstein77",
-                DateOfBirth = DateTime.Parse("1977-03-08"),
+                DateOfBirth = "1977-03-08",
                 ReligiousDenomination = "Litvish",
                 AccountType = "User"
             };
@@ -119,7 +119,7 @@
             {
                 UserID = 00005,
                 Username = "dWeiss22",
-                DateOfBirth = DateTime.Parse("1982-12-17"),
+                DateOfBirth = "1982-12-17",
                 ReligiousDenomination = "Chasidish, Satmar",
                 AccountType = "Gabai"
             };

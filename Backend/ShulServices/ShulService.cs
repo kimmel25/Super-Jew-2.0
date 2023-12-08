@@ -21,8 +21,8 @@ namespace Super_Jew_2._0.Backend.Services
 
         public static User GetFollowedShulsForUser(string userId, string password)
         {
-            //return DataBaseConnectivity.GetUserByPassword(userId, password);
-            return DummyData.DummyData.GetUserByPassword(userId,password);
+            return DataBaseConnectivity.GetUserByPassword(userId, password);
+            //return DummyData.DummyData.GetUserByPassword(userId,password);
         }
 
         public static bool AddShulToUserProfile(int userId, int shulId)
