@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Super_Jew_2._0.Backend;
+using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Data;
 
 namespace Super_Jew_2._0
@@ -16,6 +17,9 @@ namespace Super_Jew_2._0
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddTransient<Class>();
+           
+            builder.Services.AddTransient<ShulService>(); 
+
 
             var app = builder.Build();
 

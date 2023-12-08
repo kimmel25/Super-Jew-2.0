@@ -1,20 +1,24 @@
 ﻿@page "/myshuls"
 
 @inject NavigationManager NavigationManager
+@using Super_Jew_2._0.Backend.Services
+@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@using Super_Jew_2._0.Backend
+
 
 <h3><span class="myshuls-title">MyShuls</span>&trade;</h3>
 
 
-@if (shulCards != null)
+@if (shulList != null)
 {
     <div class="container">
         <div class="row">
-            @foreach (var shul in shulCards)
+            @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
-                    <ShulCard ShulName="@shul"
-                              IsFullCard="@IsShulExpanded(shul)"
-                              OnCardClick="() => HandleCardClick(shul)" />
+                    <ShulCard CurrentShul="@shul"
+                              IsFullCard="@IsShulExpanded(shul.ShulName)"
+                              OnCardClick="() => HandleCardClick(shul.ShulName)" />
                 </div>
             }
         </div>
@@ -27,7 +31,18 @@
 @code {
     private int numberOfShulsSubscribed = 5; // Hardcoded value 
     private List<string> shulCards;
+    private List<Shul> shulList; 
     private string expandedShulName;
+    private User user;
+    private String password = "12345";
+    private String username = "jonnySmith"; 
+
+
+
+
+    private User GetUser() => user = ShulService.GetFollowedShulsForUser(username, password);
+
+
 
 
     private void NavigateToAddShuls()
@@ -37,9 +52,11 @@
 
     protected override void OnInitialized()
     {
-        shulCards = Enumerable.Range(1, numberOfShulsSubscribed)
-                              .Select(index => $"Shul {index}")
-                              .ToList();
+        user = GetUser(); 
+        if (user?.FollowedShuls != null)
+        {
+            shulList = user.FollowedShuls; 
+        }
     }
 
     private void HandleCardClick(string shulName)
