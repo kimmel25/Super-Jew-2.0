@@ -6,7 +6,6 @@ public class User
     {
         FollowedShuls = new List<Shul>();
     }
-    
     public int UserID { get; set; }
     public string Username { get; set; }
     

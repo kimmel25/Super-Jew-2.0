@@ -1,6 +1,10 @@
-﻿@code {
+﻿@using Super_Jew_2._0.Backend
+
+
+
+@code {
     [Parameter]
-    public string ShulName { get; set; }
+    public Shul CurrentShul { get; set; }
 
     [Parameter]
     public bool IsFullCard { get; set; } = false;
@@ -17,16 +21,16 @@
 @if (IsFullCard)
 {
     <div class="card" @onclick="CardClicked">
-        <div class="card-header">@ShulName</div>
-        <div class="data-field">Data Field A</div>
-        <div class="data-field">Data Field B</div>
-        <div class="data-field">Data Field C</div>
-        <div class="data-field">Data Field D</div>
-        <div class="data-field">Data Field E</div>
+        <div class="card-header">@CurrentShul.ShulName</div>
+        <div class="data-field">Location: @CurrentShul.Location</div>
+        <div class="data-field">Gabbai: @CurrentShul.ContactInfo</div>
+        <div class="data-field">Shacris Times: @CurrentShul.ShachrisTime</div>
+        <div class="data-field">Mincha Time: @CurrentShul.MinchaTime </div>
+        <div class="data-field">Maariv Time: @CurrentShul.MaarivTime</div>
         <!-- data fields here -->
     </div>
 }
 else
 {
-    <div class="card-name-box" @onclick="CardClicked">@ShulName</div>
+    <div class="card-name-box" @onclick="CardClicked">@CurrentShul.ShulName</div>
 }

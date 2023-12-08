@@ -55,6 +55,9 @@ namespace Super_Jew_2._0
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddTransient<Class>();
+           
+            builder.Services.AddTransient<ShulService>(); 
+
 
             var app = builder.Build();
 
