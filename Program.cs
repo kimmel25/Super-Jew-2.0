@@ -33,6 +33,7 @@ namespace Super_Jew_2._0
             }
             
             
+            
             Console.WriteLine("Attempting to Add New Shul to User one!");
             bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 3);
             Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
