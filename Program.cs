@@ -13,32 +13,28 @@ namespace Super_Jew_2._0
         {
             
             //Test Console dummy data
-            List<Shul> allShulls = ShulService.GetAllAvailableShuls();
             
+            Console.WriteLine("Test All Available Shuls");
+            List<Shul> allShulls = ShulService.GetAllAvailableShuls();
             foreach (var shul in allShulls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
             }
             
-
+            Console.WriteLine("Getting followed Shuls for user");
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
             
             List<Shul> user1Shuls = user1.FollowedShuls;
-            
             foreach (var shul in user1Shuls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
             
-            //id for shull - 3
-            //user id one
-
             
             Console.WriteLine("Attempting to Add New Shul to User one!");
-            
-            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 2);
+            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 3);
             Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
             
             //update user one
@@ -51,6 +47,21 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
+            
+            Console.WriteLine("Attempting to REMOVE Shul to User one!");
+            addShulToUserProfile = ShulService.RemoveShulFromUserProfile(1, 1);
+            Console.WriteLine("Removed Shul From User Profile: " + addShulToUserProfile);
+            
+            user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            Console.WriteLine(user1.UserID);
+            Console.WriteLine("Shuls For Username:" + user1.Username);
+            
+            user1Shuls = user1.FollowedShuls;
+            foreach (var shul in user1Shuls)
+            {
+                Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
+            }
+
             
             
             //Blazor Code
