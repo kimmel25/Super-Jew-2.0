@@ -10,7 +10,7 @@ namespace Super_Jew_2._0.Backend.Database
 
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
-        
+
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -44,9 +44,9 @@ namespace Super_Jew_2._0.Backend.Database
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
-                        //ShachrisTime = reader["ShachrisTime"] != DBNull.Value ? reader.GetDateTime("ShachrisTime").ToString("HH:mm:ss") : null,
-                        //MinchaTime = reader["MinchaTime"] != DBNull.Value ? reader.GetDateTime("MinchaTime").ToString("HH:mm:ss") : null,
-                        //MaarivTime = reader["MaarivTime"] != DBNull.Value ? reader.GetDateTime("MaarivTime").ToString("HH:mm:ss") : null
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime")
                     };
 
 
@@ -56,7 +56,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return user;
             }
         }
-        
+
         public static List<Shul> GetAvailableShuls() //string zipCode in future
         {
             List<Shul> availableShuls = new List<Shul>();
@@ -78,9 +78,9 @@ namespace Super_Jew_2._0.Backend.Database
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
-                        //ShachrisTime = reader.GetString("ShachrisTime"),
-                        //MinchaTime = reader.GetString("MinchaTime"),
-                        //MaarivTime = reader.GetString("MaarivTime")
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime")
                     };
 
                     availableShuls.Add(shul);
@@ -89,7 +89,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return availableShuls;
             }
         }
-        
+
         public static bool AddShulToUser(int userId, int shulId)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -104,7 +104,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0; // returns true if it affected at least one record
             }
         }
-        
+
         //Todo take out shull on front end also???? or refresh user ?
         public static bool RemoveShulFromUser(int userId, int shulId)
         {
