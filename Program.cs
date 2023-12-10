@@ -11,13 +11,14 @@ namespace Super_Jew_2._0
     {
         public static void Main(string[] args)
         {
-            /*
+            
             //Test Console dummy data
-            Shul[] allShulls = ShulService.GetAllAvailableShuls();
+            List<Shul> allShulls = ShulService.GetAllAvailableShuls();
+            
             foreach (var shul in allShulls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
-            }*/
+            }
             
 
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");

@@ -5,17 +5,15 @@ namespace Super_Jew_2._0.Backend.Services
     public class ShulService
     {
 
-        private readonly DataBaseConnectivity _database;
-
         public ShulService()//DataBaseConnectivity database)
         {
             //_database = database;
         }
 
-        public static Shul[] GetAllAvailableShuls() //in future add zipcode option
+        public static List<Shul> GetAllAvailableShuls() //in future add zipcode option
         {
-            //return _database.GetAvailableShuls();
-            return DummyData.DummyData.GetAllAvailableShuls();
+            return DataBaseConnectivity.GetAvailableShuls();
+            //return DummyData.DummyData.GetAllAvailableShuls();
         }
 
 
@@ -27,8 +25,7 @@ namespace Super_Jew_2._0.Backend.Services
 
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
-            //return Super_Jew_2._0.Backend.Database.DataBaseConnectivity.AddShulToUser(userId, shulId);
-            return false;
+            return DataBaseConnectivity.AddShulToUser(userId, shulId);
         }
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
