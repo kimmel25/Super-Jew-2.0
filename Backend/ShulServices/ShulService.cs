@@ -26,6 +26,7 @@ namespace Super_Jew_2._0.Backend.Services
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
             return DataBaseConnectivity.AddShulToUser(userId, shulId);
+            
         }
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
