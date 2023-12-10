@@ -78,9 +78,9 @@ namespace Super_Jew_2._0.Backend.Database
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
-                        ShachrisTime = reader.GetString("ShachrisTime"),
-                        MinchaTime = reader.GetString("MinchaTime"),
-                        MaarivTime = reader.GetString("MaarivTime")
+                        //ShachrisTime = reader.GetString("ShachrisTime"),
+                        //MinchaTime = reader.GetString("MinchaTime"),
+                        //MaarivTime = reader.GetString("MaarivTime")
                     };
 
                     availableShuls.Add(shul);

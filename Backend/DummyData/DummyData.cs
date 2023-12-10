@@ -3,7 +3,7 @@
 {
     public static class DummyData
     {
-        public static Shul[] GetAllAvailableShuls()
+        public static List<Shul> GetAllAvailableShuls()
         {
 
             var shul1 = new Shul
@@ -55,7 +55,12 @@
             };
 
 
-            Shul[] allShuls = { shul1, shul2, shul3, shul4 };
+            List<Shul> allShuls = new List<Shul>();
+            
+            allShuls.Add(shul1);
+            allShuls.Add(shul2);
+            allShuls.Add(shul3);
+            allShuls.Add(shul4);
 
             return allShuls;
         }
@@ -65,7 +70,7 @@
 
             //Make regular user and gabbai
 
-            Shul[] allShuls = GetAllAvailableShuls();
+            List<Shul> allShuls = GetAllAvailableShuls();
 
             var user1 = new User
             {
