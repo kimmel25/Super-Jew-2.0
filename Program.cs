@@ -31,24 +31,29 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
-        
-            /*
             
-                try
-                {
-                    using (var connection = new MySqlConnection("server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;"))
-                    {
-                        connection.Open();
-                        Console.WriteLine("Connection successful.");
-                        // Optionally, execute a simple command like 'SELECT 1'
-                    }
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
-                */
+            //id for shull - 3
+            //user id one
 
+            
+            Console.WriteLine("Attempting to Add New Shul to User one!");
+            
+            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 2);
+            Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
+            
+            //update user one
+            user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            Console.WriteLine(user1.UserID);
+            Console.WriteLine("Shuls For Username:" + user1.Username);
+            
+            user1Shuls = user1.FollowedShuls;
+            foreach (var shul in user1Shuls)
+            {
+                Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
+            }
+            
+            
+            //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

@@ -95,13 +95,13 @@ namespace Super_Jew_2._0.Backend.Database
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("AddShulToUser", connection))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("userId", userId);
-                command.Parameters.AddWithValue("shulId", shulId);
-
                 connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("inputUserId", userId);
+                command.Parameters.AddWithValue("inputShulId", shulId);
+                
                 var result = command.ExecuteNonQuery();
-                return result > 0; // returns true if it affected at least one record
+                return result > 0;
             }
         }
 
