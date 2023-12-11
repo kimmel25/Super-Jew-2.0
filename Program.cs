@@ -11,7 +11,7 @@ namespace Super_Jew_2._0
     {
         public static void Main(string[] args)
         {
-            
+            /*
             //Test Console dummy data
             List<Shul> allShulls = ShulService.GetAllAvailableShuls();
             
@@ -52,6 +52,8 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
             
+            */
+          
             
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
