@@ -9,7 +9,7 @@ namespace Super_Jew_2._0
 {
     public class Program
     {
-        private void AllAvailableShuls()
+        private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
             List<Shul> allShulls = ShulService.GetAllAvailableShuls();
@@ -19,10 +19,10 @@ namespace Super_Jew_2._0
             }
         }
         
-        private void GetUserShuls()
+        private static void GetUserShuls(string username, string password)
         {
             Console.WriteLine("Getting followed Shuls for user");
-            User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            User user1 = ShulService.GetFollowedShulsForUser(username, password);
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
             
@@ -33,14 +33,14 @@ namespace Super_Jew_2._0
             }
         }
 
-        private void addShulToUserProfile()
+        private static void addShulToUserProfile(string username, string password, int shulId)
         {
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             List<Shul> user1Shuls = user1.FollowedShuls;
             
             
             Console.WriteLine("Attempting to Add Shul from User!");
-            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 2);
+            bool addShulToUserProfile = ShulService.AddShulToUserProfile(user1.UserID, shulId);
             Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
             
             //update user one
@@ -55,14 +55,14 @@ namespace Super_Jew_2._0
             }
         }
         
-        private void removeShulFromUserProfile()
+        private static void removeShulFromUserProfile(string username, string password, int shulId)
         {
-            User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            User user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
             
             
             Console.WriteLine("Attempting to Remove Shul from User!");
-            bool addShulToUserProfile = ShulService.RemoveShulFromUserProfile(1, 2);
+            bool addShulToUserProfile = ShulService.RemoveShulFromUserProfile(user1.UserID, shulId);
             Console.WriteLine("Removed Shul To User Profile: " + addShulToUserProfile);
             
             //update user one
@@ -79,6 +79,13 @@ namespace Super_Jew_2._0
         
         public static void Main(string[] args)
         {
+            /*
+            AllAvailableShuls();
+            GetUserShuls("john_doe", "password123");
+            addShulToUserProfile("john_doe", "password123", 1);
+            removeShulFromUserProfile("john_doe", "password123", 1);
+            */
+            
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
