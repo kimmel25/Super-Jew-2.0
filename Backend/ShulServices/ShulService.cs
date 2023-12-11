@@ -11,8 +11,7 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.GetAvailableShuls();
             //return DummyData.DummyData.GetAllAvailableShuls();
         }
-
-
+        
         public static User GetFollowedShulsForUser(string userId, string password)
         {
             return DataBaseConnectivity.GetUserByPassword(userId, password);
@@ -27,8 +26,7 @@ namespace Super_Jew_2._0.Backend.Services
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
-            //return _database.RemoveShulFromUser(userId, shulId);
-            return false;
+            return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
         }
 
     }
