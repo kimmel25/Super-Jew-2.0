@@ -1,8 +1,15 @@
 ﻿@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 
 
 
 @code {
+
+    private User user;
+    private String password = "password123";
+    private String username = "john_doe";
+
     [Parameter]
     public Shul CurrentShul { get; set; }
 
@@ -16,6 +23,11 @@
     {
         OnCardClick.InvokeAsync(null);
     }
+    private void RemoveShul()
+    {
+        user = ShulService.GetFollowedShulsForUser(username, password);
+        ShulService.RemoveShulFromUserProfile(user.UserID, CurrentShul.ShulID); 
+    }
 }
 
 @if (IsFullCard)
@@ -28,9 +40,12 @@
         <div class="data-field">Mincha Time: @CurrentShul.MinchaTime </div>
         <div class="data-field">Maariv Time: @CurrentShul.MaarivTime</div>
         <!-- data fields here -->
+
+        <button class="btn btn-danger" @onclick="RemoveShul">Remove</button>
     </div>
 }
 else
 {
+
     <div class="card-name-box" @onclick="CardClicked">@CurrentShul.ShulName</div>
 }
