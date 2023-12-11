@@ -42,8 +42,21 @@
             user = ShulService.GetFollowedShulsForUser(username, password); 
             if (user != null)
             {
-                 ShulService.AddShulToUserProfile(user.UserID, CurrentShul.ShulID);
-                 await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");
+                bool exists = false;
+                foreach (Shul shul in user.FollowedShuls)
+                {
+                    if (shul.ShulID == CurrentShul.ShulID)
+                    {
+                        await JSRuntime.InvokeVoidAsync("alert", "You are already subscribed to this Shul!");
+                        exists = true;
+                    }
+                }
+
+                if (!exists)
+                {
+                    ShulService.AddShulToUserProfile(user.UserID, CurrentShul.ShulID);
+                    await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");    
+                }
             }
             else
             {

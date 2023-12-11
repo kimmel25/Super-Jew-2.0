@@ -8,7 +8,7 @@ using Super_Jew_2._0.Data;
 namespace Super_Jew_2._0
 {
     public class Program
-    {
+    {  
         public static void Main(string[] args)
         {
             /*
@@ -19,7 +19,7 @@ namespace Super_Jew_2._0
             foreach (var shul in allShulls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
-            }
+            } */
             
             Console.WriteLine("Getting followed Shuls for user");
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
@@ -34,9 +34,9 @@ namespace Super_Jew_2._0
             
             
             /*
-            Console.WriteLine("Attempting to Add New Shul to User one!");
-            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 3);
-            Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
+            Console.WriteLine("Attempting to Remove Shul from User!");
+            bool addShulToUserProfile = ShulService.RemoveShulFromUserProfile(1, 2);
+            Console.WriteLine("Removed Shul To User Profile: " + addShulToUserProfile);
             
             //update user one
             user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
@@ -48,9 +48,8 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
-            
-
             */
+            
           
             
             //Blazor Code
