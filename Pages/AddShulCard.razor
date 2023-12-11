@@ -2,6 +2,7 @@
 @using Super_Jew_2._0.Backend.Services
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 @inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 
 
 
@@ -56,6 +57,7 @@
                 {
                     ShulService.AddShulToUserProfile(user.UserID, CurrentShul.ShulID);
                     await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");    
+                    //NavigationManager.NavigateTo("/MyShuls");   // can choose to nav to myshuls or stay on same page
                 }
             }
             else
@@ -82,9 +84,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
-                    <a href="#" class="btn btn-lg" @onclick="SubscribeToShul">
-                        <span>Subsrcibe!</span>
-                    </a>
+                    <button class="btn btn-lg" @onclick="SubscribeToShul">
+                        <span>Subscribe!</span>
+                    </button>
                 </div>
             </div>
         </div>
