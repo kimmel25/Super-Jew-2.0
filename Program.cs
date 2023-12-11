@@ -11,7 +11,7 @@ namespace Super_Jew_2._0
     {
         public static void Main(string[] args)
         {
-            
+            /*
             //Test Console dummy data
             
             Console.WriteLine("Test All Available Shuls");
@@ -49,21 +49,9 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
             
-            Console.WriteLine("Attempting to REMOVE Shul to User one!");
-            addShulToUserProfile = ShulService.RemoveShulFromUserProfile(1, 1);
-            Console.WriteLine("Removed Shul From User Profile: " + addShulToUserProfile);
-            
-            user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
-            Console.WriteLine(user1.UserID);
-            Console.WriteLine("Shuls For Username:" + user1.Username);
-            
-            user1Shuls = user1.FollowedShuls;
-            foreach (var shul in user1Shuls)
-            {
-                Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
-            }
 
             */
+          
             
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

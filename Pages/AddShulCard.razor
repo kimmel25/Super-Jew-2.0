@@ -1,4 +1,9 @@
 ﻿@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@inject IJSRuntime JSRuntime
+
+
 
 @code {
     [Parameter]
@@ -18,10 +23,40 @@
     public EventCallback OnCardClick { get; set; }
 
 
+    private User user; 
+
+
     private void CardClicked()
     {
         OnCardClick.InvokeAsync(null);
     }
+
+    private async Task SubscribeToShul()
+    {
+        try
+        {
+            
+            var username = "john_doe"; // Replace with actual logic to get username
+            var password = "password123"; // Replace with actual logic to get password
+
+            user = ShulService.GetFollowedShulsForUser(username, password); 
+            if (user != null)
+            {
+                 ShulService.AddShulToUserProfile(user.UserID, CurrentShul.ShulID);
+                 await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");
+            }
+            else
+            {
+                await JSRuntime.InvokeVoidAsync("alert", "User not found, credentials incorrect, or other error.");
+            }
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
+
+
 }
 
 @if (IsFullCard)
@@ -29,18 +64,20 @@
     <div class="card" @onclick="CardClicked">
         <div class="card-header">@CurrentShul.ShulName</div>
         <div class="data-field"><strong>Location:</strong> @CurrentShul.Location</div>
-        <div class="data-field"><strong>Gabbai:</strong> @CurrentShul.Location</div>
+        <div class="data-field"><strong>Gabbai:</strong> @CurrentShul.ContactInfo</div>
 
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
-                    <a href="#" class="btn btn-lg">
+                    <a href="#" class="btn btn-lg" @onclick="SubscribeToShul">
                         <span>Subsrcibe!</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
+
 }
 else
 {
