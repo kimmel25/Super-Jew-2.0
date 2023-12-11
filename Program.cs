@@ -8,7 +8,7 @@ using Super_Jew_2._0.Data;
 namespace Super_Jew_2._0
 {
     public class Program
-    {
+    {  
         public static void Main(string[] args)
         {
             /*
@@ -19,7 +19,7 @@ namespace Super_Jew_2._0
             foreach (var shul in allShulls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
-            }
+            } */
             
             Console.WriteLine("Getting followed Shuls for user");
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
