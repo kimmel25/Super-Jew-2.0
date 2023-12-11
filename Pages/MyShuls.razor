@@ -36,15 +36,10 @@
     private User user;
     private String password = "password123";
     private String username = "john_doe"; 
-
-
-
-
+    
     private User GetUser() => user = ShulService.GetFollowedShulsForUser(username, password);
 
-
-
-
+    
     private void NavigateToAddShuls()
     {
         NavigationManager.NavigateTo("/addshuls"); 
@@ -68,6 +63,4 @@
     {
         return shulName == expandedShulName;
     }
-
-    
 }

@@ -8,19 +8,19 @@ using Super_Jew_2._0.Data;
 namespace Super_Jew_2._0
 {
     public class Program
-    {  
-        public static void Main(string[] args)
+    {
+        private void AllAvailableShuls()
         {
-            /*
-            //Test Console dummy data
-            
             Console.WriteLine("Test All Available Shuls");
             List<Shul> allShulls = ShulService.GetAllAvailableShuls();
             foreach (var shul in allShulls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
-            } */
-            
+            }
+        }
+        
+        private void GetUserShuls()
+        {
             Console.WriteLine("Getting followed Shuls for user");
             User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(user1.UserID);
@@ -31,9 +31,36 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
+        }
+
+        private void addShulToUserProfile()
+        {
+            User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            List<Shul> user1Shuls = user1.FollowedShuls;
             
             
-            /*
+            Console.WriteLine("Attempting to Add Shul from User!");
+            bool addShulToUserProfile = ShulService.AddShulToUserProfile(1, 2);
+            Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
+            
+            //update user one
+            user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            Console.WriteLine(user1.UserID);
+            Console.WriteLine("Shuls For Username:" + user1.Username);
+            
+            user1Shuls = user1.FollowedShuls;
+            foreach (var shul in user1Shuls)
+            {
+                Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
+            }
+        }
+        
+        private void removeShulFromUserProfile()
+        {
+            User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            List<Shul> user1Shuls = user1.FollowedShuls;
+            
+            
             Console.WriteLine("Attempting to Remove Shul from User!");
             bool addShulToUserProfile = ShulService.RemoveShulFromUserProfile(1, 2);
             Console.WriteLine("Removed Shul To User Profile: " + addShulToUserProfile);
@@ -48,10 +75,10 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
-            */
-            
-          
-            
+        }
+        
+        public static void Main(string[] args)
+        {
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 

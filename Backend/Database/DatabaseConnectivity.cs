@@ -6,8 +6,6 @@ namespace Super_Jew_2._0.Backend.Database
 {
     public static class DataBaseConnectivity
     {
-        //static string _connectionString;
-
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
 
@@ -52,7 +50,6 @@ namespace Super_Jew_2._0.Backend.Database
 
                     user.FollowedShuls.Add(shul);
                 }
-
                 return user;
             }
         }
@@ -105,7 +102,7 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        //Todo take out shul on front end also???? or refresh user ?
+        //Todo take out shul on front end also, look into how to refresh
         public static bool RemoveShulFromUser(int userId, int shulId)
         {
             using var connection = new MySqlConnection(ConnectionString);
