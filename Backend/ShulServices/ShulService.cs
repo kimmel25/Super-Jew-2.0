@@ -1,4 +1,5 @@
 using Super_Jew_2._0.Backend.Database;
+using Super_Jew_2._0.Backend.ShulRequests;
 
 
 namespace Super_Jew_2._0.Backend.Services
@@ -26,6 +27,38 @@ namespace Super_Jew_2._0.Backend.Services
         {
             return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
         }
-
+        
+        //Methods for Gabbai's Only!
+        public static GabbaiRequest GetGabaiShulAdditionRequests(int gabaiId)
+        {
+            //TODO Get database connectivity code
+            return null;
+        }
+        public static bool InitiateGabaiShulAddition(int gabaiId ,Shul shul)
+        {
+            //TODO Get database connectivity code
+            return true;
+        }
+        
+        //This method is for a Gabai, where after he see's the the Admin's response to
+        //his Shul addition request, he can delete that "Request" off his page. 
+        public static bool ClearGabbaiShulAdditionStatus(int gabbaiId, int shulAdditionRequestId)
+        {
+            //TODO Get database connectivity code
+            return true;
+        }
+        
+        //Methods for Admins Only!
+        public static AdminReview GetGabbaiRequestsSubmissions()
+        {
+            //TODO Get database connectivity code
+            return null;
+        }
+        
+        public static bool AdminSubmitRequestDecision(int shulAdditionRequestId, string decision)
+        {
+            //TODO Get database connectivity code
+            return true;
+        }
     }
 }
