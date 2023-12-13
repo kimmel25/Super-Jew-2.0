@@ -55,5 +55,25 @@ CREATE TABLE YidGits (
     SelectedWidgets VARCHAR(255)
 );
 
+CREATE TABLE PendingShulsData(
+    ShulDataApprovalID INT PRIMARY KEY,
+    ShulID INT REFERENCES Shuls(ShulID),
+    Name VARCHAR(255),
+    Location VARCHAR(255),
+    Denomination VARCHAR(255),
+    ContactInfo TEXT,
+    ShachrisTime DATETIME,
+	MinchaTime DATETIME,
+	MaarivTime DATETIME,
+    EventID INT
+    );
+
+CREATE TABLE GabbaiRequests(
+    RequestID INT PRIMARY KEY,
+    GabbaiID INT REFERENCES Gabbai(GabbaiID),
+    ApprovalStatus VARCHAR(255),
+    ShulDataApprovalID INT references PendingShulsData(ShulDataApprovalID)
+);
+
 ALTER TABLE Shuls
 ADD FOREIGN KEY (EventID) REFERENCES ShulEvents(EventID);
