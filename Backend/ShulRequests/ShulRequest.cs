@@ -2,11 +2,7 @@ namespace Super_Jew_2._0.Backend.ShulRequests;
 
 public class ShulRequest
 {
-    //RequestID
-    // GabbaiID
-    // ApprovalStatus
-    // ShulDataApprovalID
-    
+    //Data for Specific request by Gabbai
     public string GabbaiID { get; set; } //the Gabbai that made this request
     public string RequestID { get; set; }
     public string ApprovalStatus { get; set; }
