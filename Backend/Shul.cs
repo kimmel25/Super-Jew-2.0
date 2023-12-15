@@ -12,4 +12,4 @@ public class Shul
     public string MinchaTime { get; set; }
     public string MaarivTime { get; set; }
 
-}
+} 

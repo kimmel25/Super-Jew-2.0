@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend;
 using Super_Jew_2._0.Backend.Services;
+using Super_Jew_2._0.Backend.ShulRequests;
 using Super_Jew_2._0.Data;
 
 namespace Super_Jew_2._0
@@ -76,15 +77,34 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
         }
+
+        private static void requestShulSubmitionSimulation()
+        {
+            var shulRequest1 = new ShulRequest
+            {
+                RequestID = 00,
+                GabbaiID = 1,
+                ShulName = "Beis Moon",
+                Location = "1 Street, Planet Moon",
+                Denomination = "Orthochikenpic",
+                ContactInfo = "Rena Kapinsky, 201-345-2920",
+                ShachrisTime = "2am, 4am, 6am, 230pm",
+                MinchaTime = "3:30pm, 6pm, 15 minutes after zman",
+                MaarivTime = "15 minutes before zman, 430pm, 330pm"
+            };
+            
+            
+            
+        }
         
         public static void Main(string[] args)
         {
-            
+            /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
             addShulToUserProfile("john_doe", "password123", 1);
             removeShulFromUserProfile("john_doe", "password123", 1);
-            
+            */
             
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

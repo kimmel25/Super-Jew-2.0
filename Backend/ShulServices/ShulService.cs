@@ -29,12 +29,12 @@ namespace Super_Jew_2._0.Backend.Services
         }
         
         //Methods for Gabbai's Only!
-        public static GabbaiRequest GetGabaiShulAdditionRequests(int gabaiId)
+        public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
         {
             //TODO Get database connectivity code
             return null;
         }
-        public static bool InitiateGabaiShulAddition(int gabaiId ,Shul shul)
+        public static bool InitiateGabaiShulAddition(int gabaiId ,ShulRequest shulRequest)
         {
             //TODO Get database connectivity code
             return true;
@@ -55,7 +55,7 @@ namespace Super_Jew_2._0.Backend.Services
             return null;
         }
         
-        public static bool AdminSubmitRequestDecision(int shulAdditionRequestId, string decision)
+        public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
         {
             //TODO Get database connectivity code
             return true;
