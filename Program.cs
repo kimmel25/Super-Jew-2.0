@@ -36,7 +36,7 @@ namespace Super_Jew_2._0
 
         private static void addShulToUserProfile(string username, string password, int shulId)
         {
-            User user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            User user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
             
             
@@ -45,7 +45,7 @@ namespace Super_Jew_2._0
             Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
             
             //update user one
-            user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            user1 = ShulService.GetFollowedShulsForUser(username, password);
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
             
@@ -96,6 +96,12 @@ namespace Super_Jew_2._0
             
             
         }
+
+        private static void runRequestSimulation()
+        {
+            GetUserShuls("ykatz1", "yk123");
+            addShulToUserProfile("ykatz1", "yk123",00003);
+        }
         
         public static void Main(string[] args)
         {
@@ -105,6 +111,8 @@ namespace Super_Jew_2._0
             addShulToUserProfile("john_doe", "password123", 1);
             removeShulFromUserProfile("john_doe", "password123", 1);
             */
+
+            //runRequestSimulation();
             
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

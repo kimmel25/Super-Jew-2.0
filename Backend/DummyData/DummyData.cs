@@ -3,6 +3,14 @@
 {
     public static class DummyData
     {
+        private static List<Shul> allShuls;
+        private static User[] users;
+
+        public static void AddVerifiedShul(Shul newShul)
+        {
+            allShuls.Add(newShul);
+        }
+        
         public static List<Shul> GetAllAvailableShuls()
         {
 
@@ -55,7 +63,7 @@
             };
 
 
-            List<Shul> allShuls = new List<Shul>();
+            allShuls = new List<Shul>();
             
             allShuls.Add(shul1);
             allShuls.Add(shul2);
@@ -134,7 +142,7 @@
 
             string[] userPasswords = { "yk123", "mgreen123", "rLevi123", "sGold123", "dWeiss123" };
 
-            User[] users = { user1, user2, user3, user4, user5 };
+            users = new []{ user1, user2, user3, user4, user5 };
 
             for (int i = 0; i < users.Length; i++)
             {
@@ -145,6 +153,49 @@
             }
 
             return user2;
+        }
+
+        public static bool AddShulToUserProfile(int userId, int shulId)
+        {
+            for (int i = 0; i < users.Length; i++)
+            {
+                if (users[i].UserID == userId)
+                {
+                    for (int j = 0; j < allShuls.Count; j++)
+                    {
+                        if (allShuls[j].ShulID == shulId)
+                        {
+                            users[i].FollowedShuls.Add(allShuls[j]);
+                            Console.WriteLine("IN THE AddShulToUserProfile Dummy Method and ADDED SHUL!");
+                            for (int k = 0; k < users[i].FollowedShuls.Count; k++)
+                            {
+                                Console.Write("IN THE ADD SHUL METHOD TEST: " + users[i].FollowedShuls[k].ShulName + ", ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        
+        public static bool RemoveShulFromUserProfile(int userId, int shulId)
+        {
+            for (int i = 0; i < users.Length; i++)
+            {
+                if (users[i].UserID == userId)
+                {
+                    for (int j = 0; j < allShuls.Count; j++)
+                    {
+                        if (allShuls[j].ShulID == shulId)
+                        {
+                            users[i].FollowedShuls.Remove(allShuls[j]);
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
     }

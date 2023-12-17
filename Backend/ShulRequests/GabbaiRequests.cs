@@ -9,6 +9,6 @@ public class GabbaiRequests
     }
     
     //All the requests made by the Gabbai
-    public string GabbaiID { get; set; }
+    public int GabbaiID { get; set; }
     public List<ShulRequest> Requests { get; set; }
 }

@@ -1,4 +1,5 @@
 using Super_Jew_2._0.Backend.Database;
+using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 
@@ -21,22 +22,26 @@ namespace Super_Jew_2._0.Backend.Services
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
             return DataBaseConnectivity.AddShulToUser(userId, shulId);
+            //return DummyData.DummyData.AddShulToUserProfile(userId, shulId);
         }
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
             return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
+            //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
         }
         
         //Methods for Gabbai's Only!
         public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
         {
-            //TODO Get database connectivity code
-            return null;
+            return _shulRequestDummy.GetGabaiShulAdditionRequests();
         }
+
+        private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
+        
         public static bool InitiateGabaiShulAddition(int gabaiId ,ShulRequest shulRequest)
         {
-            //TODO Get database connectivity code
+            _shulRequestDummy.InitiateGabaiShulAddition(gabaiId, shulRequest);
             return true;
         }
         
@@ -44,21 +49,19 @@ namespace Super_Jew_2._0.Backend.Services
         //his Shul addition request, he can delete that "Request" off his page. 
         public static bool ClearGabbaiShulAdditionStatus(int gabbaiId, int shulAdditionRequestId)
         {
-            //TODO Get database connectivity code
+            _shulRequestDummy.ClearGabbaiShulAdditionStatus(gabbaiId, shulAdditionRequestId);
             return true;
         }
         
         //Methods for Admins Only!
         public static AdminReview GetGabbaiRequestsSubmissions()
         {
-            //TODO Get database connectivity code
-            return null;
+            return _shulRequestDummy.GetGabbaiRequestsSubmissions();
         }
         
         public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
         {
-            //TODO Get database connectivity code
-            return true;
+            return _shulRequestDummy.AdminShulSubmitionDecision(shulAdditionRequestId, decision);
         }
     }
 }

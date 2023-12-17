@@ -11,5 +11,4 @@ public class Shul
     public string ShachrisTime { get; set; }
     public string MinchaTime { get; set; }
     public string MaarivTime { get; set; }
-
 } 
