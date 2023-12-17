@@ -1,0 +1,29 @@
+﻿.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+}
+
+    .field label {
+        margin-bottom: 5px; /* Spacing between the label and the input */
+    }
+
+.card {
+    margin-bottom: 20px; /* Space between cards */
+}
+
+.btn-primary {
+    padding: 10px 20px; /* Padding for a bigger button */
+    font-size: 16px; /* Font size */
+    background-color: #007bff; /* Bold color */
+    border: 2px solid #0056b3; /* Thicker border with a darker shade */
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.2s; /* Smooth transition for interaction */
+    width: 100%; /* Set the width to 100% of the parent container */
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Slightly darker color on hover */
+        transform: scale(1.05); /* Slightly larger scale on hover */
+    }
