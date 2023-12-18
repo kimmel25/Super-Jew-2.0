@@ -1,0 +1,65 @@
+﻿@page "/myupdates"
+
+@inject NavigationManager NavigationManager
+@using Super_Jew_2._0.Backend.Services
+@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@using Super_Jew_2._0.Backend
+
+<h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
+
+@if (shulList != null)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulList)
+            {
+                <div class="col-sm-4">
+                    <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+
+
+    private List<Shul> shulList = new List<Shul>(); 
+    private User user;
+    private String password = "password123";
+    private String username = "john_doe";
+
+    protected override void OnInitialized()
+    {
+        /*
+        user = ShulService.GetFollowedShulsForUser(username, password);
+        if (user?.FollowedShuls != null)
+        {
+            shulList = user.FollowedShuls;
+        }
+        */
+
+
+        // Hardcoding 5 fake shuls
+        for (int i = 1; i <= 5; i++)
+        {
+            shulList.Add(new Shul
+                {
+                    ShulName = $"Shul {i}",
+                    Location = $"Random Address for Shul {i}",
+                    ContactInfo = $"Random ## for Shul {i}",
+                    ShachrisTime = $"time.00000", 
+                    MinchaTime = $"time.0000 ",
+                    MaarivTime = $"time.0000"
+                 
+
+                    // Add other properties as needed
+                });
+        }
+    }
+
+    private void HandleSubmit(Shul updatedShul)
+    {
+        // Code to handle the submission of the updated shul information
+    }
+}
