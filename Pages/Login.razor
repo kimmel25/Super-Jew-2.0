@@ -1,11 +1,9 @@
-﻿@page "/"
 @page "/login"
-@using Super_Jew_2._0.Services
 @using Super_Jew_2._0.Models
-@using Super_Jew_2._0.Backend
-@inject AuthenticationService AuthenticationService
+@using Super_Jew_2._0.Backend.Services
+
+@inject ShulService ShulService
 @inject NavigationManager NavigationManager
-@inject ILoginService LoginService
 
 <h3>Login</h3>
 
@@ -13,6 +11,7 @@
     <InputText id="username" @bind-Value="@loginModel.Username" />
     <InputText id="password" type="password" @bind-Value="@loginModel.Password" />
     <button type="submit">Login</button>
+    <button @onclick="HandleCreateAccount">Create Account</button>
 </EditForm>
 
 @code {
@@ -20,22 +19,22 @@
 
     private async Task HandleLogin()
     {
-        var user = await LoginService.GetFollowedShulsForUser(loginModel.Username, loginModel.Password);
-        if (user != null && !string.IsNullOrEmpty(user.AccountType))
+        var user =  ShulService.GetFollowedShulsForUser(loginModel.Username, loginModel.Password);
+        Console.WriteLine("out of shul login method");
+        if (user != null)
         {
-            //AuthenticationService.Login(user);
-            
-    // Navigate based on the AccountType
-            switch (user.AccountType.ToLower())
+            Console.WriteLine("ACCOUNT TYPE: " + user.AccountType.ToUpper());
+            switch (user.AccountType.ToUpper()) // Make sure to match the case exactly
             {
-                case "admin":
+                case "ADMIN":
                     NavigationManager.NavigateTo("/admin-dashboard");
                     break;
-                case "user":
-                    NavigationManager.NavigateTo("/user-dashboard");
+                case "GABBAI":
+                    NavigationManager.NavigateTo("/gabai-dashboard");
                     break;
-                case "gabbai":
-                    NavigationManager.NavigateTo("/gabbai-dashboard");
+                case "USER":
+                    Console.WriteLine("we got a user!");
+                    NavigationManager.NavigateTo("/user-dashboard");
                     break;
                 default:
     // Handle unknown account type or show an error message
@@ -44,7 +43,16 @@
         }
         else
         {
+            Console.WriteLine("user null");
+        }
+        {
     // Handle login failure, show an error message, etc.
         }
+    }
+
+
+    private void HandleCreateAccount()
+    {
+        // Logic for handling account creation will go here
     }
 }
