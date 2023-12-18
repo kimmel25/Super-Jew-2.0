@@ -119,16 +119,29 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        public static bool GetInitiatedGabbaiShul(int gabaiId, ShulRequest shulRequest)
+
+        //this should function similar to AddShulToUser. also the procedure is not created yet and the code is not tested
+        public static bool GetInitiatedGabbaiShul(int gabbaiId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
-            using (var command = new MySqlCommand("Procedure", connection))
+            using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
             {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("inputGabbaiId", gabbaiId);
+                command.Parameters.AddWithValue("inputName", shulRequest.ShulName);
+                command.Parameters.AddWithValue("inputLocation", shulRequest.Location);
+                command.Parameters.AddWithValue("inputDenomination", shulRequest.Denomination);
+                command.Parameters.AddWithValue("inputContactInfo", shulRequest.ContactInfo);
+                command.Parameters.AddWithValue("inputShachrisTime", shulRequest.ShachrisTime);
+                command.Parameters.AddWithValue("inputMinchaTime", shulRequest.MinchaTime);
+                command.Parameters.AddWithValue("inputMaarivTime", shulRequest.MaarivTime);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
 
             }
-
-            return true;
         }
-
     }
 }
