@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using MySql.Data.MySqlClient;
+using Super_Jew_2._0.Backend.ShulRequests;
 
 namespace Super_Jew_2._0.Backend.Database
 {
@@ -96,7 +97,7 @@ namespace Super_Jew_2._0.Backend.Database
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("inputUserId", userId);
                 command.Parameters.AddWithValue("inputShulId", shulId);
-                
+
                 var result = command.ExecuteNonQuery();
                 return result > 0;
             }
@@ -112,10 +113,21 @@ namespace Super_Jew_2._0.Backend.Database
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("inputUserId", userId);
                 command.Parameters.AddWithValue("inputShulId", shulId);
-                
+
                 var result = command.ExecuteNonQuery();
                 return result > 0; // returns true if it affected at least one record
             }
+        }
+
+        public static bool GetInitiatedGabbaiShul(int gabaiId, ShulRequest shulRequest)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("Procedure", connection))
+            {
+
+            }
+
+            return true;
         }
 
     }
