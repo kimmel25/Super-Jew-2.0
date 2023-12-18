@@ -1,58 +1,92 @@
 ﻿@page "/gabbaisignup"
 @inject NavigationManager Nav
+@using Super_Jew_2._0.Backend.ShulRequests; 
 
-<h3>Gabbai Sign Up</h3>
+<h3>Gabbai/Shul Application</h3>
 
 <div class="container mt-4">
-    <form method="post">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <InputText class="form-control" id="name" @bind-Value="name" required />
             </div>
 
             <div class="col-md-4 mb-3">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <InputText type="email" class="form-control" id="email" @bind-Value="email" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="phonenumber">Phone Number:</label>
+                <InputText class="form-control" id="phonenumber" @bind-Value="phone_number" required />
             </div>
 
+       
+        </div>
+
+        <div class="row">
+
             <div class="col-md-4 mb-3">
-                <label for="shul">Shul Name:</label>
-                <input type="text" class="form-control" id="shul" name="shul" required>
+                <label for="shul">Shul to be Added:</label>
+                <InputText class="form-control" id="shul_name" @bind-Value="shul_name" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="rabbi">Rabbi:</label>
+                <InputText class="form-control" id="rabbi" @bind-Value="rabbi" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="location">Location:</label>
+                <InputText class="form-control" id="location" @bind-Value="location" required />
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label for="shachris">Shacris Time(s):  </label>
+                <InputText class="form-control" id="mincha" @bind-Value="shachris_time" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="mincha">Mincha Time(s): </label>
+                <InputText class="form-control" id="mincha" @bind-Value="mincha_time" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="maariv">Maariv Time(s): </label>
+                <InputText class="form-control" id="maariv" @bind-Value="maariv_time" required />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4 mb-3">
-                <label for="rabbi">Rabbi:</label>
-                <input type="text" class="form-control" id="rabbi" name="rabbi" required>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                <label for="denomination">Denomination: </label>
+                <InputText class="form-control" id="denomination" @bind-Value="denomination" required />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <a href="#" class="btn btn-lg" @onclick="NavigateTo">
-                    <span>Register!</span>
-                </a>
+                <button type="submit" class="btn btn-lg">
+                    <span>Submit Application!</span>
+                </button>
             </div>
         </div>
-    </form>
+    </EditForm>
 </div>
 
 @code {
+    ShulRequest shulrequest = new ShulRequest();
+    private string name, email, shul_name, rabbi, location, phone_number, shachris_time, mincha_time, maariv_time, denomination; 
 
-    private void NavigateTo()
+    private void HandleValidSubmit()
     {
-        Nav.NavigateTo("/gabbairegistration"); 
+        shulrequest.ShulName = shul_name; 
+        shulrequest.ShachrisTime = shachris_time;
+        shulrequest.Location = location; 
+        shulrequest.MinchaTime = mincha_time; 
+        shulrequest.MaarivTime = maariv_time;
+        shulrequest.Denomination = denomination; 
+        shulrequest.ContactInfo = name + ", " + phone_number + ", " + email;
+
+        Nav.NavigateTo("/gabbairegistration");
     }
 }
