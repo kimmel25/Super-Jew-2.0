@@ -5,19 +5,11 @@
 {
     public class DummyData
     {
-        private static List<Shul> allShuls;
-        private static List<User> users;
+        private static List<Shul> allShuls = new List<Shul>();
+        private static List<User> users = new List<User>();
         private string[] userPasswords;
-        private GabbaiRequests gabaiShulAdditionRequests;
-        private AdminReview adminShulAdditionRequests;
-
-        public DummyData()
-        {
-            allShuls = new List<Shul>();
-            users = new List<User>();
-            PopulateShuls();
-            PopulateUsers();
-        }
+        private GabbaiRequests gabaiShulAdditionRequests = new GabbaiRequests();
+        private AdminReview adminShulAdditionRequests = new AdminReview();
 
         public void AddVerifiedShul(Shul newShul)
         {
@@ -163,8 +155,6 @@
 
             //Make regular user and gabbai
 
-            List<Shul> allShuls = GetAllAvailableShuls();
-
             for (int i = 0; i < users.Count; i++)
             {
                 if (users[i].Username == username && userPasswords[i] == password)
@@ -173,7 +163,7 @@
                 }
             }
 
-            return users[1];
+            return null;
         }
 
         public bool AddShulToUserProfile(int userId, int shulId)
@@ -188,7 +178,7 @@
                         {
                             t1.FollowedShuls.Add(t);
                             Console.WriteLine("IN THE AddShulToUserProfile Dummy Method and ADDED SHUL!");
-                            Console.Write(t1.UserID + " shuls: ");
+                            Console.Write(t1.UserID + " <-- User ID: ");
                             for (int k = 0; k < t1.FollowedShuls.Count; k++)
                             {
                                 Console.Write(t1.FollowedShuls[k].ShulName + ", ");
