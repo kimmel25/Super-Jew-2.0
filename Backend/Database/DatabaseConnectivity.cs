@@ -120,7 +120,7 @@ namespace Super_Jew_2._0.Backend.Database
         }
 
 
-        //this should function similar to AddShulToUser. also the procedure is not created yet and the code is not tested
+        //this should function similar to AddShulToUser. procedure is created. Needs to be tested
         public static bool GetInitiatedGabbaiShul(int gabbaiId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
