@@ -7,41 +7,50 @@ namespace Super_Jew_2._0.Backend.Services
 {
     public class ShulService
     {
+        private static DummyData.DummyData _dummyData;
+
+
+        public ShulService()
+        {
+            _dummyData = new DummyData.DummyData();
+        }
+        
         public static List<Shul> GetAllAvailableShuls() //in future add zipcode option
         {
-            return DataBaseConnectivity.GetAvailableShuls();
-            //return DummyData.DummyData.GetAllAvailableShuls();
+            //return DataBaseConnectivity.GetAvailableShuls();
+            return _dummyData.GetAllAvailableShuls();
         }
         
         public static User GetFollowedShulsForUser(string userId, string password)
         {
-            return DataBaseConnectivity.GetUserByPassword(userId, password);
-            //return DummyData.DummyData.GetUserByPassword(userId,password);
+            //return DataBaseConnectivity.GetUserByPassword(userId, password);
+            return _dummyData.GetUserByPassword(userId,password);
         }
 
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
-            return DataBaseConnectivity.AddShulToUser(userId, shulId);
-            //return DummyData.DummyData.AddShulToUserProfile(userId, shulId);
+            //return DataBaseConnectivity.AddShulToUser(userId, shulId);
+            return _dummyData.AddShulToUserProfile(userId, shulId);
         }
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
-            return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
-            //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
+            //return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
+            return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
         }
+        
+        
         
         //Methods for Gabbai's Only!
         public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
         {
-            return _shulRequestDummy.GetGabaiShulAdditionRequests();
+            return _dummyData.GetGabaiShulAdditionRequests();
         }
-
-        private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
+        
         
         public static bool InitiateGabaiShulAddition(int gabaiId ,ShulRequest shulRequest)
         {
-            _shulRequestDummy.InitiateGabaiShulAddition(gabaiId, shulRequest);
+            _dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
             return true;
         }
         
@@ -49,19 +58,19 @@ namespace Super_Jew_2._0.Backend.Services
         //his Shul addition request, he can delete that "Request" off his page. 
         public static bool ClearGabbaiShulAdditionStatus(int gabbaiId, int shulAdditionRequestId)
         {
-            _shulRequestDummy.ClearGabbaiShulAdditionStatus(gabbaiId, shulAdditionRequestId);
+            _dummyData.ClearGabbaiShulAdditionStatus(gabbaiId, shulAdditionRequestId);
             return true;
         }
         
         //Methods for Admins Only!
         public static AdminReview GetGabbaiRequestsSubmissions()
         {
-            return _shulRequestDummy.GetGabbaiRequestsSubmissions();
+            return _dummyData.GetGabbaiRequestsSubmissions();
         }
         
         public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
         {
-            return _shulRequestDummy.AdminShulSubmitionDecision(shulAdditionRequestId, decision);
+            return _dummyData.AdminShulSubmitionDecision(shulAdditionRequestId, decision);
         }
     }
 }
