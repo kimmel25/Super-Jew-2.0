@@ -13,7 +13,7 @@ namespace Super_Jew_2._0.Backend.Services
             //return DummyData.DummyData.GetAllAvailableShuls();
         }
         
-        public static User GetFollowedShulsForUser(string userId, string password)
+        public User GetFollowedShulsForUser(string userId, string password)
         {
             return DataBaseConnectivity.GetUserByPassword(userId, password);
             //return DummyData.DummyData.GetUserByPassword(userId,password);

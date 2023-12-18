@@ -5,11 +5,15 @@ using Super_Jew_2._0.Backend;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 using Super_Jew_2._0.Data;
+using Super_Jew_2._0.Services;
+using ShulLoginService = Super_Jew_2._0.Backend.Services.ShulLoginService;
 
 namespace Super_Jew_2._0
 {
     public class Program
     {
+        
+        /*
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
@@ -102,7 +106,7 @@ namespace Super_Jew_2._0
             GetUserShuls("ykatz1", "yk123");
             addShulToUserProfile("ykatz1", "yk123",00003);
         }
-        
+        */
         public static void Main(string[] args)
         {
             /*
@@ -122,7 +126,13 @@ namespace Super_Jew_2._0
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddTransient<Class>();
-           
+            
+
+            builder.Services.AddTransient<ILoginService, ShulLoginService>();
+            
+            builder.Services.AddSingleton<AuthenticationService>();
+
+
             builder.Services.AddTransient<ShulService>(); 
 
 
