@@ -17,8 +17,8 @@ namespace Super_Jew_2._0.Backend.Services
 
         public static List<Shul> GetAllAvailableShuls() //in future add zipcode option
         {
-            //return DataBaseConnectivity.GetAvailableShuls();
-            return _dummyData.GetAllAvailableShuls();
+            return DataBaseConnectivity.GetAvailableShuls();
+            //return _dummyData.GetAllAvailableShuls();
         }
 
         public static User GetFollowedShulsForUser(string userId, string password)
@@ -54,8 +54,8 @@ namespace Super_Jew_2._0.Backend.Services
         //Param - ShulRequest - a request id, gabaiid, and shul info
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
-            _dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
-            //DataBaseConnectivity.GetInitiatedGabbaiShul(gabaiId, shulRequest);
+            //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
+            DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
             return true;
         }
 

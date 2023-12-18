@@ -121,7 +121,7 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //this should function similar to AddShulToUser. procedure is created. Needs to be tested
-        public static bool GetInitiatedGabbaiShul(int gabbaiId, ShulRequest shulRequest)
+        public static bool GetInitiatedGabbaiShul(ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
@@ -129,14 +129,14 @@ namespace Super_Jew_2._0.Backend.Database
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("inputGabbaiId", gabbaiId);
-                command.Parameters.AddWithValue("inputName", shulRequest.ShulName);
-                command.Parameters.AddWithValue("inputLocation", shulRequest.Location);
-                command.Parameters.AddWithValue("inputDenomination", shulRequest.Denomination);
-                command.Parameters.AddWithValue("inputContactInfo", shulRequest.ContactInfo);
-                command.Parameters.AddWithValue("inputShachrisTime", shulRequest.ShachrisTime);
-                command.Parameters.AddWithValue("inputMinchaTime", shulRequest.MinchaTime);
-                command.Parameters.AddWithValue("inputMaarivTime", shulRequest.MaarivTime);
+                command.Parameters.AddWithValue("NewRequestID", shulRequest.RequestID);
+                command.Parameters.AddWithValue("NewName", shulRequest.ShulName);
+                command.Parameters.AddWithValue("NewLocation", shulRequest.Location);
+                command.Parameters.AddWithValue("NewDenomination", shulRequest.Denomination);
+                command.Parameters.AddWithValue("NewContactInfo", shulRequest.ContactInfo);
+                command.Parameters.AddWithValue("NewShachrisTime", shulRequest.ShachrisTime);
+                command.Parameters.AddWithValue("NewMinchaTime", shulRequest.MinchaTime);
+                command.Parameters.AddWithValue("NewMaarivTime", shulRequest.MaarivTime);
 
                 var result = command.ExecuteNonQuery();
                 return result > 0;
