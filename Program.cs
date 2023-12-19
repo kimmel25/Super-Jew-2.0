@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend;
+using Super_Jew_2._0.Backend.Database;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 using Super_Jew_2._0.Data;
@@ -19,14 +20,34 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shul.ShulName + " " + shul.Location);
             }
         }
-        
+
+        private static void GabbaiInittiateRequestTest()
+        {
+            Console.WriteLine("Testing gabbai initiation");
+
+            ShulRequest shulRequest = new ShulRequest();
+            shulRequest.RequestID = 4;
+            shulRequest.GabbaiID = 2;
+            shulRequest.ApprovalStatus = "Approved";
+            shulRequest.ShulName = "Young israel statne island";
+            shulRequest.Location = "staten island";
+            shulRequest.Denomination = "Modern Orthodox";
+            shulRequest.ContactInfo = "888-888-8888";
+            shulRequest.ShachrisTime = "9:00, and 10";
+            shulRequest.MinchaTime = "1pm ";
+            shulRequest.MaarivTime = "10pm";
+
+            ShulService.InitiateGabaiShulAddition(1, shulRequest);
+
+        }
+
         private static void GetUserShuls(string username, string password)
         {
             Console.WriteLine("Getting followed Shuls for user");
             User user1 = ShulService.GetFollowedShulsForUser(username, password);
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
-            
+
             List<Shul> user1Shuls = user1.FollowedShuls;
             foreach (var shul in user1Shuls)
             {
@@ -38,39 +59,39 @@ namespace Super_Jew_2._0
         {
             User user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
-            
-            
+
+
             Console.WriteLine("Attempting to Add Shul from User!");
             bool addShulToUserProfile = ShulService.AddShulToUserProfile(user1.UserID, shulId);
             Console.WriteLine("Added Shul To User Profile: " + addShulToUserProfile);
-            
+
             //update user one
             user1 = ShulService.GetFollowedShulsForUser(username, password);
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
-            
+
             user1Shuls = user1.FollowedShuls;
             foreach (var shul in user1Shuls)
             {
                 Console.WriteLine(shul.ShulName + " " + shul.Location + " " + "Shacharis Time: " + shul.ShachrisTime);
             }
         }
-        
+
         private static void removeShulFromUserProfile(string username, string password, int shulId)
         {
             User user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
-            
-            
+
+
             Console.WriteLine("Attempting to Remove Shul from User!");
             bool addShulToUserProfile = ShulService.RemoveShulFromUserProfile(user1.UserID, shulId);
             Console.WriteLine("Removed Shul To User Profile: " + addShulToUserProfile);
-            
+
             //update user one
             user1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
-            
+
             user1Shuls = user1.FollowedShuls;
             foreach (var shul in user1Shuls)
             {
@@ -92,9 +113,9 @@ namespace Super_Jew_2._0
                 MinchaTime = "3:30pm, 6pm, 15 minutes after zman",
                 MaarivTime = "15 minutes before zman, 430pm, 330pm"
             };
-            
-            
-            
+
+
+
         }
 
         private static void runRequestSimulation()
@@ -102,9 +123,11 @@ namespace Super_Jew_2._0
             //GetUserShuls("ykatz1", "yk123");
             //addShulToUserProfile("ykatz1", "yk123",00003);
         }
-        
+
         public static void Main(string[] args)
         {
+
+
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
@@ -113,7 +136,7 @@ namespace Super_Jew_2._0
             */
 
             //runRequestSimulation();
-            
+
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
@@ -122,8 +145,8 @@ namespace Super_Jew_2._0
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddTransient<Class>();
-           
-            builder.Services.AddTransient<ShulService>(); 
+
+            builder.Services.AddTransient<ShulService>();
 
 
             var app = builder.Build();
