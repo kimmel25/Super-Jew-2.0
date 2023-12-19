@@ -1,9 +1,13 @@
 @page "/login"
 @using Super_Jew_2._0.Models
 @using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
 
 @inject ShulService ShulService
 @inject NavigationManager NavigationManager
+@inject UserService UserService
 
 <h3>Login</h3>
 
@@ -23,23 +27,10 @@
         Console.WriteLine("out of shul login method");
         if (user != null)
         {
-            Console.WriteLine("ACCOUNT TYPE: " + user.AccountType.ToUpper());
-            switch (user.AccountType.ToUpper()) // Make sure to match the case exactly
-            {
-                case "ADMIN":
-                    NavigationManager.NavigateTo("/admin-dashboard");
-                    break;
-                case "GABBAI":
-                    NavigationManager.NavigateTo("/gabai-dashboard");
-                    break;
-                case "USER":
-                    Console.WriteLine("we got a user!");
-                    NavigationManager.NavigateTo("/user-dashboard");
-                    break;
-                default:
-    // Handle unknown account type or show an error message
-                    break;
-            }
+            UserService.SetCurrentUser(user);
+
+    // Redirect the user to the home page or a dashboard
+            NavigationManager.NavigateTo("/");
         }
         else
         {
