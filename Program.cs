@@ -21,6 +21,14 @@ namespace Super_Jew_2._0
             }
         }
 
+        //works
+        private static void RemoveGabbaiPendingShul(int shulRequest)
+        {
+            Console.WriteLine("Testign ClearGabbaiAddedShul()");
+            ShulService.ClearGabbaiShulAdditionStatus(shulRequest);
+        }
+
+        //works
         private static void GabbaiInittiateRequestTest()
         {
             Console.WriteLine("Testing gabbai initiation");

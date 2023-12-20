@@ -17,8 +17,8 @@ namespace Super_Jew_2._0.Backend.Services
         }
 
 
-        
-        
+
+
         public static List<Shul> GetAllAvailableShuls() //in future add zipcode option
         {
             return DataBaseConnectivity.GetAvailableShuls();
@@ -31,7 +31,7 @@ namespace Super_Jew_2._0.Backend.Services
             //return DataBaseConnectivity.GetUserByPassword(userId, password);
             return _dummyData.GetUserByPassword(userId, password);
 
-                  }
+        }
 
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
@@ -58,6 +58,7 @@ namespace Super_Jew_2._0.Backend.Services
 
         //gabbai clicks on page to submit a request to add a shul
         //Param - ShulRequest - a request id, gabaiid, and shul info
+        // !! tested and works !!
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
@@ -67,8 +68,10 @@ namespace Super_Jew_2._0.Backend.Services
 
         //This method is for a Gabai, where after he see's the the Admin's response to
         //his Shul addition request, he can delete that "Request" off his page. 
-        public static bool ClearGabbaiShulAdditionStatus(int gabbaiId, int shulAdditionRequestId)
+        // !! tested and works. removes row from database !!
+        public static bool ClearGabbaiShulAdditionStatus(int requestID)
         {
+            DataBaseConnectivity.ClearGabbaiAddedShul(requestID);
             return true;
         }
 
