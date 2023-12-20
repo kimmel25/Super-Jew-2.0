@@ -29,12 +29,12 @@ namespace Super_Jew_2._0
         }
 
         //works
-        private static void GabbaiInittiateRequestTest()
+        private static void GabbaiInittiateRequestTest(int requestID)
         {
             Console.WriteLine("Testing gabbai initiation");
 
             ShulRequest shulRequest = new ShulRequest();
-            shulRequest.RequestID = 4;
+            shulRequest.RequestID = requestID;
             shulRequest.GabbaiID = 2;
             shulRequest.ApprovalStatus = "Approved";
             shulRequest.ShulName = "Young israel statne island";
@@ -135,7 +135,7 @@ namespace Super_Jew_2._0
         public static void Main(string[] args)
         {
 
-
+            RemoveGabbaiPendingShul(4);
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
