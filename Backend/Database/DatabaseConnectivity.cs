@@ -143,5 +143,21 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
+
+        public static bool ClearGabbaiAddedShul(int requestID)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("ClearGabbaiAddedShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("requestID", requestID);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
     }
 }
