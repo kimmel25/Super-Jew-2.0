@@ -28,6 +28,7 @@
         if (user != null)
         {
             UserService.SetCurrentUser(user);
+            UserService.SetPassword(loginModel.Password);
 
     // Redirect the user to the home page or a dashboard
             NavigationManager.NavigateTo("/");
