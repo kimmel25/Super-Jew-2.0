@@ -5,6 +5,7 @@
 {
     public class DummyData
     {
+
         private static List<Shul> allShuls = new List<Shul>();
         private static List<User> users = new List<User>();
         private string[] userPasswords;
@@ -17,6 +18,17 @@
         }
 
         private void PopulateUsers()
+
+        private static List<Shul> allShuls;
+        private static User[] users;
+
+        public static void AddVerifiedShul(Shul newShul)
+        {
+            allShuls.Add(newShul);
+        }
+        
+        public static List<Shul> GetAllAvailableShuls()
+
         {
              var user1 = new User
             {
@@ -137,6 +149,10 @@
                 MinchaTime = "1:45pm, ,2pm, 3pm, 15 minutes before zman",
                 MaarivTime = "Zman, 8pm, 9pm, 10:01pm, 11pm"
             };
+
+
+
+            allShuls = new List<Shul>();
             
             allShuls.Add(shul1);
             allShuls.Add(shul2);
@@ -232,6 +248,7 @@
         {
             if (shulAdditionRequestId == gabaiShulAdditionRequests.Requests[i].RequestID)
             {
+
                 //remove = i;
                 gabaiShulAdditionRequests.Requests.RemoveAt(i);
             }
@@ -250,6 +267,23 @@
         for (int i = 0; i < adminShulAdditionRequests.Requests.Count; i++)
         {
             if (shulAdditionRequestId == adminShulAdditionRequests.Requests[i].RequestID)
+
+                UserID = 00005,
+                Username = "dWeiss22",
+                DateOfBirth = "1982-12-17",
+                ReligiousDenomination = "Chasidish, Satmar",
+                AccountType = "Gabai"
+            };
+
+            user4.FollowedShuls.Add(allShuls[0]);
+            user4.FollowedShuls.Add(allShuls[1]);
+
+            string[] userPasswords = { "yk123", "mgreen123", "rLevi123", "sGold123", "dWeiss123" };
+
+            users = new []{ user1, user2, user3, user4, user5 };
+
+            for (int i = 0; i < users.Length; i++)
+
             {
                 //remove = i;
                 if (decision == "approved")
@@ -275,6 +309,49 @@
         }
         return true;
     }
+
+        public static bool AddShulToUserProfile(int userId, int shulId)
+        {
+            for (int i = 0; i < users.Length; i++)
+            {
+                if (users[i].UserID == userId)
+                {
+                    for (int j = 0; j < allShuls.Count; j++)
+                    {
+                        if (allShuls[j].ShulID == shulId)
+                        {
+                            users[i].FollowedShuls.Add(allShuls[j]);
+                            Console.WriteLine("IN THE AddShulToUserProfile Dummy Method and ADDED SHUL!");
+                            for (int k = 0; k < users[i].FollowedShuls.Count; k++)
+                            {
+                                Console.Write("IN THE ADD SHUL METHOD TEST: " + users[i].FollowedShuls[k].ShulName + ", ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        
+        public static bool RemoveShulFromUserProfile(int userId, int shulId)
+        {
+            for (int i = 0; i < users.Length; i++)
+            {
+                if (users[i].UserID == userId)
+                {
+                    for (int j = 0; j < allShuls.Count; j++)
+                    {
+                        if (allShuls[j].ShulID == shulId)
+                        {
+                            users[i].FollowedShuls.Remove(allShuls[j]);
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
 
     }
 }
