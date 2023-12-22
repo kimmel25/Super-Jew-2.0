@@ -2,59 +2,60 @@
 
 @inject NavigationManager NavigationManager
 @using Super_Jew_2._0.Backend.Services
-@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@using Super_Jew_2._0.Backend.Database
 @using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.ShulServices;
+
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
 
-@if (shulList != null)
+@if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
     <div class="container">
         <div class="row">
             @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
+                    <!-- Pass the shul object to the EditableShulCard component -->
                     <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" />
                 </div>
             }
         </div>
     </div>
 }
+else
+{
+    <p>No shuls available to display.</p>
+    // A message when no shuls are available
+}
+
 
 @code {
-    private List<Shul> shulList = new List<Shul>(); 
-    private User user;
+    ShulService ShulService = new ShulService();
+    List<Shul> shulList = new List<Shul>(); 
+    User user;
+    UserService UserService = new UserService();
+    User currentuser = UserService.CurrentUser; 
+
+
     //private String password = "password123";
     //private String username = "john_doe";
 
     protected override void OnInitialized()
     {
-        /*
-        user = ShulService.GetFollowedShulsForUser(username, password);
-        if (user?.FollowedShuls != null)
-        {
-            shulList = user.FollowedShuls;
-        }
-        */
 
+
+        shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
+
+
+        if (shulList.Count == 0)
+        {
+            throw new InvalidOperationException("Shul List is empty"); 
+        }
 
         // Hardcoding 5 fake shuls
-        for (int i = 1; i <= 5; i++)
-        {
-            shulList.Add(new Shul
-                {
-                    ShulName = $"Shul {i}",
-                    Location = $"Random Address for Shul {i}",
-                    ContactInfo = $"Random ## for Shul {i}",
-                    ShachrisTime = $"time.00000", 
-                    MinchaTime = $"time.0000 ",
-                    MaarivTime = $"time.0000"
-                 
-
-                    // Add other properties as needed
-                });
-        }
     }
+    
 
     private void HandleSubmit(Shul updatedShul)
     {
@@ -62,4 +63,6 @@
 
         // Code to handle the submission of the updated shul information
     }
+
+
 }
