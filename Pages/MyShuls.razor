@@ -4,6 +4,9 @@
 @using Super_Jew_2._0.Backend.Services
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 @using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.ShulServices
+@inject UserService UserService
+
 
 
 <h3><span class="myshuls-title">MyShuls</span>&trade;</h3>
@@ -29,30 +32,24 @@
 
 
 @code {
-   
-    private List<string> shulCards;
     private List<Shul> shulList; 
     private string expandedShulName;
-    private User user;
-    private String password = "password123";
-    private String username = "john_doe"; 
-    
-    
-    private User GetUser() => user = ShulService.GetFollowedShulsForUser(username, password);
 
-    
-    private void NavigateToAddShuls()
+
+    private async Task RefreshUserShuls()
     {
-        NavigationManager.NavigateTo("/addshuls"); 
+        var currentUser = UserService.CurrentUser; 
+        if (currentUser != null)
+        {
+            currentUser = ShulService.GetFollowedShulsForUser(currentUser.Username, UserService.UserPassword);
+            UserService.SetCurrentUser(currentUser); // Update the current user in UserService
+            shulList = currentUser.FollowedShuls;
+        }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnParametersSetAsync()
     {
-        user = GetUser(); 
-        if (user?.FollowedShuls != null)
-        {
-            shulList = user.FollowedShuls; 
-        }
+        await RefreshUserShuls();
     }
 
     private void HandleCardClick(string shulName)
@@ -64,4 +61,11 @@
     {
         return shulName == expandedShulName;
     }
+    
+    private void NavigateToAddShuls()
+    {
+        NavigationManager.NavigateTo("/addshuls"); 
+    }
 }
+
+
