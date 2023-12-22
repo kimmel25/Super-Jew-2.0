@@ -74,11 +74,25 @@
             <!-- links based on user role -->
             @if (UserService.CurrentUser?.AccountType == "ADMIN")
             {
-                <!-- Admin links -->
+                <NavLink class="nav-link" href="AddShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
+                <!-- Add in Rest of gabbai pages -->
             }
             @if (UserService.CurrentUser?.AccountType == "GABBAI")
             {
-                <!-- Gabai links -->
+                <NavLink class="nav-link" href="MyShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyShuls&trade;
+                </NavLink>
+                
+                <NavLink class="nav-link" href="AddShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
+                <NavLink class="nav-link" href="MyUpdates">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyUpdates
+                </NavLink>
             }
             @if (UserService.CurrentUser?.AccountType == "USER")
             {
