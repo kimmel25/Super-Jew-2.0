@@ -88,9 +88,10 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
         }
 
-        public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
+        public static bool AdminShulSubmitionDecision(int requestID, string decision)
         {
-            return true;
+
+            return DataBaseConnectivity.AdminDecisionOnShul(requestID, decision);
         }
     }
 }

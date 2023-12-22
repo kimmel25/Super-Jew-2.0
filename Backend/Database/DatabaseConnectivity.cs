@@ -236,6 +236,23 @@ namespace Super_Jew_2._0.Backend.Database
             return shulsToReview;
         }
 
+        public static bool AdminDecisionOnShul(int requestID, string decision)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("MakeAdminDecision", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("NewRequestID", requestID);
+                command.Parameters.AddWithValue("NewApprovalStatus", decision);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
+
 
 
 
