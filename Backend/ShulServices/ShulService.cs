@@ -78,9 +78,15 @@ namespace Super_Jew_2._0.Backend.Services
         //Methods for Admins Only!
 
         //sends back all shul requests made by gabbai 
-        public static AdminReview GetGabbaiRequestsSubmissions()
+        public static AdminReview GetGabbaiRequestsSubmissionsForAdmin()
         {
-            return DataBaseConnectivity.GetGabbaiRequests();
+            return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
+        }
+
+        //sends back all shul requests for a specified gabbai
+        public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
+        {
+            return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
         }
 
         public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
