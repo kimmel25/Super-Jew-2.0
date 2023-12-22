@@ -4,14 +4,17 @@ public class ShulRequest
 {
     //Data for Specific request by Gabbai
     public int RequestID { get; set; }
+
+    //from GabbaiRequests
     public int GabbaiID { get; set; } //the Gabbai that made this request
+    //from GabbaiRequests
     public string ApprovalStatus { get; set; }
-    
+
     public string ShulName { get; set; }
     public string Location { get; set; }
     public string Denomination { get; set; }
     public string ContactInfo { get; set; }
-    
+
     public string ShachrisTime { get; set; }
     public string MinchaTime { get; set; }
     public string MaarivTime { get; set; }
