@@ -20,7 +20,7 @@ namespace Super_Jew_2._0
         private static void testGetGabbaiRequests()
         {
             Console.WriteLine("TESTING GETTING GABBAI REQUESTS");
-            var adminReview = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+            var adminReview = ShulService.GetGabbaiRequestsSubmissions();
 
 
             Console.WriteLine("Shul Requests:");

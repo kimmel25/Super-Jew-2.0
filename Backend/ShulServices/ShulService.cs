@@ -68,19 +68,14 @@ namespace Super_Jew_2._0.Backend.Services
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
-            DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
 
-            return _shulRequestDummy.GetGabaiShulAdditionRequests();
+
+            return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
         }
 
         private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
 
-        public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
-        {
-            _shulRequestDummy.InitiateGabaiShulAddition(gabaiId, shulRequest);
 
-            return true;
-        }
 
         //This method is for a Gabai, where after he see's the the Admin's response to
         //his Shul addition request, he can delete that "Request" off his page. 
