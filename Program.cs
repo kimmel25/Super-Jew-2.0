@@ -20,7 +20,7 @@ namespace Super_Jew_2._0
         private static void testGetGabbaiRequests()
         {
             Console.WriteLine("TESTING GETTING GABBAI REQUESTS");
-            var adminReview = ShulService.GetGabbaiRequestsSubmissions();
+            var adminReview = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
 
 
             Console.WriteLine("Shul Requests:");
@@ -159,17 +159,17 @@ namespace Super_Jew_2._0
 
         }
 
-        private static void runRequestSimulation()
-        {
-            //GetUserShuls("ykatz1", "yk123");
-            //addShulToUserProfile("ykatz1", "yk123",00003);
-        }
+        //private static void runRequestSimulation()
+        //{
+        //    //GetUserShuls("ykatz1", "yk123");
+        //    //addShulToUserProfile("ykatz1", "yk123",00003);
+        //}
 
 
         private static void runRequestSimulation()
         {
             GetUserShuls("ykatz1", "yk123");
-            addShulToUserProfile("ykatz1", "yk123",00003);
+            addShulToUserProfile("ykatz1", "yk123", 00003);
         }
 
         public static void Main(string[] args)
@@ -191,15 +191,15 @@ namespace Super_Jew_2._0
             User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
             Console.WriteLine(u2.AccountType); 
             */
-            
+
             User u3 = ShulService.GetFollowedShulsForUser("dinkyp", "pinky1");
             Console.WriteLine(u3.Username);
-            
-            
+
+
 
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
-            
+
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
@@ -209,13 +209,13 @@ namespace Super_Jew_2._0
 
             builder.Services.AddTransient<ShulService>();
 
-            
+
             builder.Services.AddTransient<ILoginService, ShulLoginService>();
-            
+
             builder.Services.AddScoped<UserService>();
 
-            builder.Services.AddTransient<ShulService>(); 
-            
+            builder.Services.AddTransient<ShulService>();
+
 
 
 
@@ -229,7 +229,7 @@ namespace Super_Jew_2._0
                 app.UseHsts();
             }
             app.UseRouting();
-            
+
 
             app.UseHttpsRedirection();
 

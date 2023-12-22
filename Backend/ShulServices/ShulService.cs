@@ -1,5 +1,5 @@
 using Super_Jew_2._0.Backend.Database;
-using Super_Jew_2._0.Backend.DummyData;
+//using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 
@@ -8,13 +8,13 @@ namespace Super_Jew_2._0.Backend.Services
     public class ShulService
     {
 
-        private static DummyData.DummyData _dummyData;
+        //private static DummyData.DummyData _dummyData;
 
 
-        public ShulService()
-        {
-            _dummyData = new DummyData.DummyData();
-        }
+        //public ShulService()
+        //{
+        //    _dummyData = new DummyData.DummyData();
+        //}
 
 
 
@@ -73,7 +73,7 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
         }
 
-        private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
+        //private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
 
 
 
