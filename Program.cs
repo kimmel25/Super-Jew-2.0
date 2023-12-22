@@ -166,7 +166,17 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
+            
+            Console.WriteLine("GABBI SHUL GET TEST: ");
+            List<Shul> gabbaiShuls = ShulService.GetGabbaisShuls("4");
 
+            foreach (var shul in gabbaiShuls)
+            {
+                Console.WriteLine(shul.ShulName);
+            }
+            
+            
+            
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
@@ -176,18 +186,18 @@ namespace Super_Jew_2._0
 
             //runRequestSimulation();
 
-
+/*
             User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(u1.AccountType);
             /*
             User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
             Console.WriteLine(u2.AccountType); 
-            */
+            
             
             User u3 = ShulService.GetFollowedShulsForUser("dinkyp", "pinky1");
             Console.WriteLine(u3.Username);
             
-            
+            */
 
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

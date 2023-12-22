@@ -198,5 +198,37 @@ namespace Super_Jew_2._0.Backend.Database
 
             return shulsToReview;
         }
+        
+        public static List<Shul> GetGabbaiShuls(string userId)
+        {
+            List<Shul> gabbaiShuls = new List<Shul>();
+            
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetGabbaiShuls", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("userId", userId);
+
+                connection.Open();
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var shulToAdd = new Shul
+                    {
+                        ShulName = reader.GetString("Name"),
+                        Location = reader.GetString("Location"),
+                        Denomination = reader.GetString("Denomination"),
+                        ContactInfo = reader.GetString("ContactInfo"),
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime"),
+                    };
+
+                    gabbaiShuls.Add(shulToAdd);
+                }
+            }
+
+            return gabbaiShuls;
+        }
     }
 }

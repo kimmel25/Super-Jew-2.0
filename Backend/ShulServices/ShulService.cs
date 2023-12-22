@@ -43,6 +43,12 @@ namespace Super_Jew_2._0.Backend.Services
             //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
         }
         
+        public static List<Shul> GetGabbaisShuls(string userId) //in future add zipcode option
+        {
+            return DataBaseConnectivity.GetGabbaiShuls(userId);
+            //return _dummyData.GetAllAvailableShuls();
+        }
+        
         //Methods for Gabbai's Only!
 
         //query table by gabbai id
