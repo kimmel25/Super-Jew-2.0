@@ -66,6 +66,7 @@ namespace Super_Jew_2._0.Backend.Services
             return true;
         }
 
+        
         //This method is for a Gabai, where after he see's the the Admin's response to
         //his Shul addition request, he can delete that "Request" off his page. 
         // !! tested and works. removes row from database !!
@@ -73,6 +74,16 @@ namespace Super_Jew_2._0.Backend.Services
         {
             DataBaseConnectivity.ClearGabbaiAddedShul(requestID);
             return true;
+        }
+        
+        /**
+         * @param The Shul objct that was updated by the Gabbai. Method sends it to the backend for the DB to update it.
+         * @return bool true is successful  
+         */
+
+        public static bool UpdateShulDetails(Shul shulToUpdate)
+        {
+            return DataBaseConnectivity.UpdateShulDetails(shulToUpdate);
         }
 
         //Methods for Admins Only!

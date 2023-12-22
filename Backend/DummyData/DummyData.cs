@@ -1,5 +1,6 @@
 ﻿
-﻿using Super_Jew_2._0.Backend.ShulRequests;
+﻿using Super_Jew_2._0.Backend.Services;
+ using Super_Jew_2._0.Backend.ShulRequests;
 
  namespace Super_Jew_2._0.Backend.DummyData
 {
@@ -86,6 +87,26 @@
             users.Add(user3);
             users.Add(user4);
             users.Add(user5);
+        }
+
+        public static bool UpdateShul()
+        {
+            var shul1 = new Shul
+            {
+                ShulID = 00001,
+                ShulName = "Beth Abraham",
+                Location = "396 New Bridge Rd, Bergenfield, NJ 07621",
+                Denomination = "Orthodox",
+                ContactInfo = "Yechezkel Dinkinpinky, 201-345-2920",
+                ShachrisTime = "7am, 8am, 845am, 915am",
+                MinchaTime = "1:45pm, 3pm, 15 minutes before zman",
+                MaarivTime = "Zman, 845pm, 10pm"
+            };
+
+            return ShulService.UpdateShulDetails(shul1);
+            
+
+
         }
 
         private void PopulateShuls()
