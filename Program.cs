@@ -12,6 +12,33 @@ namespace Super_Jew_2._0
 {
     public class Program
     {
+
+        private static void testGetGabbaiRequests()
+        {
+            Console.WriteLine("TESTING GETTING GABBAI REQUESTS");
+            var adminReview = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+
+
+            Console.WriteLine("Shul Requests:");
+
+            foreach (var shulRequest in adminReview.Requests)
+            {
+                Console.WriteLine($"RequestID: {shulRequest.RequestID}");
+                Console.WriteLine($"GabbaiID: {shulRequest.GabbaiID}");
+                Console.WriteLine($"ApprovalStatus: {shulRequest.ApprovalStatus}");
+                Console.WriteLine($"ShulName: {shulRequest.ShulName}");
+                Console.WriteLine($"Location: {shulRequest.Location}");
+                Console.WriteLine($"Denomination: {shulRequest.Denomination}");
+                Console.WriteLine($"ContactInfo: {shulRequest.ContactInfo}");
+                Console.WriteLine($"ShachrisTime: {shulRequest.ShachrisTime}");
+                Console.WriteLine($"MinchaTime: {shulRequest.MinchaTime}");
+                Console.WriteLine($"MaarivTime: {shulRequest.MaarivTime}");
+                Console.WriteLine();
+            }
+
+        }
+
+
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
