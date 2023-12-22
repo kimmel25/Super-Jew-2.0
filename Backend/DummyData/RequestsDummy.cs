@@ -68,7 +68,7 @@ public class ShulRequestDummy
                         MaarivTime = adminShulAdditionRequests.Requests[i].MaarivTime
                     };
 
-                    DummyData.AddVerifiedShul(newShul);
+                    //DummyData.AddVerifiedShul(newShul);
                 }
                 
                 adminShulAdditionRequests.Requests[i].ApprovalStatus = decision;

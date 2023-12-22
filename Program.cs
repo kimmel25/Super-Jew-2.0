@@ -42,8 +42,7 @@ namespace Super_Jew_2._0
 
         }
 
-
-
+        
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
@@ -158,14 +157,7 @@ namespace Super_Jew_2._0
 
 
         }
-
-        private static void runRequestSimulation()
-        {
-            //GetUserShuls("ykatz1", "yk123");
-            //addShulToUserProfile("ykatz1", "yk123",00003);
-        }
-
-
+        
         private static void runRequestSimulation()
         {
             GetUserShuls("ykatz1", "yk123");

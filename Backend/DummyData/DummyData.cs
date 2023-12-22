@@ -5,7 +5,7 @@
 {
     public class DummyData
     {
-
+/*
         private static List<Shul> allShuls = new List<Shul>();
         private static List<User> users = new List<User>();
         private string[] userPasswords;
@@ -26,7 +26,7 @@
         {
             allShuls.Add(newShul);
         }
-        
+
         public static List<Shul> GetAllAvailableShuls()
 
         {
@@ -92,7 +92,7 @@
 
             userPasswords = new []{ "yk123", "mgreen123", "rLevi123", "sGold123", "dWeiss123" };
 
-            
+
             users.Add(user1);
             users.Add(user2);
             users.Add(user3);
@@ -153,14 +153,14 @@
 
 
             allShuls = new List<Shul>();
-            
+
             allShuls.Add(shul1);
             allShuls.Add(shul2);
             allShuls.Add(shul3);
             allShuls.Add(shul4);
 
         }
-        
+
         public List<Shul> GetAllAvailableShuls()
         {
             return allShuls;
@@ -206,7 +206,7 @@
 
             return true;
         }
-        
+
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
             for (int i = 0; i < users.Count; i++)
@@ -225,7 +225,7 @@
 
             return true;
         }
-        
+
          public GabbaiRequests GetGabaiShulAdditionRequests()
     {
        return gabaiShulAdditionRequests;
@@ -234,13 +234,13 @@
     public void InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
     {
         shulRequest.ApprovalStatus = "Awaiting Review";
-        
+
         gabaiShulAdditionRequests.GabbaiID = gabaiId;
         gabaiShulAdditionRequests.Requests.Add(shulRequest);
-        
+
         adminShulAdditionRequests.Requests.Add(shulRequest);
     }
-    
+
     public bool ClearGabbaiShulAdditionStatus(int gabbaiId, int shulAdditionRequestId)
     {
         //int remove;
@@ -255,13 +255,13 @@
         }
         return true;
     }
-        
+
     //Methods for Admins Only!
     public AdminReview GetGabbaiRequestsSubmissions()
     {
         return adminShulAdditionRequests;
     }
-        
+
     public bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
     {
         for (int i = 0; i < adminShulAdditionRequests.Requests.Count; i++)
@@ -302,7 +302,7 @@
 
                     AddVerifiedShul(newShul);
                 }
-                
+
                 adminShulAdditionRequests.Requests[i].ApprovalStatus = decision;
                 gabaiShulAdditionRequests.Requests[i] = adminShulAdditionRequests.Requests[i];
             }
@@ -333,7 +333,7 @@
 
             return true;
         }
-        
+
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
             for (int i = 0; i < users.Length; i++)
@@ -356,3 +356,6 @@
     }
 }
 
+*/
+    }
+}

@@ -121,7 +121,7 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //this should function similar to AddShulToUser. procedure is created. Needs to be tested
-        public static bool GetInitiatedGabbaiShul(ShulRequest shulRequest)
+        public static bool InitiateGabaiShulAddition(ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
@@ -188,8 +188,7 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
                     shulRequests.Add(pending);
-
-
+                    
                     shulsToReview = new AdminReview
                     {
                         Requests = shulRequests
@@ -199,11 +198,5 @@ namespace Super_Jew_2._0.Backend.Database
 
             return shulsToReview;
         }
-
-
-
-
-
-
     }
 }
