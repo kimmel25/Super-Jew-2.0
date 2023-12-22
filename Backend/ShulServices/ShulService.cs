@@ -74,8 +74,8 @@ namespace Super_Jew_2._0.Backend.Services
         }
 
         private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
-        
-        public static bool InitiateGabaiShulAddition(int gabaiId ,ShulRequest shulRequest)
+
+        public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             _shulRequestDummy.InitiateGabaiShulAddition(gabaiId, shulRequest);
 
@@ -106,13 +106,13 @@ namespace Super_Jew_2._0.Backend.Services
         public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
         {
 
-            return DataBaseConnectivity.GetGabbaiRequests();
+            return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
 
         }
 
         public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
         {
-
+            return true;
         }
     }
 }
