@@ -271,9 +271,9 @@ namespace Super_Jew_2._0.Backend.Database
             return shulsToReview;
         }
 
-        public static bool AdminDecisionOnShul(int requestID, string decision)
+        public static void AdminDecisionOnShul(int requestID, string decision)
         {
-            Shul shul;
+            Shul shul = new Shul();
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("MakeAdminDecision", connection))
             {
@@ -287,7 +287,6 @@ namespace Super_Jew_2._0.Backend.Database
                 {
                     using (var commandTwo = new MySqlCommand("GetGabbaiShulByRequestID", connection))
                     {
-                        connection.Open();
                         commandTwo.CommandType = CommandType.StoredProcedure;
 
                         commandTwo.Parameters.AddWithValue("inputRequestID", requestID);
@@ -297,7 +296,6 @@ namespace Super_Jew_2._0.Backend.Database
                         {
                             shul = new Shul
                             {
-                                ShulID = reader.GetInt32("ShulID"),
                                 ShulName = reader.GetString("Name"),
                                 Location = reader.GetString("Location"),
                                 Denomination = reader.GetString("Denomination"),
@@ -306,16 +304,18 @@ namespace Super_Jew_2._0.Backend.Database
                                 MinchaTime = reader.GetString("MinchaTime"),
                                 MaarivTime = reader.GetString("MaarivTime"),
                             };
-                            AddShul(shul);
                         }
 
                     }
 
                 }
-                var result = command.ExecuteNonQuery();
-                return result > 0;
 
+                //var result = command.ExecuteNonQuery();
+                //return result > 0;
+
+                command.ExecuteNonQuery();
             }
+            AddShul(shul);
         }
 
         public static bool AddShul(Shul shul)
