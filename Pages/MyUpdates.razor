@@ -32,10 +32,10 @@ else
 
 
 @code {
-    ShulService ShulService = new ShulService();
+    //ShulService ShulService = new ShulService();
     List<Shul> shulList = new List<Shul>(); 
     User user;
-    UserService UserService = new UserService();
+    //UserService UserService = new UserService();
     User currentuser = UserService.CurrentUser; 
 
 
@@ -47,15 +47,12 @@ else
 
 
         shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
-        
-        
         if (shulList.Count == 0)
         {
             //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
             throw new InvalidOperationException("Shul List is empty"); 
         }
-
-        // Hardcoding 5 fake shuls
+        
     }
     
 
