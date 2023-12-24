@@ -43,8 +43,7 @@ namespace Super_Jew_2._0
 
         }
 
-
-
+        
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
@@ -159,14 +158,6 @@ namespace Super_Jew_2._0
 
 
         }
-
-        //private static void runRequestSimulation()
-        //{
-        //    //GetUserShuls("ykatz1", "yk123");
-        //    //addShulToUserProfile("ykatz1", "yk123",00003);
-        //}
-
-
         private static void runRequestSimulation()
         {
             GetUserShuls("ykatz1", "yk123");
@@ -175,9 +166,6 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
-            //var test = DummyData.UpdateShul();
-            //Console.WriteLine(test);
-            RemoveGabbaiPendingShul(4);
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
@@ -187,18 +175,12 @@ namespace Super_Jew_2._0
 
             //runRequestSimulation();
 
-
+/*
             User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(u1.AccountType);
             /*
             User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
             Console.WriteLine(u2.AccountType); 
-            */
-
-            User u3 = ShulService.GetFollowedShulsForUser("dinkyp", "pinky1");
-            Console.WriteLine(u3.Username);
-
-
 
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

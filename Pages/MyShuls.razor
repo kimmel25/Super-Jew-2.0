@@ -30,7 +30,6 @@
 
 <button class="button-92" role="button" @onclick="NavigateToAddShuls">AddMore</button>
 
-
 @code {
     private List<Shul> shulList; 
     private string expandedShulName;
@@ -42,7 +41,7 @@
         if (currentUser != null)
         {
             currentUser = ShulService.GetFollowedShulsForUser(currentUser.Username, UserService.UserPassword);
-            UserService.SetCurrentUser(currentUser); // Update the current user in UserService
+            UserService.SetCurrentUser(currentUser); // Up
             shulList = currentUser.FollowedShuls;
         }
     }

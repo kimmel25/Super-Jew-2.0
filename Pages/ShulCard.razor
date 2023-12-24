@@ -1,14 +1,15 @@
 ﻿@using Super_Jew_2._0.Backend
 @using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 
 
 
 @code {
 
-    private User user;
-    private String password = "password123";
-    private String username = "john_doe";
+    //private User user;
+    //private String password = "password123";
+    //private static string username = UserService.CurrentUser.Username;
 
     [Parameter]
     public Shul CurrentShul { get; set; }
@@ -25,8 +26,9 @@
     }
     private void RemoveShul()
     {
-        user = ShulService.GetFollowedShulsForUser(username, password);
-        ShulService.RemoveShulFromUserProfile(user.UserID, CurrentShul.ShulID); 
+        //user = ShulService.GetFollowedShulsForUser(UserService.CurrentUser.Username, UserService.UserPassword);
+        ShulService.RemoveShulFromUserProfile(UserService.CurrentUser.UserID, CurrentShul.ShulID); 
+       // StateHasChanged();
     }
 }
 

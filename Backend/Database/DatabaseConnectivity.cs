@@ -125,7 +125,7 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //this should function similar to AddShulToUser. procedure is created. Needs to be tested
-        public static bool GetInitiatedGabbaiShul(ShulRequest shulRequest)
+        public static bool InitiateGabaiShulAddition(ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
@@ -259,8 +259,7 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
                     shulRequests.Add(pending);
-
-
+                    
                     shulsToReview = new AdminReview
                     {
                         Requests = shulRequests
@@ -270,7 +269,34 @@ namespace Super_Jew_2._0.Backend.Database
 
             return shulsToReview;
         }
+        
+        public static List<Shul> GetGabbaiShuls(string userId)
+        {
+            List<Shul> gabbaiShuls = new List<Shul>();
+            
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetGabbaiShuls", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("userId", userId);
 
+
+                connection.Open();
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var shulToAdd = new Shul
+                    {
+                        ShulName = reader.GetString("Name"),
+                        Location = reader.GetString("Location"),
+                        Denomination = reader.GetString("Denomination"),
+                        ContactInfo = reader.GetString("ContactInfo"),
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime"),
+                    };
+                }
+            }}
         public static void AdminDecisionOnShul(int requestID, string decision)
         {
             Shul shul = new Shul();
@@ -376,10 +402,11 @@ namespace Super_Jew_2._0.Backend.Database
         //}
 
 
+                    gabbaiShuls.Add(shulToAdd);
+                }
+            }
 
-
-
-
-
+            return gabbaiShuls;
+        }
     }
 }
