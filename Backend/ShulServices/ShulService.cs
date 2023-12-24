@@ -72,9 +72,9 @@ namespace Super_Jew_2._0.Backend.Services
 
             return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
         }
+        
 
         //private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
-
 
 
         //This method is for a Gabai, where after he see's the the Admin's response to
@@ -88,6 +88,16 @@ namespace Super_Jew_2._0.Backend.Services
 
             return true;
         }
+        
+        /**
+         * @param The Shul objct that was updated by the Gabbai. Method sends it to the backend for the DB to update it.
+         * @return bool true is successful  
+         */
+
+        public static bool UpdateShulDetails(Shul shulToUpdate)
+        {
+            return DataBaseConnectivity.UpdateShulDetails(shulToUpdate);
+        }
 
         //Methods for Admins Only!
 
@@ -95,19 +105,17 @@ namespace Super_Jew_2._0.Backend.Services
         public static AdminReview GetGabbaiRequestsSubmissionsForAdmin()
         {
             return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
-        }
 
-        //sends back all shul requests for a specified gabbai
+
         public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
         {
-
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
-
         }
 
-        public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
+        public static bool AdminShulSubmitionDecision(int requestID, string decision)
         {
-            return true;
+
+            return DataBaseConnectivity.AdminDecisionOnShul(requestID, decision);
         }
     }
 }

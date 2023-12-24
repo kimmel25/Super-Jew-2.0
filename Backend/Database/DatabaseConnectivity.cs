@@ -36,7 +36,7 @@ namespace Super_Jew_2._0.Backend.Database
                         AccountType = reader.GetString("AccountType")
                     };
 
-                    var shul = new Shul
+                    Shul? shul = new Shul
                     {
                         ShulID = reader.GetInt32("ShulID"),
                         ShulName = reader.GetString("Name"),
@@ -49,7 +49,10 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
 
-                    user.FollowedShuls.Add(shul);
+                    if (shul != null)
+                    {
+                        user.FollowedShuls.Add(shul);
+                    }
                 }
                 return user;
             }
@@ -159,6 +162,72 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
+        
+        /**
+         * Takes a Shul object and sends all of its fields that have just been updated by the Gabbai to the dataBase to
+         * update that shul in the Database
+         * @return bool true is successful 
+         */
+
+        public static bool UpdateShulDetails(Shul shulToUpdate)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("UpdateShulDetails", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("_ShulID", shulToUpdate.ShulID);
+                command.Parameters.AddWithValue("UpdatedName", shulToUpdate.ShulName);
+                command.Parameters.AddWithValue("UpdatedLocation", shulToUpdate.Location);
+                command.Parameters.AddWithValue("UpdatedDenomination", shulToUpdate.Denomination);
+                command.Parameters.AddWithValue("UpdatedContactInfo", shulToUpdate.ContactInfo);
+                command.Parameters.AddWithValue("UpdatedShachrisTime", shulToUpdate.ShachrisTime);
+                command.Parameters.AddWithValue("UpdatedMinchaTime", shulToUpdate.MinchaTime);
+                command.Parameters.AddWithValue("UpdatedMaarivTime", shulToUpdate.MaarivTime);
+
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
+
+        //for gabbai
+        public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
+        {
+            List<ShulRequest> shulRequests = new List<ShulRequest>();
+
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetGabbaiRequestsForGabbai", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("NewGabbaiID", gabbaiID);
+                connection.Open();
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var pending = new ShulRequest
+                    {
+                        RequestID = reader.GetInt32("RequestID"),
+                        ShulName = reader.GetString("Name"),
+                        Location = reader.GetString("Location"),
+                        Denomination = reader.GetString("Denomination"),
+                        ContactInfo = reader.GetString("ContactInfo"),
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime"),
+                    };
+
+                    shulRequests.Add(pending);
+
+
+
+                }
+            }
+
+            return shulRequests;
+        }
 
         //for gabbai
         public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
@@ -234,6 +303,23 @@ namespace Super_Jew_2._0.Backend.Database
             }
 
             return shulsToReview;
+        }
+
+        public static bool AdminDecisionOnShul(int requestID, string decision)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("MakeAdminDecision", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("NewRequestID", requestID);
+                command.Parameters.AddWithValue("NewApprovalStatus", decision);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
         }
 
 

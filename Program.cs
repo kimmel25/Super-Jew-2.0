@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend;
 using Super_Jew_2._0.Backend.Database;
+using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 using Super_Jew_2._0.Backend.ShulServices;
@@ -174,7 +175,9 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
-
+            //var test = DummyData.UpdateShul();
+            //Console.WriteLine(test);
+            RemoveGabbaiPendingShul(4);
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
