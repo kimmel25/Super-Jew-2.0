@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend.ShulRequests;
 
@@ -36,7 +37,7 @@ namespace Super_Jew_2._0.Backend.Database
                         AccountType = reader.GetString("AccountType")
                     };
 
-                    var shul = new Shul
+                    Shul? shul = new Shul
                     {
                         ShulID = reader.GetInt32("ShulID"),
                         ShulName = reader.GetString("Name"),
@@ -49,7 +50,10 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
 
-                    user.FollowedShuls.Add(shul);
+                    if (shul != null)
+                    {
+                        user.FollowedShuls.Add(shul);
+                    }
                 }
                 return user;
             }
@@ -160,14 +164,81 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
+        /**
+         * Takes a Shul object and sends all of its fields that have just been updated by the Gabbai to the dataBase to
+         * update that shul in the Database
+         * @return bool true is successful 
+         */
+
+        public static bool UpdateShulDetails(Shul shulToUpdate)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("UpdateShulDetails", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("_ShulID", shulToUpdate.ShulID);
+                command.Parameters.AddWithValue("UpdatedName", shulToUpdate.ShulName);
+                command.Parameters.AddWithValue("UpdatedLocation", shulToUpdate.Location);
+                command.Parameters.AddWithValue("UpdatedDenomination", shulToUpdate.Denomination);
+                command.Parameters.AddWithValue("UpdatedContactInfo", shulToUpdate.ContactInfo);
+                command.Parameters.AddWithValue("UpdatedShachrisTime", shulToUpdate.ShachrisTime);
+                command.Parameters.AddWithValue("UpdatedMinchaTime", shulToUpdate.MinchaTime);
+                command.Parameters.AddWithValue("UpdatedMaarivTime", shulToUpdate.MaarivTime);
+
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
+
+        //for gabbai
+        public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
+        {
+            List<ShulRequest> shulRequests = new List<ShulRequest>();
+
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetGabbaiRequestsForGabbai", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("NewGabbaiID", gabbaiID);
+                connection.Open();
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var pending = new ShulRequest
+                    {
+                        RequestID = reader.GetInt32("RequestID"),
+                        ShulName = reader.GetString("Name"),
+                        Location = reader.GetString("Location"),
+                        Denomination = reader.GetString("Denomination"),
+                        ContactInfo = reader.GetString("ContactInfo"),
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime"),
+                    };
+
+                    shulRequests.Add(pending);
+
+
+
+                }
+            }
+
+            return shulRequests;
+        }
+
+
         //for admin, gets all of the submitted shuls
-        public static AdminReview GetGabbaiRequests()
+        public static AdminReview GetGabbaiRequestsForAdmin()
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
             AdminReview shulsToReview = new AdminReview();
 
             using var connection = new MySqlConnection(ConnectionString);
-            using (var command = new MySqlCommand("GetGabbaiRequests", connection))
+            using (var command = new MySqlCommand("GetGabbaiRequestsForAdmin", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -209,6 +280,7 @@ namespace Super_Jew_2._0.Backend.Database
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("userId", userId);
 
+
                 connection.Open();
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
@@ -223,6 +295,112 @@ namespace Super_Jew_2._0.Backend.Database
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
                     };
+                }
+            }}
+        public static void AdminDecisionOnShul(int requestID, string decision)
+        {
+            Shul shul = new Shul();
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("MakeAdminDecision", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("NewRequestID", requestID);
+                command.Parameters.AddWithValue("NewApprovalStatus", decision);
+
+                if (decision == "Approved")
+                {
+                    using (var commandTwo = new MySqlCommand("GetGabbaiShulByRequestID", connection))
+                    {
+                        commandTwo.CommandType = CommandType.StoredProcedure;
+
+                        commandTwo.Parameters.AddWithValue("inputRequestID", requestID);
+
+                        using var reader = commandTwo.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            shul = new Shul
+                            {
+                                ShulName = reader.GetString("Name"),
+                                Location = reader.GetString("Location"),
+                                Denomination = reader.GetString("Denomination"),
+                                ContactInfo = reader.GetString("ContactInfo"),
+                                ShachrisTime = reader.GetString("ShachrisTime"),
+                                MinchaTime = reader.GetString("MinchaTime"),
+                                MaarivTime = reader.GetString("MaarivTime"),
+                            };
+                        }
+
+                    }
+
+                }
+
+                //var result = command.ExecuteNonQuery();
+                //return result > 0;
+
+                command.ExecuteNonQuery();
+            }
+            AddShul(shul);
+        }
+
+        public static bool AddShul(Shul shul)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("AddShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("inputShulID", shul.ShulID);
+                command.Parameters.AddWithValue("inputName", shul.ShulName);
+                command.Parameters.AddWithValue("inputLocation", shul.Location);
+                command.Parameters.AddWithValue("inputDenomination", shul.Denomination);
+                command.Parameters.AddWithValue("inputContactInfo", shul.ContactInfo);
+                command.Parameters.AddWithValue("inputShachrisTime", shul.ShachrisTime);
+                command.Parameters.AddWithValue("inputMinchaTime", shul.MinchaTime);
+                command.Parameters.AddWithValue("inputMaarivTime", shul.MaarivTime);
+
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
+
+        //public static Shul GetShulByID(int shulID)
+        //{
+        //    var shul = new Shul();
+        //    using var connection = new MySqlConnection(ConnectionString);
+        //    using (var command = new MySqlCommand("GetShulByID", connection))
+        //    {
+        //        command.CommandType = CommandType.StoredProcedure;
+        //        command.Parameters.AddWithValue("inputShulID", shulID);
+
+        //        connection.Open();
+        //        using var reader = command.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            shul = new Shul
+        //            {
+        //                ShulID = reader.GetInt32("ShulID"),
+        //                ShulName = reader.GetString("Name"),
+        //                Location = reader.GetString("Location"),
+        //                Denomination = reader.GetString("Denomination"),
+        //                ContactInfo = reader.GetString("ContactInfo"),
+        //                ShachrisTime = reader.GetString("ShachrisTime"),
+        //                MinchaTime = reader.GetString("MinchaTime"),
+        //                MaarivTime = reader.GetString("MaarivTime"),
+
+        //            };
+
+
+        //        }
+
+        //        return shul;
+        //    }
+        //}
+
 
                     gabbaiShuls.Add(shulToAdd);
                 }

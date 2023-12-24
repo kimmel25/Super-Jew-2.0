@@ -1,5 +1,5 @@
 using Super_Jew_2._0.Backend.Database;
-using Super_Jew_2._0.Backend.DummyData;
+//using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 
@@ -8,13 +8,13 @@ namespace Super_Jew_2._0.Backend.Services
     public class ShulService
     {
 
-        private static DummyData.DummyData _dummyData;
+        //private static DummyData.DummyData _dummyData;
 
 
-        public ShulService()
-        {
-            _dummyData = new DummyData.DummyData();
-        }
+        //public ShulService()
+        //{
+        //    _dummyData = new DummyData.DummyData();
+        //}
 
 
 
@@ -62,9 +62,15 @@ namespace Super_Jew_2._0.Backend.Services
         // !! tested and works !!
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
-            return DataBaseConnectivity.InitiateGabaiShulAddition(shulRequest);;
+            //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
+
+
+            return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
         }
-        
+
+
+        //private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
+
 
         //This method is for a Gabai, where after he see's the the Admin's response to
         //his Shul addition request, he can delete that "Request" off his page. 
@@ -74,17 +80,31 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.ClearGabbaiAddedShul(requestID);
         }
 
+        /**
+         * @param The Shul objct that was updated by the Gabbai. Method sends it to the backend for the DB to update it.
+         * @return bool true is successful  
+         */
+
+        public static bool UpdateShulDetails(Shul shulToUpdate)
+        {
+            return DataBaseConnectivity.UpdateShulDetails(shulToUpdate);
+        }
+
         //Methods for Admins Only!
 
         //sends back all shul requests made by gabbai 
-        public static AdminReview GetGabbaiRequestsSubmissions()
+        public static AdminReview GetGabbaiRequestsSubmissionsForAdmin()
         {
-            return DataBaseConnectivity.GetGabbaiRequests();
+            return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
+        }
+        public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
+        {
+            return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
         }
 
-        public static bool AdminShulSubmitionDecision(int shulAdditionRequestId, string decision)
+        public static void AdminShulSubmitionDecision(int requestID, string decision)
         {
-            return false;
+            DataBaseConnectivity.AdminDecisionOnShul(requestID, decision);
         }
     }
 }
