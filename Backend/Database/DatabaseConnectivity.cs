@@ -162,7 +162,7 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
-        
+
         /**
          * Takes a Shul object and sends all of its fields that have just been updated by the Gabbai to the dataBase to
          * update that shul in the Database
@@ -229,41 +229,6 @@ namespace Super_Jew_2._0.Backend.Database
             return shulRequests;
         }
 
-        //for gabbai
-        public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
-        {
-            List<ShulRequest> shulRequests = new List<ShulRequest>();
-
-            using var connection = new MySqlConnection(ConnectionString);
-            using (var command = new MySqlCommand("GetGabbaiRequestsForGabbai", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("NewGabbaiID", gabbaiID);
-                connection.Open();
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var pending = new ShulRequest
-                    {
-                        RequestID = reader.GetInt32("RequestID"),
-                        ShulName = reader.GetString("Name"),
-                        Location = reader.GetString("Location"),
-                        Denomination = reader.GetString("Denomination"),
-                        ContactInfo = reader.GetString("ContactInfo"),
-                        ShachrisTime = reader.GetString("ShachrisTime"),
-                        MinchaTime = reader.GetString("MinchaTime"),
-                        MaarivTime = reader.GetString("MaarivTime"),
-                    };
-
-                    shulRequests.Add(pending);
-
-
-
-                }
-            }
-
-            return shulRequests;
-        }
 
         //for admin, gets all of the submitted shuls
         public static AdminReview GetGabbaiRequestsForAdmin()

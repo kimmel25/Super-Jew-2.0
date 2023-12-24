@@ -72,7 +72,7 @@ namespace Super_Jew_2._0.Backend.Services
 
             return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
         }
-        
+
 
         //private static ShulRequestDummy _shulRequestDummy = new ShulRequestDummy();
 
@@ -88,7 +88,7 @@ namespace Super_Jew_2._0.Backend.Services
 
             return true;
         }
-        
+
         /**
          * @param The Shul objct that was updated by the Gabbai. Method sends it to the backend for the DB to update it.
          * @return bool true is successful  
@@ -106,7 +106,7 @@ namespace Super_Jew_2._0.Backend.Services
         {
             return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
 
-
+        }
         public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
         {
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
