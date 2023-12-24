@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend.ShulRequests;
 
@@ -272,6 +273,7 @@ namespace Super_Jew_2._0.Backend.Database
 
         public static bool AdminDecisionOnShul(int requestID, string decision)
         {
+            Shul shul;
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("MakeAdminDecision", connection))
             {
@@ -281,11 +283,98 @@ namespace Super_Jew_2._0.Backend.Database
                 command.Parameters.AddWithValue("NewRequestID", requestID);
                 command.Parameters.AddWithValue("NewApprovalStatus", decision);
 
+                if (decision == "Approved")
+                {
+                    using (var commandTwo = new MySqlCommand("GetGabbaiShulByRequestID", connection))
+                    {
+                        connection.Open();
+                        commandTwo.CommandType = CommandType.StoredProcedure;
+
+                        commandTwo.Parameters.AddWithValue("inputRequestID", requestID);
+
+                        using var reader = commandTwo.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            shul = new Shul
+                            {
+                                ShulID = reader.GetInt32("ShulID"),
+                                ShulName = reader.GetString("Name"),
+                                Location = reader.GetString("Location"),
+                                Denomination = reader.GetString("Denomination"),
+                                ContactInfo = reader.GetString("ContactInfo"),
+                                ShachrisTime = reader.GetString("ShachrisTime"),
+                                MinchaTime = reader.GetString("MinchaTime"),
+                                MaarivTime = reader.GetString("MaarivTime"),
+                            };
+                            AddShul(shul);
+                        }
+
+                    }
+
+                }
                 var result = command.ExecuteNonQuery();
                 return result > 0;
 
             }
         }
+
+        public static bool AddShul(Shul shul)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("AddShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("inputShulID", shul.ShulID);
+                command.Parameters.AddWithValue("inputName", shul.ShulName);
+                command.Parameters.AddWithValue("inputLocation", shul.Location);
+                command.Parameters.AddWithValue("inputDenomination", shul.Denomination);
+                command.Parameters.AddWithValue("inputContactInfo", shul.ContactInfo);
+                command.Parameters.AddWithValue("inputShachrisTime", shul.ShachrisTime);
+                command.Parameters.AddWithValue("inputMinchaTime", shul.MinchaTime);
+                command.Parameters.AddWithValue("inputMaarivTime", shul.MaarivTime);
+
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+            }
+        }
+
+        //public static Shul GetShulByID(int shulID)
+        //{
+        //    var shul = new Shul();
+        //    using var connection = new MySqlConnection(ConnectionString);
+        //    using (var command = new MySqlCommand("GetShulByID", connection))
+        //    {
+        //        command.CommandType = CommandType.StoredProcedure;
+        //        command.Parameters.AddWithValue("inputShulID", shulID);
+
+        //        connection.Open();
+        //        using var reader = command.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            shul = new Shul
+        //            {
+        //                ShulID = reader.GetInt32("ShulID"),
+        //                ShulName = reader.GetString("Name"),
+        //                Location = reader.GetString("Location"),
+        //                Denomination = reader.GetString("Denomination"),
+        //                ContactInfo = reader.GetString("ContactInfo"),
+        //                ShachrisTime = reader.GetString("ShachrisTime"),
+        //                MinchaTime = reader.GetString("MinchaTime"),
+        //                MaarivTime = reader.GetString("MaarivTime"),
+
+        //            };
+
+
+        //        }
+
+        //        return shul;
+        //    }
+        //}
+
 
 
 
