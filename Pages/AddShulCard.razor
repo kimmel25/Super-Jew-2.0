@@ -1,5 +1,6 @@
 ﻿@using Super_Jew_2._0.Backend
 @using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
@@ -34,12 +35,17 @@
 
     private async Task SubscribeToShul()
     {
+        
         try
         {
-            var username = "john_doe"; // Replace with actual logic to get username
-            var password = "password123"; // Replace with actual logic to get password
+            //var username = "john_doe"; // Replace with actual logic to get username
+            //var password = "password123"; // Replace with actual logic to get password
 
-            user = ShulService.GetFollowedShulsForUser(username, password); 
+            var currentUser = UserService.CurrentUser; 
+            
+            user = ShulService.GetFollowedShulsForUser(currentUser.Username, UserService.UserPassword);
+            //UserService.SetCurrentUser(currentUser);
+            
             if (user != null)
             {
                 bool exists = false;
@@ -68,9 +74,10 @@
         {
             
         }
+                              
     }
 
-
+    
 }
 
 @if (IsFullCard)

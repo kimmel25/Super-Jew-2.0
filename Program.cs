@@ -178,9 +178,12 @@ namespace Super_Jew_2._0
 /*
             User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(u1.AccountType);
-            /*
+            
+            
             User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
-            Console.WriteLine(u2.AccountType); 
+            Console.WriteLine(u2.AccountType); */
+
+
 
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);

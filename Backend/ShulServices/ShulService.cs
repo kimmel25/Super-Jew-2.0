@@ -63,9 +63,8 @@ namespace Super_Jew_2._0.Backend.Services
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
-
-
-            return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
+            
+            return DataBaseConnectivity.InitiateGabaiShulAddition(shulRequest);
         }
 
 

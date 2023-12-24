@@ -55,6 +55,7 @@ namespace Super_Jew_2._0.Backend.Database
                         user.FollowedShuls.Add(shul);
                     }
                 }
+
                 return user;
             }
         }
@@ -167,7 +168,7 @@ namespace Super_Jew_2._0.Backend.Database
         /**
          * Takes a Shul object and sends all of its fields that have just been updated by the Gabbai to the dataBase to
          * update that shul in the Database
-         * @return bool true is successful 
+         * @return bool true is successful
          */
 
         public static bool UpdateShulDetails(Shul shulToUpdate)
@@ -259,7 +260,7 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
                     shulRequests.Add(pending);
-                    
+
                     shulsToReview = new AdminReview
                     {
                         Requests = shulRequests
@@ -269,11 +270,11 @@ namespace Super_Jew_2._0.Backend.Database
 
             return shulsToReview;
         }
-        
+
         public static List<Shul> GetGabbaiShuls(string userId)
         {
             List<Shul> gabbaiShuls = new List<Shul>();
-            
+
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetGabbaiShuls", connection))
             {
@@ -296,7 +297,12 @@ namespace Super_Jew_2._0.Backend.Database
                         MaarivTime = reader.GetString("MaarivTime"),
                     };
                 }
-            }}
+            }
+
+            return gabbaiShuls;
+        }
+
+
         public static void AdminDecisionOnShul(int requestID, string decision)
         {
             Shul shul = new Shul();
@@ -341,6 +347,7 @@ namespace Super_Jew_2._0.Backend.Database
 
                 command.ExecuteNonQuery();
             }
+
             AddShul(shul);
         }
 
@@ -401,12 +408,15 @@ namespace Super_Jew_2._0.Backend.Database
         //    }
         //}
 
-
+/*
                     gabbaiShuls.Add(shulToAdd);
                 }
             }
 
             return gabbaiShuls;
         }
+    }
+
+        */
     }
 }
