@@ -5,6 +5,7 @@
 @using Super_Jew_2._0.Backend.Database
 @using Super_Jew_2._0.Backend
 @using Super_Jew_2._0.Backend.ShulServices;
+@inject IJSRuntime JSRuntime
 
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
@@ -46,10 +47,11 @@ else
 
 
         shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
-
-
+        
+        
         if (shulList.Count == 0)
         {
+            //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
             throw new InvalidOperationException("Shul List is empty"); 
         }
 
@@ -57,11 +59,22 @@ else
     }
     
 
-    private void HandleSubmit(Shul updatedShul)
+    private async Task HandleSubmit(Shul updatedShul)
     {
-
-
-        // Code to handle the submission of the updated shul information
+        Console.WriteLine("SHUL ID --");
+        Console.WriteLine(updatedShul.ShulID);
+        
+        if (ShulService.UpdateShulDetails(updatedShul))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Shul Updated!");
+                //
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Error!");
+        }
+            
+    // Code to handle the submission of the updated shul information
     }
 
 

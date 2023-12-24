@@ -296,9 +296,11 @@ namespace Super_Jew_2._0.Backend.Database
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
                     };
+                    
+                    gabbaiShuls.Add(shulToAdd);
                 }
             }
-
+            
             return gabbaiShuls;
         }
 
