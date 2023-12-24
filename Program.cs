@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MySql.Data.MySqlClient;
@@ -6,12 +7,16 @@ using Super_Jew_2._0.Backend.Database;
 using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
+using Super_Jew_2._0.Backend.ShulServices;
 using Super_Jew_2._0.Data;
+using Super_Jew_2._0.Services;
+using ShulLoginService = Super_Jew_2._0.Backend.Services.ShulLoginService;
 
 namespace Super_Jew_2._0
 {
     public class Program
     {
+
 
         private static void testGetGabbaiRequests()
         {
@@ -37,6 +42,7 @@ namespace Super_Jew_2._0
             }
 
         }
+
 
 
         private static void AllAvailableShuls()
@@ -154,10 +160,17 @@ namespace Super_Jew_2._0
 
         }
 
+        //private static void runRequestSimulation()
+        //{
+        //    //GetUserShuls("ykatz1", "yk123");
+        //    //addShulToUserProfile("ykatz1", "yk123",00003);
+        //}
+
+
         private static void runRequestSimulation()
         {
-            //GetUserShuls("ykatz1", "yk123");
-            //addShulToUserProfile("ykatz1", "yk123",00003);
+            GetUserShuls("ykatz1", "yk123");
+            addShulToUserProfile("ykatz1", "yk123", 00003);
         }
 
         public static void Main(string[] args)
@@ -174,6 +187,19 @@ namespace Super_Jew_2._0
 
             //runRequestSimulation();
 
+
+            User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+            Console.WriteLine(u1.AccountType);
+            /*
+            User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
+            Console.WriteLine(u2.AccountType); 
+            */
+
+            User u3 = ShulService.GetFollowedShulsForUser("dinkyp", "pinky1");
+            Console.WriteLine(u3.Username);
+
+
+
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
@@ -181,9 +207,19 @@ namespace Super_Jew_2._0
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
+
             builder.Services.AddTransient<Class>();
 
             builder.Services.AddTransient<ShulService>();
+
+
+            builder.Services.AddTransient<ILoginService, ShulLoginService>();
+
+            builder.Services.AddScoped<UserService>();
+
+            builder.Services.AddTransient<ShulService>();
+
+
 
 
             var app = builder.Build();
@@ -195,12 +231,12 @@ namespace Super_Jew_2._0
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRouting();
+
 
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-
-            app.UseRouting();
 
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
