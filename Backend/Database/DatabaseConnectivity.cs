@@ -59,6 +59,21 @@ namespace Super_Jew_2._0.Backend.Database
                 return user;
             }
         }
+        
+        public static bool AddGabbaiToShul(int userId, int shulId)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("AddGabbaiToShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("InputUserId", userId);
+                command.Parameters.AddWithValue("InputShulId", shulId);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0; // returns true if it affected at least one record
+            }
+        }
 
         public static List<Shul> GetAvailableShuls() //string zipCode in future
         {
@@ -249,6 +264,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var pending = new ShulRequest
                     {
                         RequestID = reader.GetInt32("RequestID"),
+                        GabbaiID = reader.GetInt32("UserID"),
                         ShulName = reader.GetString("Name"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
@@ -299,8 +315,9 @@ namespace Super_Jew_2._0.Backend.Database
             return gabbaiShuls;
         }
         
-        public static void AdminDecisionOnShul(int requestID, string decision)
+        public static void AdminDecisionOnShul(int requestID, string decision, ShulRequest request)
         {
+            
             Shul shul = new Shul();
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("MakeAdminDecision", connection))
@@ -310,6 +327,8 @@ namespace Super_Jew_2._0.Backend.Database
 
                 command.Parameters.AddWithValue("NewRequestID", requestID);
                 command.Parameters.AddWithValue("NewApprovalStatus", decision);
+                
+                
 
                 if (decision == "Approved")
                 {
@@ -335,6 +354,18 @@ namespace Super_Jew_2._0.Backend.Database
                         }
 
                     }
+                    
+                    AddShul(shul);
+
+                    List<Shul> allShulsToCheck = GetAvailableShuls();
+                    foreach (var eachShul in allShulsToCheck)
+                    {
+                        if (eachShul.ShulName == shul.ShulName)
+                        {
+                            AddGabbaiToShul(request.GabbaiID,eachShul.ShulID);
+                            Console.WriteLine("REQUEST BY ADD GABAI: " + eachShul.ShulName + " " + request.GabbaiID);
+                        }
+                    }
 
                 }
 
@@ -343,8 +374,7 @@ namespace Super_Jew_2._0.Backend.Database
 
                 command.ExecuteNonQuery();
             }
-
-            AddShul(shul);
+            
         }
 
         public static bool AddShul(Shul shul)
@@ -354,7 +384,7 @@ namespace Super_Jew_2._0.Backend.Database
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
-
+                
                 command.Parameters.AddWithValue("inputShulID", shul.ShulID);
                 command.Parameters.AddWithValue("inputName", shul.ShulName);
                 command.Parameters.AddWithValue("inputLocation", shul.Location);

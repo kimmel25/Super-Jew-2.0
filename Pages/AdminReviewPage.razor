@@ -46,10 +46,10 @@ else
     // Logic to load requests, similar to RefreshUserShuls
     }
 
-    private async Task HandleDecision((int requestId, string decision) decisionInfo)
+    private async Task HandleDecision((int requestId, string decision, ShulRequest request) decisionInfo)
     {
     // Call the backend service with the decision
-        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision);
+        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
         await RefreshRequests(); // Refresh the list to reflect the changes
     }
 }

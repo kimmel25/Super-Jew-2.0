@@ -4,13 +4,13 @@
     public ShulRequest Request { get; set; }
 
     [Parameter]
-    public EventCallback<(int requestId, string decision)> OnDecisionMade { get; set; }
+    public EventCallback<(int requestId, string decision, ShulRequest request)> OnDecisionMade { get; set; }
 
     private async Task ApproveRequest()
     {
         if (Request != null)
         {
-            await OnDecisionMade.InvokeAsync((Request.RequestID, "Approved"));
+            await OnDecisionMade.InvokeAsync((Request.RequestID, "Approved", Request));
         }
     }
 
@@ -18,7 +18,7 @@
     {
         if (Request != null)
         {
-            await OnDecisionMade.InvokeAsync((Request.RequestID, "Rejected"));
+            await OnDecisionMade.InvokeAsync((Request.RequestID, "Rejected", Request));
         }
     }
 }
@@ -36,7 +36,6 @@
             <div class="data-field">Shacris Times: @Request.ShachrisTime</div>
             <div class="data-field">Mincha Time: @Request.MinchaTime </div>
             <div class="data-field">Maariv Time: @Request.MaarivTime</div>
-            
             
             <button class="btn btn-success" @onclick="ApproveRequest">Approve</button>
             <button class="btn btn-danger" @onclick="RejectRequest">Reject</button>

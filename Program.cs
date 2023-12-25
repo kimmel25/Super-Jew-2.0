@@ -226,13 +226,25 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shulRequest.ShulName);
             } */
 
-            
+            /*
             Console.WriteLine("GABBI SUBMITS:");
             List<ShulRequest> gabbaiShulls1 = ShulService.GetGabbaiRequestsSubmissionsForGabbai(4);
             foreach (var shulRequest in gabbaiShulls1)
             {
                 Console.WriteLine(shulRequest.ShulName);
+            } */
+
+            Console.WriteLine("dinkys: ");
+            List<Shul> dinkysShuls = ShulService.GetGabbaisShuls("4");
+            foreach (var shul in dinkysShuls)
+            {
+                Console.WriteLine(shul.ShulName);
             }
+
+            
+            
+            //DataBaseConnectivity.AddGabbaiToShul(4, 30);
+            
 
 
 
