@@ -37,23 +37,23 @@ namespace Super_Jew_2._0.Backend.Database
                         AccountType = reader.GetString("AccountType")
                     };
 
-                    Shul? shul = new Shul
+                    if (!reader.IsDBNull(reader.GetOrdinal("ShulID")))
                     {
-                        ShulID = reader.GetInt32("ShulID"),
-                        ShulName = reader.GetString("Name"),
-                        Location = reader.GetString("Location"),
-                        Denomination = reader.GetString("Denomination"),
-                        ContactInfo = reader.GetString("ContactInfo"),
-                        ShachrisTime = reader.GetString("ShachrisTime"),
-                        MinchaTime = reader.GetString("MinchaTime"),
-                        MaarivTime = reader.GetString("MaarivTime")
-                    };
-
-
-                    if (shul != null)
-                    {
+                        Shul? shul = new Shul
+                        {
+                            ShulID = reader.GetInt32("ShulID"),
+                            ShulName = reader.GetString("Name"),
+                            Location = reader.GetString("Location"),
+                            Denomination = reader.GetString("Denomination"),
+                            ContactInfo = reader.GetString("ContactInfo"),
+                            ShachrisTime = reader.GetString("ShachrisTime"),
+                            MinchaTime = reader.GetString("MinchaTime"),
+                            MaarivTime = reader.GetString("MaarivTime")
+                        };
                         user.FollowedShuls.Add(shul);
+
                     }
+
                 }
 
                 return user;
