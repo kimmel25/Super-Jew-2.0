@@ -117,5 +117,17 @@ namespace Super_Jew_2._0.Backend.Services
 
             return DataBaseConnectivity.AdminDecisionOnShul(requestID, decision);
         }
+
+
+        //METHODS FOR EVENTS
+        public static Event GetEvent(int eventID)
+        {
+            return null;
+        }
+
+        public static bool CreateEvent(int shulID, string eventName, string timeOfEvent, string location, string subscription)
+        {
+            return DataBaseConnectivity.CreateEventDB(shulID, eventName, timeOfEvent, location, subscription);
+        }
     }
 }
