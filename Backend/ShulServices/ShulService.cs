@@ -64,7 +64,7 @@ namespace Super_Jew_2._0.Backend.Services
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
             
-            return DataBaseConnectivity.InitiateGabaiShulAddition(shulRequest);
+            return DataBaseConnectivity.InitiateGabaiShulAddition(gabaiId, shulRequest);
         }
 
 

@@ -126,7 +126,7 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //this should function similar to AddShulToUser. procedure is created. Needs to be tested
-        public static bool InitiateGabaiShulAddition(ShulRequest shulRequest)
+        public static bool InitiateGabaiShulAddition(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
@@ -142,7 +142,8 @@ namespace Super_Jew_2._0.Backend.Database
                 command.Parameters.AddWithValue("NewShachrisTime", shulRequest.ShachrisTime);
                 command.Parameters.AddWithValue("NewMinchaTime", shulRequest.MinchaTime);
                 command.Parameters.AddWithValue("NewMaarivTime", shulRequest.MaarivTime);
-
+                command.Parameters.AddWithValue("TheGabbaiID", userId);
+                
                 var result = command.ExecuteNonQuery();
                 return result > 0;
 
