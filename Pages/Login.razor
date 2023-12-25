@@ -1,23 +1,50 @@
-﻿@page "/Login"
+@page "/login"
+@using Super_Jew_2._0.Models
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
 
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="#" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <button type="submit" class="login-button">Log In</button>
-    </form>
-    <div class="forgot-password">
-        <a href="#">Forgot Password?</a>
-    </div>
-</div>
+@inject ShulService ShulService
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+
+<h3>Login</h3>
+
+<EditForm Model="@loginModel" OnValidSubmit="@HandleLogin">
+    <InputText id="username" @bind-Value="@loginModel.Username" />
+    <InputText id="password" type="password" @bind-Value="@loginModel.Password" />
+    <button type="submit">Login</button>
+    <button @onclick="HandleCreateAccount">Create Account</button>
+</EditForm>
 
 @code {
+    private LoginModel loginModel = new LoginModel();
 
+    private async Task HandleLogin()
+    {
+        var user =  ShulService.GetFollowedShulsForUser(loginModel.Username, loginModel.Password);
+        Console.WriteLine("out of shul login method");
+        if (user != null)
+        {
+            UserService.SetCurrentUser(user);
+            UserService.SetPassword(loginModel.Password);
+
+    // Redirect the user to the home page or a dashboard
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("user null");
+        }
+        {
+    // Handle login failure, show an error message, etc.
+        }
+    }
+
+
+    private void HandleCreateAccount()
+    {
+        // Logic for handling account creation will go here
+    }
 }

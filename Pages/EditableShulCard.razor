@@ -1,0 +1,64 @@
+﻿@using Super_Jew_2._0.Backend
+
+@code {
+    [Parameter]
+    public Shul CurrentShul { get; set; }
+
+    [Parameter]
+    public EventCallback<Shul> OnSubmit { get; set; }
+
+    private Shul editableShul;
+
+    protected override void OnInitialized()
+    {
+        editableShul = CurrentShul;
+    }
+
+    private void Submit()
+
+    {
+        
+        OnSubmit.InvokeAsync(editableShul);
+
+    }
+    
+   
+
+   
+    
+}
+
+<div class="card">
+    <div class="card-header">
+        @editableShul.ShulName
+    </div>
+    <div class="card-body">
+        <div class="field">
+            <label>Location: </label>
+            <input type="text" @bind="editableShul.Location" />
+        </div>
+        <div class="field">
+            <label>Contact Info: </label>
+            <input type="text" @bind="editableShul.ContactInfo" />
+        </div>
+        <div class="field">
+            <label>Shachris Time: </label>
+            <input type="text" @bind="editableShul.ShachrisTime" />
+        </div>
+        <div class="field">
+            <label>Mincha Time: </label>
+            <input type="text" @bind="editableShul.MinchaTime" />
+        </div>
+        <div class="field">
+            <label>Maariv Time: </label>
+            <input type="text" @bind="editableShul.MaarivTime" />
+        </div>
+
+        <button class="btn btn-primary" @onclick="Submit">Submit</button>
+
+       
+       
+    </div>
+
+    
+</div>

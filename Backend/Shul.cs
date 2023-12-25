@@ -2,6 +2,11 @@ namespace Super_Jew_2._0.Backend;
 
 public class Shul
 {
+    public Shul()
+    {
+        shulEvents = new List<Event>();
+    }
+    
     public int ShulID { get; set; }
     public string ShulName { get; set; }
     public string Location { get; set; }
@@ -12,4 +17,5 @@ public class Shul
     public string MinchaTime { get; set; }
     public string MaarivTime { get; set; }
 
-}
+    public List<Event> shulEvents { get; set; }
+} 

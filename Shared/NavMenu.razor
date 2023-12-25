@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Super_Jew_2._0.Backend.ShulServices
+@inject UserService UserService
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">SuperJew!</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -7,6 +10,7 @@
     </div>
 </div>
 
+@*
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
@@ -37,17 +41,76 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="UpdateShul">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> ForTheGabbai
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="AddShuls">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
             </NavLink>
+        </div><div class="nav-item px-3">
+            <NavLink class="nav-link" href="MyUpdates">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> MyUpdates
+            </NavLink>
         </div>
+
+
     </nav>
-</div>
+    </div>
+    *@
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <nav class="flex-column">
+            <!-- Common link -->
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+                
+            @if (UserService.CurrentUser == null)
+            {
+                <NavLink class="nav-link" href="Login">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                </NavLink>
+            }
+            
+    
+            <!-- links based on user role -->
+            @if (UserService.CurrentUser?.AccountType == "ADMIN")
+            {
+                <NavLink class="nav-link" href="AdminReviewPage">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Admin Review Page
+                </NavLink>
+                
+                
+                <!-- Add in Rest of gabbai pages -->
+            }
+            @if (UserService.CurrentUser?.AccountType == "GABBAI")
+            {
+                <NavLink class="nav-link" href="MyShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyShuls&trade;
+                </NavLink>
+                
+                <NavLink class="nav-link" href="AddShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
+                <NavLink class="nav-link" href="MyUpdates">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyUpdates
+                </NavLink>
+            }
+            @if (UserService.CurrentUser?.AccountType == "USER")
+            {
+                Console.WriteLine("user logged in!");
+                <NavLink class="nav-link" href="MyShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyShuls&trade;
+                </NavLink>
+                
+                <NavLink class="nav-link" href="AddShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
+            
+            }
+            </div>
+        </nav>
+    </div>
 
 @code {
     private bool collapseNavMenu = true;
@@ -57,5 +120,15 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+    
+    protected override void OnInitialized()
+    {
+        UserService.OnUserChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        UserService.OnUserChanged -= StateHasChanged;
     }
 }

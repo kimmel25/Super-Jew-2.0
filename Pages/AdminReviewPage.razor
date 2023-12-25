@@ -1,0 +1,55 @@
+﻿@page "/adminreviewpage"
+
+@using Super_Jew_2._0.Backend.ShulRequests
+@using Super_Jew_2._0.Backend.ShulServices
+@using Super_Jew_2._0.Backend.Services
+@inject ShulService ShulService
+@inject UserService UserService
+
+<h3>Admin Review Page</h3>
+
+@if (gabbaisSubmittedRequests.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var request in gabbaisSubmittedRequests)
+            {
+                if (request.ApprovalStatus == "Awaiting Decision")
+                {
+                    <div class="col-sm-4">
+                        <AdminShulReviewCard Request="@request" OnDecisionMade="HandleDecision" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-title">
+        <h5 class="card-title">No Requests at the moment!</h5>
+    </div>
+}
+
+@code {
+    private List<ShulRequest> gabbaisSubmittedRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+        Console.WriteLine("COUNT IN INIT: " + gabbaisSubmittedRequests.Count);
+        await RefreshRequests();
+    }
+
+    private async Task RefreshRequests()
+    {
+    // Logic to load requests, similar to RefreshUserShuls
+    }
+
+    private async Task HandleDecision((int requestId, string decision, ShulRequest request) decisionInfo)
+    {
+    // Call the backend service with the decision
+        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
+        await RefreshRequests(); // Refresh the list to reflect the changes
+    }
+}
