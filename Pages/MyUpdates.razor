@@ -2,64 +2,103 @@
 
 @inject NavigationManager NavigationManager
 @using Super_Jew_2._0.Backend.Services
-@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@using Super_Jew_2._0.Backend.Database
 @using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.ShulRequests
+@using Super_Jew_2._0.Backend.ShulServices;
+@inject IJSRuntime JSRuntime
+
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
 
-@if (shulList != null)
+@if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
     <div class="container">
         <div class="row">
             @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
+                    <!-- Pass the shul object to the EditableShulCard component -->
                     <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" />
                 </div>
             }
         </div>
     </div>
 }
+else
+{
+    <p>No shuls available to display.</p>
+    // A message when no shuls are available
+}
+
+@if (gabbaisSubmittedRequests.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var request in gabbaisSubmittedRequests)
+            {
+                <div class="col-sm-4">
+                    <ShulRequestCard Request="@request" OnRemove="HandleRemoveRequest" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No requests available to display.</p>
+}
+
 
 @code {
+    //ShulService ShulService = new ShulService();
+    List<Shul> shulList = new List<Shul>();
+    List<ShulRequest> gabbaisSubmittedRequests;
+    User user;
+    //UserService UserService = new UserService();
+    User currentuser = UserService.CurrentUser; 
 
 
-    private List<Shul> shulList = new List<Shul>(); 
-    private User user;
-    private String password = "password123";
-    private String username = "john_doe";
+    //private String password = "password123";
+    //private String username = "john_doe";
 
     protected override void OnInitialized()
     {
-        /*
-        user = ShulService.GetFollowedShulsForUser(username, password);
-        if (user?.FollowedShuls != null)
+
+        
+        shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
+        if (shulList.Count == 0)
         {
-            shulList = user.FollowedShuls;
+            //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
+            throw new InvalidOperationException("Shul List is empty"); 
         }
-        */
 
-
-        // Hardcoding 5 fake shuls
-        for (int i = 1; i <= 5; i++)
-        {
-            shulList.Add(new Shul
-                {
-                    ShulName = $"Shul {i}",
-                    Location = $"Random Address for Shul {i}",
-                    ContactInfo = $"Random ## for Shul {i}",
-                    ShachrisTime = $"time.00000", 
-                    MinchaTime = $"time.0000 ",
-                    MaarivTime = $"time.0000"
-                 
-
-                    // Add other properties as needed
-                });
-        }
+        //check if greater than zero
+        gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(UserService.CurrentUser.UserID);
+        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
+    
 
-    private void HandleSubmit(Shul updatedShul)
+    private async Task HandleSubmit(Shul updatedShul)
     {
-        // Code to handle the submission of the updated shul information
+        Console.WriteLine(updatedShul.ShulID);
+        
+        if (ShulService.UpdateShulDetails(updatedShul))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Shul Updated!");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Error!");
+        }
+            
+    // Code to handle the submission of the updated shul information
     }
+    
+    private async Task HandleRemoveRequest(int requestId)
+    {
+        ShulService.ClearGabbaiShulAdditionStatus(requestId);
+    }
+
+
 }

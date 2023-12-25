@@ -30,18 +30,11 @@ namespace Super_Jew_2._0.Backend.Services
 
             Console.WriteLine("in shul login method");
             return DataBaseConnectivity.GetUserByPassword(userId, password);
-            //return DummyData.DummyData.GetUserByPassword(userId,password);
-
         }
 
         public static bool AddShulToUserProfile(int userId, int shulId)
         {
             return DataBaseConnectivity.AddShulToUser(userId, shulId);
-
-            //return _dummyData.AddShulToUserProfile(userId, shulId);
-
-            //return DummyData.DummyData.AddShulToUserProfile(userId, shulId);
-
         }
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
@@ -49,28 +42,29 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
             //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
         }
-
-
-
+        
+        public static List<Shul> GetGabbaisShuls(string userId) //in future add zipcode option
+        {
+            return DataBaseConnectivity.GetGabbaiShuls(userId);
+            //return _dummyData.GetAllAvailableShuls();
+        }
+        
         //Methods for Gabbai's Only!
 
         //query table by gabbai id
-        public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
+        public static List<ShulRequest> GetGabaiShulAdditionRequests(int gabaiId)
         {
-
-            return null;
+            return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabaiId);
         }
-
-
+        
         //gabbai clicks on page to submit a request to add a shul
         //Param - ShulRequest - a request id, gabaiid, and shul info
         // !! tested and works !!
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
-
-
-            return DataBaseConnectivity.GetInitiatedGabbaiShul(shulRequest);
+            
+            return DataBaseConnectivity.InitiateGabaiShulAddition(gabaiId, shulRequest);
         }
 
 
@@ -82,11 +76,7 @@ namespace Super_Jew_2._0.Backend.Services
         // !! tested and works. removes row from database !!
         public static bool ClearGabbaiShulAdditionStatus(int requestID)
         {
-
-            DataBaseConnectivity.ClearGabbaiAddedShul(requestID);
-
-
-            return true;
+            return DataBaseConnectivity.ClearGabbaiAddedShul(requestID);
         }
 
         /**
@@ -102,20 +92,18 @@ namespace Super_Jew_2._0.Backend.Services
         //Methods for Admins Only!
 
         //sends back all shul requests made by gabbai 
-        public static AdminReview GetGabbaiRequestsSubmissionsForAdmin()
+        public static List<ShulRequest> GetGabbaiRequestsSubmissionsForAdmin()
         {
             return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
-
         }
         public static List<ShulRequest> GetGabbaiRequestsSubmissionsForGabbai(int gabbaiID)
         {
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
         }
 
-        public static bool AdminShulSubmitionDecision(int requestID, string decision)
+        public static void AdminShulSubmitionDecision(int requestID, string decision, ShulRequest request)
         {
-
-            return DataBaseConnectivity.AdminDecisionOnShul(requestID, decision);
+            DataBaseConnectivity.AdminDecisionOnShul(requestID, decision, request);
         }
 
 

@@ -26,7 +26,7 @@ namespace Super_Jew_2._0
 
             Console.WriteLine("Shul Requests:");
 
-            foreach (var shulRequest in adminReview.Requests)
+            foreach (var shulRequest in adminReview)
             {
                 Console.WriteLine($"RequestID: {shulRequest.RequestID}");
                 Console.WriteLine($"GabbaiID: {shulRequest.GabbaiID}");
@@ -43,8 +43,7 @@ namespace Super_Jew_2._0
 
         }
 
-
-
+        
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
@@ -159,14 +158,6 @@ namespace Super_Jew_2._0
 
 
         }
-
-        //private static void runRequestSimulation()
-        //{
-        //    //GetUserShuls("ykatz1", "yk123");
-        //    //addShulToUserProfile("ykatz1", "yk123",00003);
-        //}
-
-
         private static void runRequestSimulation()
         {
             GetUserShuls("ykatz1", "yk123");
@@ -175,9 +166,6 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
-            //var test = DummyData.UpdateShul();
-            //Console.WriteLine(test);
-            RemoveGabbaiPendingShul(4);
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
@@ -187,16 +175,76 @@ namespace Super_Jew_2._0
 
             //runRequestSimulation();
 
-
+/*
             User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
             Console.WriteLine(u1.AccountType);
-            /*
+            
+            
             User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
-            Console.WriteLine(u2.AccountType); 
-            */
+            Console.WriteLine(u2.AccountType); */
 
-            User u3 = ShulService.GetFollowedShulsForUser("dinkyp", "pinky1");
-            Console.WriteLine(u3.Username);
+/*
+            Console.WriteLine("gabbais shuls: ");
+            List<Shul> gShuls = ShulService.GetGabbaisShuls("4");
+            foreach (var shul in gShuls)
+            {
+                Console.WriteLine(shul.ShulName);
+            } */
+            
+            //Shor Yoshuv,1 CedarLawn,Yeshivish kinda,"Rabbi Jaeger, (917)-223-Torah","5 am, 7:45 am",1:30 pm,"9:00 pm, 10:00 pm"
+            
+            /*
+            var shul1 = new Shul
+            {
+                ShulID = 4,
+                ShulName = "Shor Yoshuv",
+                Location = "1 CedarLawn",
+                Denomination = "Yeshivish kinda",
+                ContactInfo = "Rabbi Jaeger, (917)-223-Torah",
+                ShachrisTime = "5 am, 7:45 am",
+                MinchaTime = "1:30 pm, 2:30pm",
+                MaarivTime = "9:00 pm, 10:00 pm"
+            };
+            
+            ShulService.UpdateShulDetails(shul1); */
+            
+
+            /*
+            ShulService.InitiateGabaiShulAddition(4, shul1);
+            
+            List<ShulRequest> gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(3);
+            foreach (var shulRequest in gabbaisSubmittedRequests)
+            {
+                Console.WriteLine(shulRequest.ShulName);
+            } */
+
+            /*
+            Console.WriteLine("GABBI RTESR MAIN");
+            List<ShulRequest> gabbaisSubmittedRequests2 = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+            foreach (var shulRequest in gabbaisSubmittedRequests2)
+            {
+                Console.WriteLine(shulRequest.ShulName);
+            } */
+
+            /*
+            Console.WriteLine("GABBI SUBMITS:");
+            List<ShulRequest> gabbaiShulls1 = ShulService.GetGabbaiRequestsSubmissionsForGabbai(4);
+            foreach (var shulRequest in gabbaiShulls1)
+            {
+                Console.WriteLine(shulRequest.ShulName);
+            } */
+
+            Console.WriteLine("dinkys: ");
+            List<Shul> dinkysShuls = ShulService.GetGabbaisShuls("4");
+            foreach (var shul in dinkysShuls)
+            {
+                Console.WriteLine(shul.ShulName);
+            }
+
+            
+            
+            //DataBaseConnectivity.AddGabbaiToShul(4, 30);
+            
 
 
 

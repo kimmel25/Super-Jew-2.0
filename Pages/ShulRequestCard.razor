@@ -1,0 +1,20 @@
+﻿@using Super_Jew_2._0.Backend.ShulRequests
+@code {
+    [Parameter]
+    public ShulRequest Request { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnRemove { get; set; }
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Request.ShulName</h5>
+        <p class="card-text">Status: @Request.ApprovalStatus</p>
+        <!-- Other details can be displayed here -->
+        @if (Request.ApprovalStatus == "Approved" || Request.ApprovalStatus == "Rejected")
+        {
+            <button class="btn btn-danger" @onclick="() => OnRemove.InvokeAsync(Request.RequestID)">Remove</button>
+        }
+    </div>
+</div>

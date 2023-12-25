@@ -1,33 +1,17 @@
-﻿@page "/gabbaisignup"
+﻿@page "/shulsignup"
 @inject NavigationManager Nav
 @using Super_Jew_2._0.Backend.ShulRequests; 
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
 
-<h3>Gabbai/Shul Application</h3>
+<h3>Shul Application</h3>
 
 <div class="container mt-4">
     <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label for="name">Name:</label>
-                <InputText class="form-control" id="name" @bind-Value="name" required />
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <label for="email">Email:</label>
-                <InputText type="email" class="form-control" id="email" @bind-Value="email" required />
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="phonenumber">Phone Number:</label>
-                <InputText class="form-control" id="phonenumber" @bind-Value="phone_number" required />
-            </div>
-
-       
-        </div>
 
         <div class="row">
-
             <div class="col-md-4 mb-3">
-                <label for="shul">Shul to be Added:</label>
+                <label for="shul">Shul Name:</label>
                 <InputText class="form-control" id="shul_name" @bind-Value="shul_name" required />
             </div>
             <div class="col-md-4 mb-3">
@@ -74,20 +58,30 @@
 </div>
 
 @code {
-    ShulRequest shulrequest = new ShulRequest();
-    private string name, email, shul_name, rabbi, location, phone_number, shachris_time, mincha_time, maariv_time, denomination; 
+    private string shul_name = "";
+    private string rabbi = string.Empty;
+    private string location = string.Empty;
+    private string shachris_time = string.Empty;
+    private string mincha_time = string.Empty;
+    private string maariv_time = string.Empty;
+    private string denomination = string.Empty;
+
 
     private void HandleValidSubmit()
     {
-        shulrequest.ShulName = shul_name; 
-        shulrequest.ShachrisTime = shachris_time;
-        shulrequest.Location = location; 
-        shulrequest.MinchaTime = mincha_time; 
-        shulrequest.MaarivTime = maariv_time;
-        shulrequest.Denomination = denomination; 
-        shulrequest.ContactInfo = name + ", " + phone_number + ", " + email;
-       
-
+        var pending = new ShulRequest
+        {
+            ShulName = shul_name,
+            Location = shachris_time,
+            Denomination = denomination,
+            ContactInfo = "",
+            ShachrisTime = shachris_time,
+            MinchaTime = mincha_time,
+            MaarivTime = maariv_time,
+        };
+        
+        ShulService.InitiateGabaiShulAddition(UserService.CurrentUser.UserID, pending);
+        
         Nav.NavigateTo("/gabbairegistration");
     }
 }

@@ -28,8 +28,8 @@
     </div>
 }
 
+CHECK TO SEE IF GABBAI OR USER FOR THE BUTTON!!!!!
 <button class="button-92" role="button" @onclick="NavigateToAddShuls">AddMore</button>
-
 
 @code {
     private List<Shul> shulList; 
@@ -42,7 +42,7 @@
         if (currentUser != null)
         {
             currentUser = ShulService.GetFollowedShulsForUser(currentUser.Username, UserService.UserPassword);
-            UserService.SetCurrentUser(currentUser); // Update the current user in UserService
+            UserService.SetCurrentUser(currentUser); // Up
             shulList = currentUser.FollowedShuls;
         }
     }
