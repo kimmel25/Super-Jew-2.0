@@ -42,13 +42,13 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
             //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
         }
-        
+
         public static List<Shul> GetGabbaisShuls(string userId) //in future add zipcode option
         {
             return DataBaseConnectivity.GetGabbaiShuls(userId);
             //return _dummyData.GetAllAvailableShuls();
         }
-        
+
         //Methods for Gabbai's Only!
 
         //query table by gabbai id
@@ -56,14 +56,14 @@ namespace Super_Jew_2._0.Backend.Services
         {
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabaiId);
         }
-        
+
         //gabbai clicks on page to submit a request to add a shul
         //Param - ShulRequest - a request id, gabaiid, and shul info
         // !! tested and works !!
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest)
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
-            
+
             return DataBaseConnectivity.InitiateGabaiShulAddition(gabaiId, shulRequest);
         }
 
@@ -113,9 +113,9 @@ namespace Super_Jew_2._0.Backend.Services
             return null;
         }
 
-        public static bool CreateEvent(int shulID, string eventName, string timeOfEvent, string location, string subscription)
+        public static bool CreateEvent(int shulID, string eventName, string timeOfEvent, string location, string subscription, string description)
         {
-            return DataBaseConnectivity.CreateEventDB(shulID, eventName, timeOfEvent, location, subscription);
+            return DataBaseConnectivity.CreateEventDB(shulID, eventName, timeOfEvent, location, subscription, description);
         }
     }
 }
