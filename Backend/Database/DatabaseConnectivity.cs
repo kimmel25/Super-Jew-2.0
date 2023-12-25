@@ -2,6 +2,7 @@
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 namespace Super_Jew_2._0.Backend.Database
@@ -62,8 +63,22 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
         
-        
-        public static List<Shul> GetAvailableShuls() //TODO string zipCode in future
+        public static bool AddGabbaiToShul(int userId, int shulId)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("AddGabbaiToShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("InputUserId", userId);
+                command.Parameters.AddWithValue("InputShulId", shulId);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0; // returns true if it affected at least one record
+            }
+        }
+
+        public static List<Shul> GetAvailableShuls() //string zipCode in future
         {
             List<Shul> availableShuls = new List<Shul>();
 
@@ -150,7 +165,8 @@ namespace Super_Jew_2._0.Backend.Database
                 command.Parameters.AddWithValue("NewShachrisTime", shulRequest.ShachrisTime);
                 command.Parameters.AddWithValue("NewMinchaTime", shulRequest.MinchaTime);
                 command.Parameters.AddWithValue("NewMaarivTime", shulRequest.MaarivTime);
-
+                command.Parameters.AddWithValue("TheGabbaiID", userId);
+                
                 var result = command.ExecuteNonQuery();
                 return result > 0;
 
@@ -207,7 +223,11 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        
+        /**
+         * Takes a Shul object and sends all of its fields that have just been updated by the Gabbai to the dataBase to
+         * update that shul in the Database
+         * @return bool true is successful
+         */
 
         public static bool UpdateShulDetails(Shul shulToUpdate)
         {
@@ -257,12 +277,10 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
+                        ApprovalStatus = reader.GetString("ApprovalStatus")
                     };
 
                     shulRequests.Add(pending);
-
-
-
                 }
             }
 
@@ -271,10 +289,10 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //Methods for Admins only
-        public static AdminReview GetGabbaiRequestsForAdmin()
+        public static List<ShulRequest> GetGabbaiRequestsForAdmin()
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
-            AdminReview shulsToReview = new AdminReview();
+            //AdminReview shulsToReview = new AdminReview();
 
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetGabbaiRequestsForAdmin", connection))
@@ -288,6 +306,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var pending = new ShulRequest
                     {
                         RequestID = reader.GetInt32("RequestID"),
+                        GabbaiID = reader.GetInt32("UserID"),
                         ShulName = reader.GetString("Name"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
@@ -295,25 +314,22 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
+                        ApprovalStatus = reader.GetString("ApprovalStatus")
                     };
 
                     shulRequests.Add(pending);
-
-                    shulsToReview = new AdminReview
-                    {
-                        Requests = shulRequests
-                    };
                 }
             }
 
-            return shulsToReview;
+            return shulRequests;
         }
 
        
 
 
-        public static void AdminDecisionOnShul(int requestID, string decision)
+        public static void AdminDecisionOnShul(int requestID, string decision, ShulRequest request)
         {
+            
             Shul shul = new Shul();
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("MakeAdminDecision", connection))
@@ -323,6 +339,8 @@ namespace Super_Jew_2._0.Backend.Database
 
                 command.Parameters.AddWithValue("NewRequestID", requestID);
                 command.Parameters.AddWithValue("NewApprovalStatus", decision);
+                
+                
 
                 if (decision == "Approved")
                 {
@@ -348,6 +366,18 @@ namespace Super_Jew_2._0.Backend.Database
                         }
 
                     }
+                    
+                    AddShul(shul);
+
+                    List<Shul> allShulsToCheck = GetAvailableShuls();
+                    foreach (var eachShul in allShulsToCheck)
+                    {
+                        if (eachShul.ShulName == shul.ShulName)
+                        {
+                            AddGabbaiToShul(request.GabbaiID,eachShul.ShulID);
+                            Console.WriteLine("REQUEST BY ADD GABAI: " + eachShul.ShulName + " " + request.GabbaiID);
+                        }
+                    }
 
                 }
 
@@ -356,8 +386,7 @@ namespace Super_Jew_2._0.Backend.Database
 
                 command.ExecuteNonQuery();
             }
-
-            AddShul(shul);
+            
         }
 
         public static bool AddShul(Shul shul)
@@ -367,7 +396,7 @@ namespace Super_Jew_2._0.Backend.Database
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
-
+                
                 command.Parameters.AddWithValue("inputShulID", shul.ShulID);
                 command.Parameters.AddWithValue("inputName", shul.ShulName);
                 command.Parameters.AddWithValue("inputLocation", shul.Location);
@@ -409,6 +438,26 @@ namespace Super_Jew_2._0.Backend.Database
         //                MaarivTime = reader.GetString("MaarivTime"),
 
         //            };
+
+        //EVENTS
+        public static bool CreateEventDB(int shulID, string eventName, string timeOfEvent, string location, string subscription)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("CreateEvent", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("inputShulID", shulID);
+                command.Parameters.AddWithValue("inputEventName", eventName);
+                command.Parameters.AddWithValue("inputTimeOfEvent", timeOfEvent);
+                command.Parameters.AddWithValue("inputLocation", location);
+                command.Parameters.AddWithValue("inputSubscription", subscription);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
 
 
         //        }

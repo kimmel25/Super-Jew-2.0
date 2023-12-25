@@ -30,6 +30,11 @@
         ShulService.RemoveShulFromUserProfile(UserService.CurrentUser.UserID, CurrentShul.ShulID); 
        // StateHasChanged();
     }
+    
+    private void GetShulEvents()
+    {
+        
+    }
 }
 
 @if (IsFullCard)
@@ -42,7 +47,11 @@
         <div class="data-field">Mincha Time: @CurrentShul.MinchaTime </div>
         <div class="data-field">Maariv Time: @CurrentShul.MaarivTime</div>
         <!-- data fields here -->
-
+        
+        
+        <!--CHANGE COLOR -->
+        <button class="btn btn-danger" @onclick="GetShulEvents">Events</button>
+        
         <button class="btn btn-danger" @onclick="RemoveShul">Remove</button>
     </div>
 }

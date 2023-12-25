@@ -4,6 +4,7 @@
 @using Super_Jew_2._0.Backend.Services
 @using Super_Jew_2._0.Backend.Database
 @using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.ShulRequests
 @using Super_Jew_2._0.Backend.ShulServices;
 @inject IJSRuntime JSRuntime
 
@@ -30,10 +31,29 @@ else
     // A message when no shuls are available
 }
 
+@if (gabbaisSubmittedRequests.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var request in gabbaisSubmittedRequests)
+            {
+                <div class="col-sm-4">
+                    <ShulRequestCard Request="@request" OnRemove="HandleRemoveRequest" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No requests available to display.</p>
+}
+
 
 @code {
     //ShulService ShulService = new ShulService();
-    List<Shul> shulList = new List<Shul>(); 
+    List<Shul> shulList = new List<Shul>();
+    List<ShulRequest> gabbaisSubmittedRequests;
     User user;
     //UserService UserService = new UserService();
     User currentuser = UserService.CurrentUser; 
@@ -45,26 +65,27 @@ else
     protected override void OnInitialized()
     {
 
-
+        
         shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
         if (shulList.Count == 0)
         {
             //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
             throw new InvalidOperationException("Shul List is empty"); 
         }
-        
+
+        //check if greater than zero
+        gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(UserService.CurrentUser.UserID);
+        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
     
 
     private async Task HandleSubmit(Shul updatedShul)
     {
-        Console.WriteLine("SHUL ID --");
         Console.WriteLine(updatedShul.ShulID);
         
         if (ShulService.UpdateShulDetails(updatedShul))
         {
             await JSRuntime.InvokeVoidAsync("alert", "Shul Updated!");
-                //
         }
         else
         {
@@ -72,6 +93,11 @@ else
         }
             
     // Code to handle the submission of the updated shul information
+    }
+    
+    private async Task HandleRemoveRequest(int requestId)
+    {
+        ShulService.ClearGabbaiShulAdditionStatus(requestId);
     }
 
 
