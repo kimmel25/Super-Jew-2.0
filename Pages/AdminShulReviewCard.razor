@@ -1,0 +1,45 @@
+﻿@using Super_Jew_2._0.Backend.ShulRequests
+@code {
+    [Parameter]
+    public ShulRequest Request { get; set; }
+
+    [Parameter]
+    public EventCallback<(int requestId, string decision)> OnDecisionMade { get; set; }
+
+    private async Task ApproveRequest()
+    {
+        if (Request != null)
+        {
+            await OnDecisionMade.InvokeAsync((Request.RequestID, "Approved"));
+        }
+    }
+
+    private async Task RejectRequest()
+    {
+        if (Request != null)
+        {
+            await OnDecisionMade.InvokeAsync((Request.RequestID, "Rejected"));
+        }
+    }
+}
+
+        <!-- ADD SHUL DETAILS -->
+
+@if (Request != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Request.ShulName</h5>
+            <!-- Display other ShulRequest details here -->
+            
+            
+            
+            <button class="btn btn-success" @onclick="ApproveRequest">Approve</button>
+            <button class="btn btn-danger" @onclick="RejectRequest">Reject</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Request information is not available at this moment.</p>
+}

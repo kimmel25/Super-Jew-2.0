@@ -52,9 +52,9 @@ namespace Super_Jew_2._0.Backend.Services
         //Methods for Gabbai's Only!
 
         //query table by gabbai id
-        public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
+        public static List<ShulRequest> GetGabaiShulAdditionRequests(int gabaiId)
         {
-            return null;
+            return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabaiId);
         }
         
         //gabbai clicks on page to submit a request to add a shul
@@ -92,7 +92,7 @@ namespace Super_Jew_2._0.Backend.Services
         //Methods for Admins Only!
 
         //sends back all shul requests made by gabbai 
-        public static AdminReview GetGabbaiRequestsSubmissionsForAdmin()
+        public static List<ShulRequest> GetGabbaiRequestsSubmissionsForAdmin()
         {
             return DataBaseConnectivity.GetGabbaiRequestsForAdmin();
         }

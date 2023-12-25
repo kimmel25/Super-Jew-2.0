@@ -27,7 +27,7 @@
         <div class="row">
 
             <div class="col-md-4 mb-3">
-                <label for="shul">Shul to be Added:</label>
+                <label for="shul">Shul Name:</label>
                 <InputText class="form-control" id="shul_name" @bind-Value="shul_name" required />
             </div>
             <div class="col-md-4 mb-3">
@@ -87,7 +87,7 @@
         shulrequest.Denomination = denomination; 
         shulrequest.ContactInfo = name + ", " + phone_number + ", " + email;
        
-
+        
         Nav.NavigateTo("/gabbairegistration");
     }
 }

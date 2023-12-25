@@ -233,10 +233,10 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //for admin, gets all of the submitted shuls
-        public static AdminReview GetGabbaiRequestsForAdmin()
+        public static List<ShulRequest> GetGabbaiRequestsForAdmin()
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
-            AdminReview shulsToReview = new AdminReview();
+            //AdminReview shulsToReview = new AdminReview();
 
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetGabbaiRequestsForAdmin", connection))
@@ -260,15 +260,10 @@ namespace Super_Jew_2._0.Backend.Database
                     };
 
                     shulRequests.Add(pending);
-
-                    shulsToReview = new AdminReview
-                    {
-                        Requests = shulRequests
-                    };
                 }
             }
 
-            return shulsToReview;
+            return shulRequests;
         }
 
         public static List<Shul> GetGabbaiShuls(string userId)
@@ -280,8 +275,7 @@ namespace Super_Jew_2._0.Backend.Database
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("userId", userId);
-
-
+                
                 connection.Open();
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
@@ -304,8 +298,7 @@ namespace Super_Jew_2._0.Backend.Database
             
             return gabbaiShuls;
         }
-
-
+        
         public static void AdminDecisionOnShul(int requestID, string decision)
         {
             Shul shul = new Shul();

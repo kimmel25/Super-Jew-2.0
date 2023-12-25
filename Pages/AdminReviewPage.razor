@@ -1,0 +1,52 @@
+﻿@page "/adminreviewpage"
+
+@using Super_Jew_2._0.Backend.ShulRequests
+@using Super_Jew_2._0.Backend.ShulServices
+@using Super_Jew_2._0.Backend.Services
+@inject ShulService ShulService
+@inject UserService UserService
+
+<h3>Admin Review Page</h3>
+
+@if (gabbaisSubmittedRequests != null)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var request in gabbaisSubmittedRequests)
+            {
+                if (request != null)
+                {
+                    <div class="col-sm-4">
+                        <AdminShulReviewCard Request="@request" OnDecisionMade="HandleDecision" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No requests available for review.</p>
+}
+
+@code {
+    private List<ShulRequest> gabbaisSubmittedRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+        await RefreshRequests();
+    }
+
+    private async Task RefreshRequests()
+    {
+    // Logic to load requests, similar to RefreshUserShuls
+    }
+
+    private async Task HandleDecision((int requestId, string decision) decisionInfo)
+    {
+    // Call the backend service with the decision
+        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision);
+        await RefreshRequests(); // Refresh the list to reflect the changes
+    }
+}

@@ -26,7 +26,7 @@ namespace Super_Jew_2._0
 
             Console.WriteLine("Shul Requests:");
 
-            foreach (var shulRequest in adminReview.Requests)
+            foreach (var shulRequest in adminReview)
             {
                 Console.WriteLine($"RequestID: {shulRequest.RequestID}");
                 Console.WriteLine($"GabbaiID: {shulRequest.GabbaiID}");
@@ -193,6 +193,7 @@ namespace Super_Jew_2._0
             
             //Shor Yoshuv,1 CedarLawn,Yeshivish kinda,"Rabbi Jaeger, (917)-223-Torah","5 am, 7:45 am",1:30 pm,"9:00 pm, 10:00 pm"
             
+            /*
             var shul1 = new Shul
             {
                 ShulID = 4,
@@ -205,7 +206,38 @@ namespace Super_Jew_2._0
                 MaarivTime = "9:00 pm, 10:00 pm"
             };
             
-            ShulService.UpdateShulDetails(shul1);
+            ShulService.UpdateShulDetails(shul1); */
+
+            var shul1 = new ShulRequest()
+            {
+                RequestID = 0,
+                ApprovalStatus = "Awaiting Decision",
+                GabbaiID = 4,
+                ShulName = "Dinky Pinky Test",
+                Location = "1 CedarLawn",
+                Denomination = "Yeshivish kinda",
+                ContactInfo = "Rabbi Jaeger, (917)-223-Torah",
+                ShachrisTime = "5 am, 7:45 am",
+                MinchaTime = "1:30 pm, 2:30pm",
+                MaarivTime = "9:00 pm, 10:00 pm"
+            };
+
+            /*
+            ShulService.InitiateGabaiShulAddition(4, shul1);
+            
+            List<ShulRequest> gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(3);
+            foreach (var shulRequest in gabbaisSubmittedRequests)
+            {
+                Console.WriteLine(shulRequest.ShulName);
+            } */
+
+            Console.WriteLine("GABBI RTESR MAIN");
+            List<ShulRequest> gabbaisSubmittedRequests2 = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+            foreach (var shulRequest in gabbaisSubmittedRequests2)
+            {
+                Console.WriteLine(shulRequest.ShulName);
+            }
+
 
 
             //Blazor Code
