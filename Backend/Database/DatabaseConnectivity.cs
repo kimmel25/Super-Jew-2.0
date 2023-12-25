@@ -2,6 +2,7 @@
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 namespace Super_Jew_2._0.Backend.Database
@@ -426,6 +427,26 @@ namespace Super_Jew_2._0.Backend.Database
         //                MaarivTime = reader.GetString("MaarivTime"),
 
         //            };
+
+        //EVENTS
+        public static bool CreateEventDB(int shulID, string eventName, string timeOfEvent, string location, string subscription)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("CreateEvent", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("inputShulID", shulID);
+                command.Parameters.AddWithValue("inputEventName", eventName);
+                command.Parameters.AddWithValue("inputTimeOfEvent", timeOfEvent);
+                command.Parameters.AddWithValue("inputLocation", location);
+                command.Parameters.AddWithValue("inputSubscription", subscription);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
 
 
         //        }
