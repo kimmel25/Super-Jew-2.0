@@ -288,6 +288,7 @@ namespace Super_Jew_2._0.Backend.Database
                 {
                     var shulToAdd = new Shul
                     {
+                        ShulID = reader.GetInt32("ShulId"),
                         ShulName = reader.GetString("Name"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
