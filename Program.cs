@@ -85,7 +85,7 @@ namespace Super_Jew_2._0
         private static void GetUserShuls(string username, string password)
         {
             Console.WriteLine("Getting followed Shuls for user");
-            User user1 = ShulService.GetFollowedShulsForUser(username, password);
+            User? user1 = ShulService.GetFollowedShulsForUser(username, password);
             Console.WriteLine(user1.UserID);
             Console.WriteLine("Shuls For Username:" + user1.Username);
 
@@ -98,7 +98,7 @@ namespace Super_Jew_2._0
 
         private static void addShulToUserProfile(string username, string password, int shulId)
         {
-            User user1 = ShulService.GetFollowedShulsForUser(username, password);
+            User? user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
 
 
@@ -120,7 +120,7 @@ namespace Super_Jew_2._0
 
         private static void removeShulFromUserProfile(string username, string password, int shulId)
         {
-            User user1 = ShulService.GetFollowedShulsForUser(username, password);
+            User? user1 = ShulService.GetFollowedShulsForUser(username, password);
             List<Shul> user1Shuls = user1.FollowedShuls;
 
 
