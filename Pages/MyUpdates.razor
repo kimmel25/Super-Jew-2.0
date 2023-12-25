@@ -31,7 +31,7 @@ else
     // A message when no shuls are available
 }
 
-@if (gabbaisSubmittedRequests != null && gabbaisSubmittedRequests.Count > 0)
+@if (gabbaisSubmittedRequests.Count > 0)
 {
     <div class="container">
         <div class="row">
@@ -75,6 +75,7 @@ else
 
         //check if greater than zero
         gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(UserService.CurrentUser.UserID);
+        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
     
 

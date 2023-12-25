@@ -8,13 +8,13 @@
 
 <h3>Admin Review Page</h3>
 
-@if (gabbaisSubmittedRequests != null)
+@if (gabbaisSubmittedRequests.Count > 0)
 {
     <div class="container">
         <div class="row">
             @foreach (var request in gabbaisSubmittedRequests)
             {
-                if (request != null)
+                if (request.ApprovalStatus == "Awaiting Decision")
                 {
                     <div class="col-sm-4">
                         <AdminShulReviewCard Request="@request" OnDecisionMade="HandleDecision" />
@@ -26,7 +26,9 @@
 }
 else
 {
-    <p>No requests available for review.</p>
+    <div class="card-title">
+        <h5 class="card-title">No Requests at the moment!</h5>
+    </div>
 }
 
 @code {
@@ -35,6 +37,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+        Console.WriteLine("COUNT IN INIT: " + gabbaisSubmittedRequests.Count);
         await RefreshRequests();
     }
 

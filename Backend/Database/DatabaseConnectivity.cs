@@ -219,12 +219,10 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
+                        ApprovalStatus = reader.GetString("ApprovalStatus")
                     };
 
                     shulRequests.Add(pending);
-
-
-
                 }
             }
 
@@ -257,6 +255,7 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
+                        ApprovalStatus = reader.GetString("ApprovalStatus")
                     };
 
                     shulRequests.Add(pending);
