@@ -179,6 +179,8 @@ namespace Super_Jew_2._0
 
             //ShulService.CreateNewUserAccount(testUser, "test123");
             User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");
+            ShulService.UpgradeUserToGabbai(resultUser.UserID);
+            
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");

@@ -218,9 +218,8 @@ namespace Super_Jew_2._0.Backend.Database
             using (var command = new MySqlCommand("UpgradeUserToGabbai", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("userId", userId);
+                command.Parameters.AddWithValue("_userId", userId);
                 connection.Open();
-                using var reader = command.ExecuteReader();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
                 
@@ -234,7 +233,6 @@ namespace Super_Jew_2._0.Backend.Database
         
         //this should function similar to AddShulToUser. procedure is created.
         
-        //TODO make method to transform User into Gabbai
         public static bool GabbaiAddShulRequest(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
