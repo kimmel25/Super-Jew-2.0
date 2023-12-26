@@ -25,37 +25,63 @@ namespace Super_Jew_2._0.Backend.Database
 
                 connection.Open();
                 using var reader = command.ExecuteReader();
+                
+                
                 while (reader.Read())
+                    {
+            user ??= new User
+            {
+                UserID = reader.GetInt32("UserID"),
+                Username = reader.GetString("Username"),
+                DateOfBirth = reader.GetString("DateOfBirth"),
+                ReligiousDenomination = reader.GetString("ReligiousDenomination"),
+                AccountType = reader.GetString("AccountType"),
+                FollowedShuls = new List<Shul>() // Initialize the FollowedShuls list
+            };
+
+            if (!reader.IsDBNull(reader.GetOrdinal("ShulID")))
+            {
+                Shul shul = new Shul
                 {
+                    ShulID = reader.GetInt32("ShulID"),
+                    ShulName = reader.GetString("ShulName"),
+                    Location = reader.GetString("Location"),
+                    Denomination = reader.GetString("Denomination"),
+                    ContactInfo = reader.GetString("ContactInfo"),
+                    ShachrisTime = reader.GetString("ShachrisTime"),
+                    MinchaTime = reader.GetString("MinchaTime"),
+                    MaarivTime = reader.GetString("MaarivTime"),
+                    shulEvents = new List<ShulEvent>() // Initialize the shulEvents list
+                };
+                user.FollowedShuls.Add(shul);
+            }
+        }
 
-                    user ??= new User
+        // Advance to the next result set
+        if (reader.NextResult())
+        {
+            // Second result set: Events
+            while (reader.Read())
+            {
+                // Assuming you have a way to find the right shul object in user.FollowedShuls
+                // For example, by ShulID
+                int shulId = reader.GetInt32("ShulID");
+                Shul shul = user.FollowedShuls.FirstOrDefault(s => s.ShulID == shulId);
+                if (shul != null)
+                {
+                    ShulEvent sEvent = new ShulEvent()
                     {
-                        UserID = reader.GetInt32("UserID"),
-                        Username = reader.GetString("Username"),
-                        //Name = reader.GetString("Name"),
-                        DateOfBirth = reader.GetString("DateOfBirth"),
-                        ReligiousDenomination = reader.GetString("ReligiousDenomination"),
-                        AccountType = reader.GetString("AccountType")
+                        ShulID = shulId,
+                        EventName = reader.GetString("EventName"),
+                        TimeOfEvent = reader.GetString("TimeOfEvent"),
+                        Location = reader.GetString("Location"),
+                        Subscription = reader.GetString("Subscription"),
+                        Description = reader.GetString("Description"),
                     };
-
-                    if (!reader.IsDBNull(reader.GetOrdinal("ShulID")))
-                    {
-                        Shul? shul = new Shul
-                        {
-                            ShulID = reader.GetInt32("ShulID"),
-                            ShulName = reader.GetString("Name"),
-                            Location = reader.GetString("Location"),
-                            Denomination = reader.GetString("Denomination"),
-                            ContactInfo = reader.GetString("ContactInfo"),
-                            ShachrisTime = reader.GetString("ShachrisTime"),
-                            MinchaTime = reader.GetString("MinchaTime"),
-                            MaarivTime = reader.GetString("MaarivTime")
-                        };
-                        user.FollowedShuls.Add(shul);
-
-                    }
-                   
+                    shul.shulEvents.Add(sEvent);
                 }
+            }
+        }
 
                 return user;
             }
@@ -95,35 +121,18 @@ namespace Super_Jew_2._0.Backend.Database
                     var shul = new Shul
                     {
                         ShulID = reader.GetInt32("ShulID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
-                        //shulEvents = new List<ShulEvent>()
                     };
-
-                    //if (!reader.IsDBNull(reader.GetOrdinal("EventID")))
-                    //{
-                    //    Event? shulEvent = new Event
-                    //    {
-                    //        ShulID = reader.GetInt32("ShulID"),
-                    //        EventName = reader.GetString("EventName"),
-                    //        TimeOfEvent = reader.GetString("TimeOfEvent"),
-                    //        Location = reader.GetString("Location"),
-                    //        Subscription = reader.GetString("Subscription"),
-                    //        Description = reader.GetString("Description"),
-                    //    };
-                    //    shul.shulEvents.Add(shulEvent);
+                    
                     availableShuls.Add(shul);
-                    //}
-
-
                 }
-
-
+                
                 return availableShuls;
             }
         }
@@ -208,7 +217,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var shulToAdd = new Shul
                     {
                         ShulID = reader.GetInt32("ShulId"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -287,7 +296,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var pending = new ShulRequest
                     {
                         RequestID = reader.GetInt32("RequestID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -324,7 +333,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         RequestID = reader.GetInt32("RequestID"),
                         GabbaiID = reader.GetInt32("UserID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -372,7 +381,7 @@ namespace Super_Jew_2._0.Backend.Database
                         {
                             shul = new Shul
                             {
-                                ShulName = reader.GetString("Name"),
+                                ShulName = reader.GetString("ShulName"),
                                 Location = reader.GetString("Location"),
                                 Denomination = reader.GetString("Denomination"),
                                 ContactInfo = reader.GetString("ContactInfo"),

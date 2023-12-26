@@ -234,12 +234,33 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shulRequest.ShulName);
             } */
 
+            /*
             Console.WriteLine("dinkys: ");
             List<Shul> dinkysShuls = ShulService.GetGabbaisShuls("4");
             foreach (var shul in dinkysShuls)
             {
                 Console.WriteLine(shul.ShulName);
+            } */
+
+            User userToTestEvent = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+
+            List<Shul> userJohnsShuls = userToTestEvent.FollowedShuls;
+
+            foreach (var shul in userJohnsShuls)
+            {
+                Console.WriteLine(shul.ShulName);
             }
+            
+            /*
+            foreach (var shul in userJohnsShuls)
+            {
+                Console.WriteLine("Shul Name: " + shul.ShulName);
+                Console.WriteLine("Events: ");
+                foreach (var eShulEvent in shul.shulEvents)
+                {
+                    Console.WriteLine("Event Name: " + eShulEvent.EventName);
+                }
+            } */
 
             
             

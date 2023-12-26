@@ -38,6 +38,8 @@
     {
         ShulState.CurrentShul = CurrentShul; // Set the current shul
 
+        //Fake Test shulls data
+        /*
         ShulEvent shulEvent1 = new ShulEvent
         {
             EventName = "Avoas Ubanim",
@@ -52,11 +54,10 @@
             TimeOfEvent = "2/5 2024",
             Location = "Keter Torah",
             Subscription = "www.ourshul.com/dinnersignup",
-        };
-        
-        
+        }; 
         ShulState.CurrentShul.shulEvents.Add(shulEvent1);
-        ShulState.CurrentShul.shulEvents.Add(shulEvent2);
+        ShulState.CurrentShul.shulEvents.Add(shulEvent2); */
+        
         Nav.NavigateTo("/shulevents");
     }
 }
