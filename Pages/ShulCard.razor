@@ -30,6 +30,7 @@
     {
         //user = ShulService.GetFollowedShulsForUser(UserService.CurrentUser.Username, UserService.UserPassword);
         ShulService.RemoveShulFromUserProfile(UserService.CurrentUser.UserID, CurrentShul.ShulID); 
+        Nav.NavigateTo("/myshuls");
        // StateHasChanged();
     }
     
@@ -79,6 +80,5 @@
 }
 else
 {
-
     <div class="card-name-box" @onclick="CardClicked">@CurrentShul.ShulName</div>
 }
