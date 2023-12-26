@@ -8,6 +8,7 @@
 @inject ShulService ShulService
 @inject NavigationManager NavigationManager
 @inject UserService UserService
+@inject NavigationManager Nav
 
 <h3>Login</h3>
 
@@ -23,6 +24,7 @@
 
     private async Task HandleLogin()
     {
+        
         var user =  ShulService.GetFollowedShulsForUser(loginModel.Username, loginModel.Password);
         Console.WriteLine("out of shul login method");
         if (user != null)
@@ -45,6 +47,6 @@
 
     private void HandleCreateAccount()
     {
-        // Logic for handling account creation will go here
+        Nav.NavigateTo("/createaccount");
     }
 }

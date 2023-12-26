@@ -12,7 +12,7 @@ namespace Super_Jew_2._0.Backend.Database
     {
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
-
+        
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -74,12 +74,39 @@ namespace Super_Jew_2._0.Backend.Database
                                 ShachrisTime = reader.GetString("ShachrisTime"),
                                 MinchaTime = reader.GetString("MinchaTime"),
                                 MaarivTime = reader.GetString("MaarivTime")
+                                shulEvents = new List<ShulEvent>() // Do it in the ShulEvent C-Tor just like User
+
                             };
                             user.FollowedShuls.Add(shul);
 
                         }
 
                     }
+        // Advance to the next result set
+        if (reader.NextResult())
+        {
+            // Second result set: Events
+            while (reader.Read())
+            {
+                // Assuming you have a way to find the right shul object in user.FollowedShuls
+                // For example, by ShulID
+                int shulId = reader.GetInt32("ShulID");
+                Shul shul = user.FollowedShuls.FirstOrDefault(s => s.ShulID == shulId);
+                if (shul != null)
+                {
+                    ShulEvent sEvent = new ShulEvent()
+                    {
+                        ShulID = shulId,
+                        EventName = reader.GetString("EventName"),
+                        TimeOfEvent = reader.GetString("TimeOfEvent"),
+                        Location = reader.GetString("Location"),
+                        Subscription = reader.GetString("Subscription"),
+                        Description = reader.GetString("Description"),
+                    };
+                    shul.shulEvents.Add(sEvent);
+                }
+            }
+        }
 
                     return user;
                 }
@@ -152,28 +179,11 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
-                        shulEvents = new List<Event>()
                     };
-
-                    //if (!reader.IsDBNull(reader.GetOrdinal("EventID")))
-                    //{
-                    //    Event? shulEvent = new Event
-                    //    {
-                    //        ShulID = reader.GetInt32("ShulID"),
-                    //        EventName = reader.GetString("EventName"),
-                    //        TimeOfEvent = reader.GetString("TimeOfEvent"),
-                    //        Location = reader.GetString("Location"),
-                    //        Subscription = reader.GetString("Subscription"),
-                    //        Description = reader.GetString("Description"),
-                    //    };
-                    //    shul.shulEvents.Add(shulEvent);
+                    
                     availableShuls.Add(shul);
-                    //}
-
-
                 }
-
-
+                
                 return availableShuls;
             }
         }
@@ -216,7 +226,6 @@ namespace Super_Jew_2._0.Backend.Database
         
         //this should function similar to AddShulToUser. procedure is created.
         
-        //TODO make method to transform User into Gabbai
         public static bool GabbaiAddShulRequest(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -259,7 +268,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var shulToAdd = new Shul
                     {
                         ShulID = reader.GetInt32("ShulId"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -338,7 +347,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var pending = new ShulRequest
                     {
                         RequestID = reader.GetInt32("RequestID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -375,7 +384,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         RequestID = reader.GetInt32("RequestID"),
                         GabbaiID = reader.GetInt32("UserID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -423,7 +432,7 @@ namespace Super_Jew_2._0.Backend.Database
                         {
                             shul = new Shul
                             {
-                                ShulName = reader.GetString("Name"),
+                                ShulName = reader.GetString("ShulName"),
                                 Location = reader.GetString("Location"),
                                 Denomination = reader.GetString("Denomination"),
                                 ContactInfo = reader.GetString("ContactInfo"),
