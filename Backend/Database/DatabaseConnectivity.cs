@@ -166,7 +166,7 @@ namespace Super_Jew_2._0.Backend.Database
         //Methods for Gabbais Only!
         
         //this should function similar to AddShulToUser. procedure is created.
-        public static bool GabbaiAddShulRequest(ShulRequest shulRequest)
+        public static bool GabbaiAddShulRequest(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))

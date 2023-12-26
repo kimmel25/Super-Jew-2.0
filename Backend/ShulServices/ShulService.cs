@@ -83,7 +83,7 @@ namespace Super_Jew_2._0.Backend.Services
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
             
-            return DataBaseConnectivity.GabbaiAddShulRequest(shulRequest);
+            return DataBaseConnectivity.GabbaiAddShulRequest(gabaiId, shulRequest);
         }
 
         
@@ -114,12 +114,8 @@ namespace Super_Jew_2._0.Backend.Services
         }
         
         
-
-        //TODO query table by gabbai id
-        public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
-        {
-            return null;
-        }
+        
+        
        
         /**
          * @param The Shul object that had its details updated by the Gabbai. Method sends it to the backend for the Database to update it.
