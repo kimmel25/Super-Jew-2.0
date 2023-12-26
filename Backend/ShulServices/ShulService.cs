@@ -20,7 +20,7 @@ namespace Super_Jew_2._0.Backend.Services
          * @param username: The username of the new Users account
          * @param password: Password the user sets when creating the account
          * This Method creats a new user account from scratch for a new user
-         * @returns boolean: True for a proper update, false if some sort is issue occured.
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
          */
         public static bool CreateNewUserAccount(User user, string password)
         {
@@ -66,7 +66,7 @@ namespace Super_Jew_2._0.Backend.Services
         * @param userID: An int representing the users ID, generated in the database and held in the User object
         * @param shulID: An int representing the shuls ID, generated in the database and held in the Shul object
         * Updates the Database when a shul is added to the users list of followed shuls
-        * @returns boolean: True for a proper update, false if some sort is issue occured.
+        * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
         */
         
         public static bool AddShulToUserProfile(int userId, int shulId)
@@ -78,13 +78,23 @@ namespace Super_Jew_2._0.Backend.Services
        * @param userID: An int representing the users ID, generated in the database and held in the User object
        * @param shulID: An int representing the shuls ID, generated in the database and held in the Shul object
        * Updates the Database when a shul is removed from the users list of followed shuls
-       * @returns boolean: True for a proper update, false if some sort is issue occured.
+       * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
        */
 
         public static bool RemoveShulFromUserProfile(int userId, int shulId)
         {
             return DataBaseConnectivity.RemoveShulFromUser(userId, shulId);
             //return DummyData.DummyData.RemoveShulFromUserProfile(userId, shulId);
+        }
+
+        /**
+         * @param userID: An int representing the users ID, generated in the database and held in the User object
+         * Turns a regular user into a Gabbai and affords him all the functionality a Gabbai has
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
+         */
+        public static bool UpgradeUserToGabbai(int userId)
+        {
+            return DataBaseConnectivity.UpgradeUserToGabbai(userId);
         }
         
         //Methods for Gabbai's Only!
@@ -96,7 +106,7 @@ namespace Super_Jew_2._0.Backend.Services
          * @param: An int representing the gabbais ID, generated in the database and held in the User object
          * @param shulRequest: A ShulRequest object which represents a request made by a Gabbai to add a shul.
          * This Method updates the Database to hold all the most current requests until an Admin approves or denys them
-         * @returns boolean: True for a proper update, false if some sort is issue occured.
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
          */
         
         public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest) 
@@ -125,7 +135,7 @@ namespace Super_Jew_2._0.Backend.Services
         /**
          * @param: An int representing the ID of the request, generated in the database and held in the shulRequest object
          * After the admin aproves or denys the Gabbais request, the pending request is cleared.
-         * @returns boolean: True for a proper update, false if some sort is issue occured.
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
          * 
          */
         public static bool ClearGabbaiShulAdditionStatus(int requestId)
@@ -139,7 +149,7 @@ namespace Super_Jew_2._0.Backend.Services
        
         /**
          * @param The Shul object that had its details updated by the Gabbai. Method sends it to the backend for the Database to update it.
-         * @returns boolean: True for a proper update, false if some sort is issue occured.
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
          */
 
         public static bool UpdateShulDetails(Shul shulToUpdate)
