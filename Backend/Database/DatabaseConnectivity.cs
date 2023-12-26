@@ -12,7 +12,7 @@ namespace Super_Jew_2._0.Backend.Database
     {
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
-        
+
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -41,7 +41,7 @@ namespace Super_Jew_2._0.Backend.Database
                 {
                     hashedPassword = PasswordHasher.HashPassword(password, salt);
                 }
-                
+
                 using (var command = new MySqlCommand("GetUserByPassword", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -82,31 +82,33 @@ namespace Super_Jew_2._0.Backend.Database
                         }
 
                     }
-        // Advance to the next result set
-        if (reader.NextResult())
-        {
-            // Second result set: Events
-            while (reader.Read())
-            {
-                // Assuming you have a way to find the right shul object in user.FollowedShuls
-                // For example, by ShulID
-                int shulId = reader.GetInt32("ShulID");
-                Shul shul = user.FollowedShuls.FirstOrDefault(s => s.ShulID == shulId);
-                if (shul != null)
-                {
-                    ShulEvent sEvent = new ShulEvent()
+
+                    // Advance to the next result set
+                    if (reader.NextResult())
                     {
-                        ShulID = shulId,
-                        EventName = reader.GetString("EventName"),
-                        TimeOfEvent = reader.GetString("TimeOfEvent"),
-                        Location = reader.GetString("Location"),
-                        Subscription = reader.GetString("Subscription"),
-                        Description = reader.GetString("Description"),
-                    };
-                    shul.shulEvents.Add(sEvent);
-                }
-            }
-        }
+                        // Second result set: Events
+                        while (reader.Read())
+                        {
+                            // Assuming you have a way to find the right shul object in user.FollowedShuls
+                            // For example, by ShulID
+                            int shulId = reader.GetInt32("ShulID");
+                            Shul shul = user.FollowedShuls.FirstOrDefault(s => s.ShulID == shulId);
+                            if (shul != null)
+                            {
+                                ShulEvent sEvent = new ShulEvent
+                                {
+                                    EventId = reader.GetInt32("EventID"),
+                                    ShulID = shulId,
+                                    EventName = reader.GetString("EventName"),
+                                    TimeOfEvent = reader.GetString("TimeOfEvent"),
+                                    Location = reader.GetString("Location"),
+                                    Subscription = reader.GetString("Subscription"),
+                                    Description = reader.GetString("Description"),
+                                };
+                                shul.shulEvents.Add(sEvent);
+                            }
+                        }
+                    }
 
                     return user;
                 }
@@ -115,7 +117,9 @@ namespace Super_Jew_2._0.Backend.Database
 
 
 
-        public static bool CreateNewUserAccount(User user, string hashedPassword, string salt) //TODO maybe check for duplicate usernames and return false
+        public static bool
+            CreateNewUserAccount(User user, string hashedPassword,
+                string salt) //TODO maybe check for duplicate usernames and return false
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("CreateNewUser", connection))
@@ -129,12 +133,12 @@ namespace Super_Jew_2._0.Backend.Database
                 command.Parameters.AddWithValue("InputDateOfBirth", user.DateOfBirth);
                 command.Parameters.AddWithValue("InputReligiousDenomination", user.Name);
                 command.Parameters.AddWithValue("InputAccountType", user.AccountType);
-                
+
                 var result = command.ExecuteNonQuery();
                 return result > 0;
 
-                
-                
+
+
             }
         }
 
@@ -180,15 +184,15 @@ namespace Super_Jew_2._0.Backend.Database
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
                     };
-                    
+
                     availableShuls.Add(shul);
                 }
-                
+
                 return availableShuls;
             }
         }
-        
-       
+
+
 
         public static bool AddShulToUser(int userId, int shulId)
         {
@@ -204,7 +208,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0;
             }
         }
-        
+
         public static bool RemoveShulFromUser(int userId, int shulId)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -219,8 +223,8 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0; // returns true if it affected at least one record
             }
         }
-        
-        
+
+
 
         public static bool UpgradeUserToGabbai(int userId)
         {
@@ -232,7 +236,7 @@ namespace Super_Jew_2._0.Backend.Database
                 connection.Open();
                 var result = command.ExecuteNonQuery();
                 return result > 0;
-                
+
 
             }
         }
@@ -240,9 +244,9 @@ namespace Super_Jew_2._0.Backend.Database
 
 
         //Methods for Gabbais Only!
-        
+
         //this should function similar to AddShulToUser. procedure is created.
-        
+
         public static bool GabbaiAddShulRequest(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -266,11 +270,11 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
-        
+
         public static List<Shul> GetGabbaiShuls(string userId)
         {
             List<Shul> gabbaiShuls = new List<Shul>();
-        
+
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetGabbaiShuls", connection))
             {
@@ -293,11 +297,11 @@ namespace Super_Jew_2._0.Backend.Database
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
                     };
-                    
+
                     gabbaiShuls.Add(shulToAdd);
                 }
             }
-            
+
             return gabbaiShuls;
         }
 
@@ -347,7 +351,7 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        
+
         public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
@@ -418,7 +422,7 @@ namespace Super_Jew_2._0.Backend.Database
             return shulRequests;
         }
 
-       
+
 
 
         public static void AdminDecisionOnShul(int requestID, string decision, ShulRequest request)
@@ -536,14 +540,12 @@ namespace Super_Jew_2._0.Backend.Database
         //EVENTS
         public static bool CreateEventDB(ShulEvent sEvent)
         {
-            //int shulID, string eventName, string timeOfEvent, string location, string subscription, string description
-            
+
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("CreateEvent", connection))
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("inputShulID", sEvent.ShulID);
                 command.Parameters.AddWithValue("inputEventName", sEvent.EventName);
                 command.Parameters.AddWithValue("inputTimeOfEvent", sEvent.TimeOfEvent);
@@ -557,22 +559,19 @@ namespace Super_Jew_2._0.Backend.Database
         }
 
 
-        //        }
+        public static bool DeleteEvent(int eventId)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("DeleteEvent", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("InputEventId", eventId);
 
-        //        return shul;
-        //    }
-        //}
 
-        /*
-                            gabbaiShuls.Add(shulToAdd);
-                        }
-                    }
-
-                    return gabbaiShuls;
-                }
+                var result = command.ExecuteNonQuery();
+                return result > 0;
             }
-
-                */
-        
+        }
     }
 }

@@ -179,10 +179,23 @@ namespace Super_Jew_2._0.Backend.Services
         {
             return null;
         }
+        
+        
 
         public static bool CreateEvent(ShulEvent sEvent)
         {
             return DataBaseConnectivity.CreateEventDB(sEvent);
         }
+        
+        /**
+         * @ sEventId: An int representing the event ID, generated in the database and held in the Event object
+         * Deletes an event from the Database
+         * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
+         */
+        public static bool DeleteEvent(int eventId)
+        {
+            return DataBaseConnectivity.DeleteEvent(eventId);
+        }
+        
     }
 }
