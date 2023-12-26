@@ -25,8 +25,7 @@ namespace Super_Jew_2._0.Backend.Database
 
                 connection.Open();
                 using var reader = command.ExecuteReader();
-                
-                
+
                 while (reader.Read())
                     {
             user ??= new User
