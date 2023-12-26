@@ -245,9 +245,7 @@ namespace Super_Jew_2._0
             
             //DataBaseConnectivity.AddGabbaiToShul(4, 30);
             
-
-
-
+            
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
@@ -266,6 +264,8 @@ namespace Super_Jew_2._0
             builder.Services.AddScoped<UserService>();
 
             builder.Services.AddTransient<ShulService>();
+            
+            builder.Services.AddScoped<ShulStateService>();
 
 
 

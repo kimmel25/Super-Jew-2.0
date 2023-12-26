@@ -32,7 +32,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         UserID = reader.GetInt32("UserID"),
                         Username = reader.GetString("Username"),
-                        //Name = reader.GetString("Name"),TODO add to database name
+                        //Name = reader.GetString("Name"),
                         DateOfBirth = reader.GetString("DateOfBirth"),
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
@@ -55,6 +55,7 @@ namespace Super_Jew_2._0.Backend.Database
 
                     }
 
+                   
                 }
 
                 return user;

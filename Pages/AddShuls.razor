@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager
 @using Super_Jew_2._0.Backend;
 @using Super_Jew_2._0.Backend.Services;
+@using Super_Jew_2._0.Backend.ShulServices
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 @using Super_Jew_2._0.Data;
 
@@ -25,7 +26,16 @@
 
 }
 
-<button class="button-92" role="button" @onclick="NavigateToGabbai">Don't see your Shul? Click here!</button>
+
+            @if (UserService.CurrentUser?.AccountType == "GABBAI")
+            {
+                <button class="button-92" role="button" @onclick="NavigateToGabbai">Don't see your Shul? Click here!</button>
+            }
+
+ @if (UserService.CurrentUser?.AccountType == "USER")
+ {
+     <button class="button-92" role="button" @onclick="UpgradeAccount">Want to become a Gabbai and Add your Shul?? Click Here!</button> 
+ }
 
 
 
@@ -51,5 +61,9 @@
         return shulName == expandedShulName;
     }
 
+    private void UpgradeAccount()
+    {
+        NavigationManager.NavigateTo("/becomeagabbai"); 
+    }
     
 }

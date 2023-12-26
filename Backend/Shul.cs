@@ -4,7 +4,7 @@ public class Shul
 {
     public Shul()
     {
-        shulEvents = new List<Event>();
+        shulEvents = new List<ShulEvent>();
     }
     
     public int ShulID { get; set; }
@@ -17,5 +17,5 @@ public class Shul
     public string MinchaTime { get; set; }
     public string MaarivTime { get; set; }
 
-    public List<Event> shulEvents { get; set; }
+    public List<ShulEvent> shulEvents { get; set; }
 } 

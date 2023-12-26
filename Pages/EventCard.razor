@@ -1,0 +1,32 @@
+﻿@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+@inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@inject NavigationManager Nav
+@inject ShulStateService ShulState
+
+@code {
+    [Parameter]
+    public Shul CurrentShul { get; set; }
+
+    // Removed IsFullCard and OnCardClick as they might not be needed for this scenario
+}
+
+@if (CurrentShul?.shulEvents != null && CurrentShul.shulEvents.Any())
+{
+    foreach (var shulEvent in CurrentShul.shulEvents)
+    {
+        <div class="event-card">
+            <div class="event-card-header">@shulEvent.EventName</div>
+            <div class="event-data-field">Time: @shulEvent.TimeOfEvent</div>
+            <div class="event-data-field">Location: @shulEvent.Location</div>
+            <div class="event-data-field">How to Sign up: @shulEvent.Subscription</div>
+             <!-- <div class="event-data-field">Description</div> -->
+            <!-- Add other fields as necessary -->
+        </div>
+    }
+}
+else
+{
+    <div>No events available for @CurrentShul.ShulName</div>
+}
