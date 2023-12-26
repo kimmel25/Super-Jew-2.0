@@ -14,16 +14,28 @@ namespace Super_Jew_2._0.Backend.Services
      */
     public class ShulService
     {
-    
+
         /**
-         * Gets the user objct with all the users followed shul.
-         * Essentially logging in
+         * @param username: The username of the new Users account
+         * @param password: Password the user sets when creating the account
+         * This Method creats a new user account from scratch for a new user
+         * @returns boolean: True for a proper update, false if some sort is issue occured.
+         */
+        public static bool CreateNewUserAccount(User user, string password)
+        {
+            return DataBaseConnectivity.CreateNewUserAccount(user, password);
+            //TODO Handle the Password and add it to the DB safely
+        }
+        
+        /**
          * @param username: The username of the Users account
          * @param password: Password to the users log in
-         * @Returns a user object mapped with information from the database results which return user info and the users shul info
+         * Gets the user objct with all the users' followed shuls.
+         * Essentially logging in to an existing account
+         * @returns a user object mapped with information from the database results which return user info and the users shul info
          * If a user has no followed shuls, that field in FollowedShuls field in the User object will be null
          */
-
+        
         public static User? GetFollowedShulsForUser(string username, string password)
         {
 
@@ -79,7 +91,7 @@ namespace Super_Jew_2._0.Backend.Services
          * @returns boolean: True for a proper update, false if some sort is issue occured.
          */
         
-        public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest) //TODO whats going on with Gabbai ID??
+        public static bool InitiateGabaiShulAddition(int gabaiId, ShulRequest shulRequest) 
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
             
@@ -92,7 +104,7 @@ namespace Super_Jew_2._0.Backend.Services
          * @returns a List of Shuls that Gabbai has control over. These are the shuls the Gabbai can edit.
          */
         
-        public static List<Shul> GetGabbaisShuls(string userId) 
+        public static List<Shul> GetGabbaisShuls(string userId) //TODO change from string to int
         {
             return DataBaseConnectivity.GetGabbaiShuls(userId);
             //return _dummyData.GetAllAvailableShuls();

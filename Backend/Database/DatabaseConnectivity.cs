@@ -32,7 +32,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         UserID = reader.GetInt32("UserID"),
                         Username = reader.GetString("Username"),
-                        //Name = reader.GetString("Name"),TODO add to database name
+                        Name = reader.GetString("Name"),
                         DateOfBirth = reader.GetString("DateOfBirth"),
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
@@ -58,6 +58,31 @@ namespace Super_Jew_2._0.Backend.Database
                 }
 
                 return user;
+            }
+        }
+        
+        
+        
+        public static bool CreateNewUserAccount(User user, string password)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("CreateNewUser", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                
+                command.Parameters.AddWithValue("_UserID", user.UserID);
+                command.Parameters.AddWithValue("userName", user.Username);
+                command.Parameters.AddWithValue("name", user.Name);
+                command.Parameters.AddWithValue("dateOfBirth", user.DateOfBirth);
+                command.Parameters.AddWithValue("ReligiousDenomination", user.Name);
+                command.Parameters.AddWithValue("AccountType", user.AccountType);
+                
+                var result = command.ExecuteNonQuery();
+                return result > 0;
+
+                
+                
             }
         }
 
@@ -166,6 +191,8 @@ namespace Super_Jew_2._0.Backend.Database
         //Methods for Gabbais Only!
         
         //this should function similar to AddShulToUser. procedure is created.
+        
+        //TODO make method to transform User into Gabbai
         public static bool GabbaiAddShulRequest(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -494,5 +521,6 @@ namespace Super_Jew_2._0.Backend.Database
             }
 
                 */
+        
     }
 }
