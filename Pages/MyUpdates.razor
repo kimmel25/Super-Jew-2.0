@@ -74,8 +74,8 @@ else
         }
 
         //check if greater than zero
-        gabbaisSubmittedRequests = ShulService.GetGabaiShulAdditionRequests(UserService.CurrentUser.UserID);
-        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForGabbai(UserService.CurrentUser.UserID);
+        Console.WriteLine("IN INIT FOR GABAI FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
     
 

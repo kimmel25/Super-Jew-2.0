@@ -12,8 +12,6 @@ namespace Super_Jew_2._0.Backend.Database
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
 
-        
-        
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -111,8 +109,6 @@ namespace Super_Jew_2._0.Backend.Database
                 return availableShuls;
             }
         }
-        
-       
 
         public static bool AddShulToUser(int userId, int shulId)
         {
@@ -146,11 +142,8 @@ namespace Super_Jew_2._0.Backend.Database
         }
 
 
-        
-        //Methods for Gabbais Only!
-        
-        //this should function similar to AddShulToUser. procedure is created.
-        public static bool GabbaiAddShulRequest(ShulRequest shulRequest)
+        //this should function similar to AddShulToUser. procedure is created. Needs to be tested
+        public static bool InitiateGabaiShulAddition(int userId, ShulRequest shulRequest)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetInitiatedGabbaiShul", connection))
@@ -173,42 +166,8 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
-        
-        public static List<Shul> GetGabbaiShuls(string userId)
-        {
-            List<Shul> gabbaiShuls = new List<Shul>();
 
-            using var connection = new MySqlConnection(ConnectionString);
-            using (var command = new MySqlCommand("GetGabbaiShuls", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("userId", userId);
-
-
-                connection.Open();
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var shulToAdd = new Shul
-                    {
-                        ShulID = reader.GetInt32("ShulId"),
-                        ShulName = reader.GetString("Name"),
-                        Location = reader.GetString("Location"),
-                        Denomination = reader.GetString("Denomination"),
-                        ContactInfo = reader.GetString("ContactInfo"),
-                        ShachrisTime = reader.GetString("ShachrisTime"),
-                        MinchaTime = reader.GetString("MinchaTime"),
-                        MaarivTime = reader.GetString("MaarivTime"),
-                    };
-                    
-                    gabbaiShuls.Add(shulToAdd);
-                }
-            }
-            
-            return gabbaiShuls;
-        }
-
-        public static bool ClearGabbaiShulAdditionStatus(int requestID)
+        public static bool ClearGabbaiAddedShul(int requestID)
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("ClearGabbaiAddedShul", connection))
@@ -254,7 +213,7 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        
+        //for gabbai
         public static List<ShulRequest> GetGabbaiRequestsForGabbai(int gabbaiID)
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
@@ -289,7 +248,7 @@ namespace Super_Jew_2._0.Backend.Database
         }
 
 
-        //Methods for Admins only
+        //for admin, gets all of the submitted shuls
         public static List<ShulRequest> GetGabbaiRequestsForAdmin()
         {
             List<ShulRequest> shulRequests = new List<ShulRequest>();
@@ -325,9 +284,39 @@ namespace Super_Jew_2._0.Backend.Database
             return shulRequests;
         }
 
-       
+        public static List<Shul> GetGabbaiShuls(string userId)
+        {
+            List<Shul> gabbaiShuls = new List<Shul>();
 
-
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetGabbaiShuls", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("userId", userId);
+                
+                connection.Open();
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var shulToAdd = new Shul
+                    {
+                        ShulID = reader.GetInt32("ShulId"),
+                        ShulName = reader.GetString("Name"),
+                        Location = reader.GetString("Location"),
+                        Denomination = reader.GetString("Denomination"),
+                        ContactInfo = reader.GetString("ContactInfo"),
+                        ShachrisTime = reader.GetString("ShachrisTime"),
+                        MinchaTime = reader.GetString("MinchaTime"),
+                        MaarivTime = reader.GetString("MaarivTime"),
+                    };
+                    
+                    gabbaiShuls.Add(shulToAdd);
+                }
+            }
+            
+            return gabbaiShuls;
+        }
+        
         public static void AdminDecisionOnShul(int requestID, string decision, ShulRequest request)
         {
             

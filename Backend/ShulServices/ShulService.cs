@@ -83,7 +83,7 @@ namespace Super_Jew_2._0.Backend.Services
         {
             //_dummyData.InitiateGabaiShulAddition(gabaiId, shulRequest);
             
-            return DataBaseConnectivity.GabbaiAddShulRequest(shulRequest);
+            return DataBaseConnectivity.InitiateGabaiShulAddition(gabaiId, shulRequest);
         }
 
         
@@ -106,21 +106,13 @@ namespace Super_Jew_2._0.Backend.Services
          * @param: An int representing the ID of the request, generated in the database and held in the shulRequest object
          * After the admin aproves or denys the Gabbais request, the pending request is cleared.
          * @returns boolean: True for a proper update, false if some sort is issue occured.
-         * 
+         *
          */
         public static bool ClearGabbaiShulAdditionStatus(int requestId)
         {
-            return DataBaseConnectivity.ClearGabbaiShulAdditionStatus(requestId);
+            return DataBaseConnectivity.ClearGabbaiAddedShul(requestId);
         }
-        
-        
 
-        //TODO query table by gabbai id
-        public static GabbaiRequests GetGabaiShulAdditionRequests(int gabaiId)
-        {
-            return null;
-        }
-       
         /**
          * @param The Shul object that had its details updated by the Gabbai. Method sends it to the backend for the Database to update it.
          * @returns boolean: True for a proper update, false if some sort is issue occured.
