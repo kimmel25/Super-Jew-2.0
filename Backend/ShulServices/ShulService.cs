@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Super_Jew_2._0.Backend.Database;
 //using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.ShulRequests;
@@ -23,9 +24,15 @@ namespace Super_Jew_2._0.Backend.Services
          */
         public static bool CreateNewUserAccount(User user, string password)
         {
-            return DataBaseConnectivity.CreateNewUserAccount(user, password);
-            //TODO Handle the Password and add it to the DB safely
+            var salt = PasswordHasher.GenerateSalt();
+            var hashedPassword =  PasswordHasher.HashPassword(password, salt);
+            Console.WriteLine(hashedPassword);
+            return DataBaseConnectivity.CreateNewUserAccount(user, hashedPassword, salt);
+            
         }
+        
+        
+            
         
         /**
          * @param username: The username of the Users account
@@ -40,6 +47,7 @@ namespace Super_Jew_2._0.Backend.Services
         {
 
             Console.WriteLine("in shul login method");
+            
             return DataBaseConnectivity.GetUserByPassword(username, password);
         }
         

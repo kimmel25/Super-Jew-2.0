@@ -166,6 +166,19 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
+
+            User testUser = new User
+            {
+                Username = "dannyctest",
+                AccountType = "User",
+                DateOfBirth = "07272000",
+                Name = "Daniel",
+                UserID = 0
+
+            };
+
+            //ShulService.CreateNewUserAccount(testUser, "test123");
+            User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
@@ -234,12 +247,12 @@ namespace Super_Jew_2._0
                 Console.WriteLine(shulRequest.ShulName);
             } */
 
-            Console.WriteLine("dinkys: ");
-            List<Shul> dinkysShuls = ShulService.GetGabbaisShuls("4");
-            foreach (var shul in dinkysShuls)
-            {
-                Console.WriteLine(shul.ShulName);
-            }
+            // Console.WriteLine("dinkys: ");
+            // List<Shul> dinkysShuls = ShulService.GetGabbaisShuls("4");
+            // foreach (var shul in dinkysShuls)
+            // {
+            //     Console.WriteLine(shul.ShulName);
+            // }
 
             
             

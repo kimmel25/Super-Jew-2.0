@@ -3,6 +3,7 @@ using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Asn1.Ocsp;
+using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 
 namespace Super_Jew_2._0.Backend.Database
@@ -15,68 +16,92 @@ namespace Super_Jew_2._0.Backend.Database
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
+            string salt = string.Empty;
+            string hashedPassword = string.Empty;
 
-            using var connection = new MySqlConnection(ConnectionString);
-            using (var command = new MySqlCommand("GetUserByPassword", connection))
+            using (var connection = new MySqlConnection(ConnectionString))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("inputUsername", username);
-                command.Parameters.AddWithValue("inputPassword", password);
-
                 connection.Open();
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
+
+                using (var saltCommand = new MySqlCommand("GetUserSalt", connection))
                 {
+                    saltCommand.CommandType = CommandType.StoredProcedure;
+                    saltCommand.Parameters.AddWithValue("inputUsername", username);
 
-                    user ??= new User
+                    using (var saltReader = saltCommand.ExecuteReader())
                     {
-                        UserID = reader.GetInt32("UserID"),
-                        Username = reader.GetString("Username"),
-                        Name = reader.GetString("Name"),
-                        DateOfBirth = reader.GetString("DateOfBirth"),
-                        ReligiousDenomination = reader.GetString("ReligiousDenomination"),
-                        AccountType = reader.GetString("AccountType")
-                    };
-
-                    if (!reader.IsDBNull(reader.GetOrdinal("ShulID")))
-                    {
-                        Shul? shul = new Shul
+                        if (saltReader.Read())
                         {
-                            ShulID = reader.GetInt32("ShulID"),
-                            ShulName = reader.GetString("Name"),
-                            Location = reader.GetString("Location"),
-                            Denomination = reader.GetString("Denomination"),
-                            ContactInfo = reader.GetString("ContactInfo"),
-                            ShachrisTime = reader.GetString("ShachrisTime"),
-                            MinchaTime = reader.GetString("MinchaTime"),
-                            MaarivTime = reader.GetString("MaarivTime")
+                            salt = saltReader.GetString("Salt");
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(salt))
+                {
+                    hashedPassword = PasswordHasher.HashPassword(password, salt);
+                }
+                
+                using (var command = new MySqlCommand("GetUserByPassword", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("inputUsername", username);
+                    command.Parameters.AddWithValue("inputPassword", hashedPassword);
+
+                    using var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+
+                        user ??= new User
+                        {
+                            UserID = reader.GetInt32("UserID"),
+                            Username = reader.GetString("Username"),
+                            Name = reader.GetString("Name"),
+                            DateOfBirth = reader.GetString("DateOfBirth"),
+                            ReligiousDenomination = reader.GetString("ReligiousDenomination"),
+                            AccountType = reader.GetString("AccountType")
                         };
-                        user.FollowedShuls.Add(shul);
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("ShulID")))
+                        {
+                            Shul? shul = new Shul
+                            {
+                                ShulID = reader.GetInt32("ShulID"),
+                                ShulName = reader.GetString("Name"),
+                                Location = reader.GetString("Location"),
+                                Denomination = reader.GetString("Denomination"),
+                                ContactInfo = reader.GetString("ContactInfo"),
+                                ShachrisTime = reader.GetString("ShachrisTime"),
+                                MinchaTime = reader.GetString("MinchaTime"),
+                                MaarivTime = reader.GetString("MaarivTime")
+                            };
+                            user.FollowedShuls.Add(shul);
+
+                        }
 
                     }
 
+                    return user;
                 }
-
-                return user;
             }
         }
-        
-        
-        
-        public static bool CreateNewUserAccount(User user, string password)
+
+
+
+        public static bool CreateNewUserAccount(User user, string hashedPassword, string salt) //TODO maybe check for duplicate usernames and return false
         {
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("CreateNewUser", connection))
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
-                
-                command.Parameters.AddWithValue("_UserID", user.UserID);
-                command.Parameters.AddWithValue("userName", user.Username);
-                command.Parameters.AddWithValue("name", user.Name);
-                command.Parameters.AddWithValue("dateOfBirth", user.DateOfBirth);
-                command.Parameters.AddWithValue("ReligiousDenomination", user.Name);
-                command.Parameters.AddWithValue("AccountType", user.AccountType);
+                command.Parameters.AddWithValue("InputName", user.Name);
+                command.Parameters.AddWithValue("InputUserName", user.Username);
+                command.Parameters.AddWithValue("InputPassword", hashedPassword);
+                command.Parameters.AddWithValue("_salt", salt);
+                command.Parameters.AddWithValue("InputDateOfBirth", user.DateOfBirth);
+                command.Parameters.AddWithValue("InputReligiousDenomination", user.Name);
+                command.Parameters.AddWithValue("InputAccountType", user.AccountType);
                 
                 var result = command.ExecuteNonQuery();
                 return result > 0;
@@ -120,7 +145,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var shul = new Shul
                     {
                         ShulID = reader.GetInt32("ShulID"),
-                        ShulName = reader.GetString("Name"),
+                        ShulName = reader.GetString("ShulName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -169,8 +194,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0;
             }
         }
-
-        //Todo take out shul on front end also, look into how to refresh
+        
         public static bool RemoveShulFromUser(int userId, int shulId)
         {
             using var connection = new MySqlConnection(ConnectionString);
