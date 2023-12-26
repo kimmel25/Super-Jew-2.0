@@ -148,7 +148,7 @@ namespace Super_Jew_2._0.Backend.Services
 
 
         //METHODS FOR EVENTS
-        public static Event GetEvent(int eventID)
+        public static ShulEvent GetEvent(int eventID)
         {
             return null;
         }

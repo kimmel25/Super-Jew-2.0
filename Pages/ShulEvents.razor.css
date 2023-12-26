@@ -1,0 +1,11 @@
+﻿.event-card {
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding: 10px;
+    transition: box-shadow 0.3s, transform 0.3s; /* Smooth transition for pop-out effect */
+}
+
+.event-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transform: scale(1.05); /* Slightly increase the size */
+}

@@ -2,6 +2,8 @@
 @using Super_Jew_2._0.Backend.Services
 @using Super_Jew_2._0.Backend.ShulServices
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
+@inject NavigationManager Nav
+@inject ShulStateService ShulState
 
 
 
@@ -33,7 +35,28 @@
     
     private void GetShulEvents()
     {
+        ShulState.CurrentShul = CurrentShul; // Set the current shul
+
+        ShulEvent shulEvent1 = new ShulEvent
+        {
+            EventName = "Avoas Ubanim",
+            TimeOfEvent = "Moztash 1hr after Shabbos",
+            Location = "Shul Beis Medrash",
+            Subscription = "N/a",
+        };
         
+        ShulEvent shulEvent2 = new ShulEvent
+        {
+            EventName = "Shul Dinner",
+            TimeOfEvent = "2/5 2024",
+            Location = "Keter Torah",
+            Subscription = "www.ourshul.com/dinnersignup",
+        };
+        
+        
+        ShulState.CurrentShul.shulEvents.Add(shulEvent1);
+        ShulState.CurrentShul.shulEvents.Add(shulEvent2);
+        Nav.NavigateTo("/shulevents");
     }
 }
 
@@ -46,11 +69,10 @@
         <div class="data-field">Shacris Times: @CurrentShul.ShachrisTime</div>
         <div class="data-field">Mincha Time: @CurrentShul.MinchaTime </div>
         <div class="data-field">Maariv Time: @CurrentShul.MaarivTime</div>
-        <!-- data fields here -->
         
         
-        <!--CHANGE COLOR -->
-        <button class="btn btn-danger" @onclick="GetShulEvents">Events</button>
+        <!--CHANGE COLOR for button -->
+        <button class="btn btn-primary" @onclick="GetShulEvents">Events</button>
         
         <button class="btn btn-danger" @onclick="RemoveShul">Remove</button>
     </div>

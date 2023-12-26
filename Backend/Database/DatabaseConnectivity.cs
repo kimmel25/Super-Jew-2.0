@@ -11,7 +11,7 @@ namespace Super_Jew_2._0.Backend.Database
     {
         private static readonly string ConnectionString =
             "server=ls-01387c56e2e850b1cdd03466bf968f269762e5fb.ccj5p9bk5hpi.us-east-1.rds.amazonaws.com;port=3306;database=SuperJewDataBase;user=dbmasteruser;password=SuperJewPassword613;Allow Zero Datetime=True";
-
+        
         public static User? GetUserByPassword(string username, string password)
         {
             User? user = null;
@@ -32,7 +32,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         UserID = reader.GetInt32("UserID"),
                         Username = reader.GetString("Username"),
-                        //Name = reader.GetString("Name"),TODO add to database name
+                        //Name = reader.GetString("Name"),
                         DateOfBirth = reader.GetString("DateOfBirth"),
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
@@ -54,7 +54,7 @@ namespace Super_Jew_2._0.Backend.Database
                         user.FollowedShuls.Add(shul);
 
                     }
-
+                   
                 }
 
                 return user;

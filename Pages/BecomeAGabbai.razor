@@ -1,0 +1,29 @@
+﻿@page "/becomeagabbai"
+@inject NavigationManager Nav
+@using Super_Jew_2._0.Backend.ShulRequests; 
+
+<h3>Gabbai/Shul Application</h3>
+
+<div class="container mt-4">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+        <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-lg">
+                                <span>Become A Gabbai!</span>
+                            </button>
+                        </div>
+                    </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private string name, email, shul_name, rabbi, location, phone_number, shachris_time, mincha_time, maariv_time, denomination; 
+
+    private void HandleValidSubmit()
+    {
+        //ShulService upgrade user
+        Nav.NavigateTo("/usertogabaiupdate");
+    }
+}
