@@ -6,10 +6,12 @@
 @using Super_Jew_2._0.Backend
 @using Super_Jew_2._0.Backend.ShulRequests
 @using Super_Jew_2._0.Backend.ShulServices;
+@inject NavigationManager Nav
 @inject IJSRuntime JSRuntime
 
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
+<button @onclick="AddEvent" class="btn btn-secondary">Add Event to one of your Shuls</button>
 
 @if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
@@ -98,6 +100,12 @@ else
     private async Task HandleRemoveRequest(int requestId)
     {
         ShulService.ClearGabbaiShulAdditionStatus(requestId);
+    }
+    
+        
+    private void AddEvent()
+    {
+        Nav.NavigateTo("/createshulevent"); // Replace with the actual route
     }
 
 

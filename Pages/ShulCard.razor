@@ -36,28 +36,7 @@
     
     private void GetShulEvents()
     {
-        ShulState.CurrentShul = CurrentShul; // Set the current shul
-
-        //Fake Test shulls data
-        /*
-        ShulEvent shulEvent1 = new ShulEvent
-        {
-            EventName = "Avoas Ubanim",
-            TimeOfEvent = "Moztash 1hr after Shabbos",
-            Location = "Shul Beis Medrash",
-            Subscription = "N/a",
-        };
-        
-        ShulEvent shulEvent2 = new ShulEvent
-        {
-            EventName = "Shul Dinner",
-            TimeOfEvent = "2/5 2024",
-            Location = "Keter Torah",
-            Subscription = "www.ourshul.com/dinnersignup",
-        }; 
-        ShulState.CurrentShul.shulEvents.Add(shulEvent1);
-        ShulState.CurrentShul.shulEvents.Add(shulEvent2); */
-        
+        ShulState.CurrentShul = CurrentShul;
         Nav.NavigateTo("/shulevents");
     }
 }

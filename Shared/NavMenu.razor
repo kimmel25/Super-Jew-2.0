@@ -75,9 +75,22 @@
             <!-- links based on user role -->
             @if (UserService.CurrentUser?.AccountType == "ADMIN")
             {
+                <NavLink class="nav-link" href="MyShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyShuls&trade;
+                </NavLink>
+                
+                <NavLink class="nav-link" href="AddShuls">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
                 <NavLink class="nav-link" href="AdminReviewPage">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Admin Review Page
                 </NavLink>
+                
+                <NavLink class="nav-link" href="createaccount">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Create a Gabbai
+                </NavLink>
+                
                 
                 <!-- logout button -->
                 <button class="nav-link" @onclick="Logout">

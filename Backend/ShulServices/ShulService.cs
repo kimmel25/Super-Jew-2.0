@@ -173,9 +173,9 @@ namespace Super_Jew_2._0.Backend.Services
             return null;
         }
 
-        public static bool CreateEvent(int shulID, string eventName, string timeOfEvent, string location, string subscription, string description)
+        public static bool CreateEvent(ShulEvent sEvent)
         {
-            return DataBaseConnectivity.CreateEventDB(shulID, eventName, timeOfEvent, location, subscription, description);
+            return DataBaseConnectivity.CreateEventDB(sEvent);
         }
     }
 }
