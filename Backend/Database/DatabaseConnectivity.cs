@@ -466,20 +466,22 @@ namespace Super_Jew_2._0.Backend.Database
         //            };
 
         //EVENTS
-        public static bool CreateEventDB(int shulID, string eventName, string timeOfEvent, string location, string subscription, string description)
+        public static bool CreateEventDB(ShulEvent sEvent)
         {
+            //int shulID, string eventName, string timeOfEvent, string location, string subscription, string description
+            
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("CreateEvent", connection))
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("inputShulID", shulID);
-                command.Parameters.AddWithValue("inputEventName", eventName);
-                command.Parameters.AddWithValue("inputTimeOfEvent", timeOfEvent);
-                command.Parameters.AddWithValue("inputLocation", location);
-                command.Parameters.AddWithValue("inputSubscription", subscription);
-                command.Parameters.AddWithValue("inputDescription", description);
+                command.Parameters.AddWithValue("inputShulID", sEvent.ShulID);
+                command.Parameters.AddWithValue("inputEventName", sEvent.EventName);
+                command.Parameters.AddWithValue("inputTimeOfEvent", sEvent.TimeOfEvent);
+                command.Parameters.AddWithValue("inputLocation", sEvent.Location);
+                command.Parameters.AddWithValue("inputSubscription", sEvent.Subscription);
+                command.Parameters.AddWithValue("inputDescription", sEvent.Description);
 
                 var result = command.ExecuteNonQuery();
                 return result > 0;
