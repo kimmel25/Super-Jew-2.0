@@ -2,6 +2,7 @@
 @inject NavigationManager Nav
 @using Super_Jew_2._0.Backend.ShulRequests; 
 @using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
 
 <h3>Create Account</h3>
 
@@ -54,16 +55,14 @@
     {
         User newUser = new User
         {
-            //Name = name,
+            Name = name,
             Username = username,
             DateOfBirth = dob,
             ReligiousDenomination = religDenom,
             AccountType = "USER"
         };
         
-        //SEND IN PASSWORD
-        
-        //Shulservice create account
+        ShulService.CreateNewUserAccount(newUser, password);
         
         Nav.NavigateTo("/createaccountfinal");
     }

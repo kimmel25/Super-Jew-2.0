@@ -176,8 +176,8 @@ namespace Super_Jew_2._0
                 UserID = 0
             };
 
-            ShulService.CreateNewUserAccount(testUser, "dinkyp");
-            User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");
+            //ShulService.CreateNewUserAccount(testUser, "dinkyp");
+            //User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");
             /*
             AllAvailableShuls();
             GetUserShuls("john_doe", "password123");
