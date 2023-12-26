@@ -31,9 +31,6 @@ namespace Super_Jew_2._0.Backend.Services
             
         }
         
-        
-            
-        
         /**
          * @param username: The username of the Users account
          * @param password: Password to the users log in
