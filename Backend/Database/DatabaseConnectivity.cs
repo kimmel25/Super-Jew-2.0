@@ -105,19 +105,20 @@ namespace Super_Jew_2._0.Backend.Database
                         shulEvents = new List<Event>()
                     };
 
-                    if (!reader.IsDBNull(reader.GetOrdinal("EventID")))
-                    {
-                        Event? shulEvent = new Event
-                        {
-                            ShulID = reader.GetInt32("ShulID"),
-                            EventName = reader.GetString("EventName"),
-                            TimeOfEvent = reader.GetString("TimeOfEvent"),
-                            Location = reader.GetString("Location"),
-                            Subscription = reader.GetString("Subscription")
-                        };
-                        shul.shulEvents.Add(shulEvent);
-                        availableShuls.Add(shul);
-                    }
+                    //if (!reader.IsDBNull(reader.GetOrdinal("EventID")))
+                    //{
+                    //    Event? shulEvent = new Event
+                    //    {
+                    //        ShulID = reader.GetInt32("ShulID"),
+                    //        EventName = reader.GetString("EventName"),
+                    //        TimeOfEvent = reader.GetString("TimeOfEvent"),
+                    //        Location = reader.GetString("Location"),
+                    //        Subscription = reader.GetString("Subscription"),
+                    //        Description = reader.GetString("Description"),
+                    //    };
+                    //    shul.shulEvents.Add(shulEvent);
+                    availableShuls.Add(shul);
+                    //}
 
 
                 }
