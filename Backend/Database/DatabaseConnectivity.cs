@@ -102,7 +102,7 @@ namespace Super_Jew_2._0.Backend.Database
                         ShachrisTime = reader.GetString("ShachrisTime"),
                         MinchaTime = reader.GetString("MinchaTime"),
                         MaarivTime = reader.GetString("MaarivTime"),
-                        shulEvents = new List<Event>()
+                        //shulEvents = new List<ShulEvent>()
                     };
 
                     //if (!reader.IsDBNull(reader.GetOrdinal("EventID")))
