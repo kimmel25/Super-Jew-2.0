@@ -169,15 +169,14 @@ namespace Super_Jew_2._0
 
             User testUser = new User
             {
-                Username = "dannyctest",
-                AccountType = "User",
+                Username = "dinkyp",
+                AccountType = "GABBAI",
                 DateOfBirth = "07272000",
-                Name = "Daniel",
+                Name = "Dinky P",
                 UserID = 0
-
             };
 
-            //ShulService.CreateNewUserAccount(testUser, "test123");
+            ShulService.CreateNewUserAccount(testUser, "dinkyp");
             User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");
             /*
             AllAvailableShuls();
@@ -254,7 +253,7 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName);
             } */
-
+/*
             User userToTestEvent = ShulService.GetFollowedShulsForUser("john_doe", "password123");
 
             List<Shul> userJohnsShuls = userToTestEvent.FollowedShuls;

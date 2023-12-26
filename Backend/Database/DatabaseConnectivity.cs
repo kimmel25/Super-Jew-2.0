@@ -67,13 +67,13 @@ namespace Super_Jew_2._0.Backend.Database
                             Shul? shul = new Shul
                             {
                                 ShulID = reader.GetInt32("ShulID"),
-                                ShulName = reader.GetString("Name"),
+                                ShulName = reader.GetString("ShulName"),
                                 Location = reader.GetString("Location"),
                                 Denomination = reader.GetString("Denomination"),
                                 ContactInfo = reader.GetString("ContactInfo"),
                                 ShachrisTime = reader.GetString("ShachrisTime"),
                                 MinchaTime = reader.GetString("MinchaTime"),
-                                MaarivTime = reader.GetString("MaarivTime")
+                                MaarivTime = reader.GetString("MaarivTime"),
                                 shulEvents = new List<ShulEvent>() // Do it in the ShulEvent C-Tor just like User
 
                             };
@@ -253,7 +253,7 @@ namespace Super_Jew_2._0.Backend.Database
         public static List<Shul> GetGabbaiShuls(string userId)
         {
             List<Shul> gabbaiShuls = new List<Shul>();
-
+        
             using var connection = new MySqlConnection(ConnectionString);
             using (var command = new MySqlCommand("GetGabbaiShuls", connection))
             {
