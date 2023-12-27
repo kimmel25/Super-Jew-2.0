@@ -172,10 +172,28 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(gabbai.Name);
             }
+            
+            Console.WriteLine("SHOWING shul:::");
+            List<Shul> cShuls = ShulService.GetAllAvailableShuls();
+            foreach (var shul in cShuls)
+            {
+                foreach (var eEvent in shul.shulEvents)
+                {
+                    Console.WriteLine(eEvent.EventName);
+                }
+            }
+
+            Console.WriteLine("EVENTY TEST!");
+            List<ShulEvent> bethAbeevents = ShulService.GetEventsByShul(1);
+            foreach (var shulEvent in bethAbeevents)
+            {
+                Console.WriteLine(shulEvent.EventName);
+            }
+
 
 
             
-            ShulService.DeleteEvent(7);
+            //ShulService.DeleteEvent(7);
 
             //ShulService.CreateNewUserAccount(testUser, "dinkyp");
             //User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");

@@ -202,5 +202,15 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.DeleteEvent(eventId);
         }
         
+        public static List<ShulEvent> GetEventsByShul(int shulId)
+        {
+            return DataBaseConnectivity.GetEventsByShul(shulId);
+        }
+        
+        public static bool AddShul(Shul shul) //for admin
+        {
+            return DataBaseConnectivity.AddShul(shul);
+        }
+        
     }
 }

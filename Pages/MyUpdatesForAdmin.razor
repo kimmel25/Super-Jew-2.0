@@ -12,6 +12,7 @@
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
 <button @onclick="AddEvent" class="btn btn-secondary">Add Event to one of your Shuls</button>
+<button @onclick="DeleteEvent" class="btn btn-secondary">Delete Shul Event</button>
 
 @if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
@@ -33,7 +34,33 @@ else
     // A message when no shuls are available
 }
 
-<!--MOVE ADMIN REVIEW PAGE TO HERE -->
+
+<h3>Admin Review Page</h3>
+
+@if (gabbaisSubmittedRequests.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var request in gabbaisSubmittedRequests)
+            {
+                if (request.ApprovalStatus == "Awaiting Decision")
+                {
+                    <div class="col-sm-4">
+                        <AdminShulReviewCard Request="@request" OnDecisionMade="HandleDecision" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-title">
+        <h5 class="card-title">No Requests at the moment!</h5>
+    </div>
+}
+
+
 
 @code {
     List<Shul> shulList = new List<Shul>();
@@ -44,11 +71,9 @@ else
     protected override void OnInitialized()
     {
         shulList = ShulService.GetAllAvailableShuls();
-
-
-        //check if greater than zero
-        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForGabbai(UserService.CurrentUser.UserID);
-        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+        
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+        //Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
     
     
@@ -77,5 +102,23 @@ else
     {
         Nav.NavigateTo("/createshuleventforadmin"); // Replace with the actual route
     }
+    
+    private void DeleteEvent()
+    {
+        Nav.NavigateTo("/deleteshuleventforadmin"); // Replace with the actual route
+    }
+    
+    private async Task RefreshRequests()
+    {
+    // Logic to load requests, similar to RefreshUserShuls
+    }
+    
+    private async Task HandleDecision((int requestId, string decision, ShulRequest request) decisionInfo)
+    {
+    // Call the backend service with the decision
+        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
+        await RefreshRequests(); // Refresh the list to reflect the changes
+    }
+
     
 }

@@ -1,0 +1,82 @@
+﻿@page "/addshulasadmin"
+@inject NavigationManager Nav
+@using Super_Jew_2._0.Backend.ShulRequests; 
+@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+
+<h3>Add Shul</h3>
+
+<div class="container mt-4">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+        <div class="col-md-4 mb-3">
+            <label for="shul">Shul to be Added:</label>
+            <InputText class="form-control" id="shul_name" @bind-Value="shul_name" required />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="rabbi">Rabbi:</label>
+            <InputText class="form-control" id="rabbi" @bind-Value="rabbi" required />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="location">Location:</label>
+            <InputText class="form-control" id="location" @bind-Value="location" required />
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label for="shachris">Shacris Time(s):  </label>
+                <InputText class="form-control" id="mincha" @bind-Value="shachris_time" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="mincha">Mincha Time(s): </label>
+                <InputText class="form-control" id="mincha" @bind-Value="mincha_time" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="maariv">Maariv Time(s): </label>
+                <InputText class="form-control" id="maariv" @bind-Value="maariv_time" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="denomination">Denomination: </label>
+                <InputText class="form-control" id="denomination" @bind-Value="denomination" required />
+            </div>
+            
+                        <div class="col-md-4 mb-3">
+                            <label for="denomination">Contact Info: </label>
+                            <InputText class="form-control" id="contact" @bind-Value="phone_number" required />
+                        </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-lg">
+                    <span>Add New Shul!</span>
+                </button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+@code {
+    ShulRequest shulrequest = new ShulRequest();
+    private string name, email, shul_name, rabbi, location, phone_number, shachris_time, mincha_time, maariv_time, denomination; 
+
+    private void HandleValidSubmit()
+    {
+        Shul addShul = new Shul()
+        {
+            ShulName = shul_name,
+            Location = location,
+            Denomination = denomination,
+            ContactInfo = phone_number,
+            ShachrisTime = shachris_time,
+            MinchaTime = mincha_time,
+            MaarivTime = maariv_time
+        };
+
+        ShulService.AddShul(addShul);
+        
+        Nav.NavigateTo("/shuladdasadmin"); //fix this
+    }
+}

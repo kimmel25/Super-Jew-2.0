@@ -1,0 +1,61 @@
+﻿@page "/deleteshuleventforadmin"
+@inject NavigationManager Nav
+@inject ShulStateService ShulState
+@using Super_Jew_2._0.Backend.ShulRequests;
+@using Super_Jew_2._0.Backend;
+@using Super_Jew_2._0.Backend.Services;
+@using Super_Jew_2._0.Backend.ShulServices;
+
+<h3>Delete Event for @ShulState.CurrentShul?.ShulName</h3>
+
+<select @bind-value="selectedShulId" @bind-value:event="oninput" @onchange="OnShulSelected" class="form-control">
+    <option value="">-- Select Shul --</option>
+    @foreach (var shul in shuls)
+    {
+        <option value="@shul.ShulID">@shul.ShulName</option>
+    }
+</select>
+
+
+@if (events != null)
+{
+    <select @bind="selectedEventId" class="form-control">
+        <option value="">-- Select Event --</option>
+        @foreach (var shulEvent in events)
+    {
+        <option value="@shulEvent.EventId">@shulEvent.EventName</option>
+    }
+    </select>
+}
+
+<button @onclick="HandleValidSubmit" class="btn btn-primary">Delete Event</button>
+
+
+
+
+@code {
+    private List<Shul> shuls;
+    private List<ShulEvent> events;
+    private int selectedShulId;
+    private int selectedEventId;
+
+    protected override void OnInitialized()
+    {
+        shuls = ShulService.GetAllAvailableShuls();
+    }
+
+    private async Task OnShulSelected(ChangeEventArgs e)
+    {
+        selectedShulId = Convert.ToInt32(e.Value);
+        events = ShulService.GetEventsByShul(selectedShulId);
+    }
+
+    private void HandleValidSubmit()
+    {
+        if (selectedEventId != 0)
+        {
+            ShulService.DeleteEvent(selectedEventId);
+            Nav.NavigateTo("/deleteeventfinal");
+        }
+    }
+}
