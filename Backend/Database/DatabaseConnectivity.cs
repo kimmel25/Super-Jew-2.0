@@ -449,7 +449,7 @@ namespace Super_Jew_2._0.Backend.Database
                         {
                             shul = new Shul
                             {
-                                ShulName = reader.GetString("ShulName"),
+                                ShulName = reader.GetString("RequestName"),
                                 Location = reader.GetString("Location"),
                                 Denomination = reader.GetString("Denomination"),
                                 ContactInfo = reader.GetString("ContactInfo"),
