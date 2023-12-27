@@ -18,10 +18,9 @@ namespace Super_Jew_2._0.Backend.ShulServices
             UserPassword = password;
         }
 
-        public void Logout()
+        public static void Logout()
         {
             CurrentUser = null;
-            OnUserChanged?.Invoke();
         }
     }
 

@@ -1,6 +1,8 @@
 ﻿@page "/becomeagabbai"
 @inject NavigationManager Nav
 @using Super_Jew_2._0.Backend.ShulRequests; 
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
 
 <h3>Gabbai/Shul Application</h3>
 
@@ -23,7 +25,8 @@
 
     private void HandleValidSubmit()
     {
-        //ShulService upgrade user
+        ShulService.UpgradeUserToGabbai(UserService.CurrentUser.UserID);
+        UserService.Logout();
         Nav.NavigateTo("/usertogabaiupdate");
     }
 }

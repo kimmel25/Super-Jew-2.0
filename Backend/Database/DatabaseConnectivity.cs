@@ -401,7 +401,7 @@ namespace Super_Jew_2._0.Backend.Database
                     {
                         RequestID = reader.GetInt32("RequestID"),
                         GabbaiID = reader.GetInt32("UserID"),
-                        ShulName = reader.GetString("ShulName"),
+                        ShulName = reader.GetString("RequestName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
