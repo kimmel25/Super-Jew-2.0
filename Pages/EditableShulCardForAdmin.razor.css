@@ -1,0 +1,76 @@
+﻿.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+}
+
+    .field label {
+        margin-bottom: 5px; /* Spacing between the label and the input */
+    }
+
+.card {
+    margin-bottom: 20px; /* Space between cards */
+}
+
+button {
+    background: #004dff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    button:hover {
+        background: #0031cc;
+    }
+
+.btn {
+    color: white;
+    font-family: 'Finlandica', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 3px solid #ef0f34;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
+    .btn:focus {
+        color: #555;
+    }
+
+    .btn:hover {
+        color: #fff;
+    }
+
+    .btn:before {
+        content: "";
+        background: #ef0f34;
+        height: 10px;
+        width: 10px;
+        border-radius: 6px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: -1;
+        transition: all 0.3s ease 0s;
+    }
+
+    .btn:hover:before {
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+    }
+
+@media only screen and (max-width: 767px) {
+    .btn {
+        margin-bottom: 30px;
+    }
+}

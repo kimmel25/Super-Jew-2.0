@@ -1,0 +1,75 @@
+﻿@page "/createaccountasadmin"
+@inject NavigationManager Nav
+@using Super_Jew_2._0.Backend.ShulRequests; 
+@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+
+<h3>Create Account</h3>
+
+<div class="container mt-4">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="name">Name:</label>
+                <InputText class="form-control" id="name" @bind-Value="name" required />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="name">Username:</label>
+                <InputText type="username" class="form-control" id="email" @bind-Value="username" required />
+            </div>
+            
+                        <div class="col-md-4 mb-3">
+                            <label for="password">Password:</label>
+                            <InputText type="password" class="form-control" id="email" @bind-Value="password" required />
+                        </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label for="shul">Date Of Birth: </label>
+                <InputText class="form-control" id="shul_name" @bind-Value="dob" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="rabbi">Religious Denomination:</label>
+                <InputText class="form-control" id="rabbi" @bind-Value="religDenom" required />
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="rabbi">ACCOUNT TYPE (ADMIN, GABBAI OR USER):</label>
+                <InputText class="form-control" id="rabbi" @bind-Value="accountType" required />
+                </div>
+            
+        </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-lg">
+                            <span>Create Account!</span>
+                        </button>
+                    </div>
+                </div>
+        
+    </EditForm>
+</div>
+
+@code {
+    private string name, username, dob, religDenom, password, accountType; 
+
+    private void HandleValidSubmit()
+    {
+        User newUser = new User
+        {
+            Name = name,
+            Username = username,
+            DateOfBirth = dob,
+            ReligiousDenomination = religDenom,
+            AccountType = accountType
+        };
+        
+        ShulService.CreateNewUserAccount(newUser, password);
+        
+        Nav.NavigateTo("/createaccountfinal");
+    }
+}

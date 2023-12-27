@@ -1,0 +1,81 @@
+﻿@page "/myupdatesforadmin"
+
+@inject NavigationManager NavigationManager
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.Database
+@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.ShulRequests
+@using Super_Jew_2._0.Backend.ShulServices;
+@inject NavigationManager Nav
+@inject IJSRuntime JSRuntime
+
+
+<h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
+<button @onclick="AddEvent" class="btn btn-secondary">Add Event to one of your Shuls</button>
+
+@if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulList)
+            {
+                <div class="col-sm-4">
+                    <!-- Pass the shul object to the EditableShulCard component -->
+                    <EditableShulCardForAdmin CurrentShul="@shul" OnSubmit="HandleSubmit" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No shuls available to display.</p>
+    // A message when no shuls are available
+}
+
+<!--MOVE ADMIN REVIEW PAGE TO HERE -->
+
+@code {
+    List<Shul> shulList = new List<Shul>();
+    List<ShulRequest> gabbaisSubmittedRequests;
+    User user;
+    User currentuser = UserService.CurrentUser; 
+    
+    protected override void OnInitialized()
+    {
+        shulList = ShulService.GetAllAvailableShuls();
+
+
+        //check if greater than zero
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForGabbai(UserService.CurrentUser.UserID);
+        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+    }
+    
+    
+    private async Task HandleSubmit(Shul updatedShul)
+    {
+        Console.WriteLine(updatedShul.ShulID);
+        
+        if (ShulService.UpdateShulDetails(updatedShul))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Shul Updated!");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Error!");
+        }
+            
+    // Code to handle the submission of the updated shul information
+    }
+    
+    private async Task HandleRemoveRequest(int requestId)
+    {
+        ShulService.ClearGabbaiShulAdditionStatus(requestId);
+    }
+    
+    private void AddEvent()
+    {
+        Nav.NavigateTo("/createshuleventforadmin"); // Replace with the actual route
+    }
+    
+}

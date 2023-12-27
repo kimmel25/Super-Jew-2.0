@@ -4,7 +4,16 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">SuperJew!</a>
+        <a class="navbar-brand" href="">SuperJew</a>
+        @if (UserService.CurrentUser?.AccountType == "ADMIN")
+        {
+            <a class="navbar-brand" href="">ADMIN</a>
+        }
+        
+        @if (UserService.CurrentUser?.AccountType == "GABBAI")
+        {
+            <a class="navbar-brand" href="">GABBAI</a>
+        }
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -69,6 +78,10 @@
                 <NavLink class="nav-link" href="Login">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Login
                 </NavLink>
+                
+                <NavLink class="nav-link" href="createaccount">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Create Account
+                </NavLink>
             }
             
     
@@ -87,10 +100,17 @@
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Admin Review Page
                 </NavLink>
                 
-                <NavLink class="nav-link" href="createaccount">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Create a Gabbai
+                <NavLink class="nav-link" href="createaccountasadmin">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Create Account
                 </NavLink>
                 
+                <NavLink class="nav-link" href="shulsetup">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Shul Setup
+                </NavLink>
+                
+                <NavLink class="nav-link" href="myupdatesforadmin">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> MyUpdates (Admin)
+                </NavLink>
                 
                 <!-- logout button -->
                 <button class="nav-link" @onclick="Logout">
@@ -108,6 +128,10 @@
                 
                 <NavLink class="nav-link" href="AddShuls">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> AddShuls
+                </NavLink>
+                
+                <NavLink class="nav-link" href="shulsignup">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Submit New Shul
                 </NavLink>
                 
                 <NavLink class="nav-link" href="MyUpdates">
