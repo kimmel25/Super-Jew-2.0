@@ -2,7 +2,7 @@
 {
     public class ShulEvent
     {
-        
+        public int EventId { get; set; }
         public int ShulID { get; set; }
         public string EventName { get; set; }
         public string TimeOfEvent { get; set; }
