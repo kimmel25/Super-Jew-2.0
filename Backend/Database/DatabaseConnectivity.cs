@@ -82,16 +82,12 @@ namespace Super_Jew_2._0.Backend.Database
                         }
 
                     }
-
-                    // Advance to the next result set
+                    
                     if (reader.NextResult())
                     {
-                        // Second result set: Events
                         while (reader.Read())
                         {
-                            // Assuming you have a way to find the right shul object in user.FollowedShuls
-                            // For example, by ShulID
-                            int shulId = reader.GetInt32("ShulID");
+                            int shulId = reader.GetInt32("ShulId");
                             Shul shul = user.FollowedShuls.FirstOrDefault(s => s.ShulID == shulId);
                             if (shul != null)
                             {
@@ -604,6 +600,37 @@ namespace Super_Jew_2._0.Backend.Database
                 var result = command.ExecuteNonQuery();
                 return result > 0;
             }
+        }
+        
+        public static List<ShulEvent> GetEventsByShul(int shulId)
+        {
+            List<ShulEvent> shulEvents = new List<ShulEvent>();
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetEventsForShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("shulId", shulId);
+                
+                using var reader = command.ExecuteReader();
+                
+                
+                while (reader.Read())
+                {
+                    ShulEvent sEvent = new ShulEvent
+                    {
+                        EventId = reader.GetInt32("EventID"),
+                        ShulID = shulId,
+                        EventName = reader.GetString("EventName"),
+                        TimeOfEvent = reader.GetString("TimeOfEvent"),
+                        Location = reader.GetString("Location"),
+                        Subscription = reader.GetString("Subscription"),
+                        Description = reader.GetString("Description"),
+                    };
+                        shulEvents.Add(sEvent);
+                    }
+                }
+            return shulEvents;
         }
     }
 }

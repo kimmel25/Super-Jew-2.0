@@ -11,7 +11,8 @@
 
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
-<button @onclick="AddEvent" class="btn btn-secondary">Add Event to one of your Shuls</button>
+<button @onclick="AddEvent" class="btn btn-secondary">Add Shul Event</button>
+<button @onclick="DeleteEvent" class="btn btn-secondary">Delete Shul Event</button>
 
 @if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
@@ -106,6 +107,11 @@ else
     private void AddEvent()
     {
         Nav.NavigateTo("/createshulevent"); // Replace with the actual route
+    }
+    
+    private void DeleteEvent()
+    {
+        Nav.NavigateTo("/deleteshulevent"); // Replace with the actual route
     }
 
 
