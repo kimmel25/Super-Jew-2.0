@@ -166,16 +166,23 @@ namespace Super_Jew_2._0
 
         public static void Main(string[] args)
         {
-
-            User testUser = new User
+            Console.WriteLine("SHOWING GABBAIS:::");
+            List<User> currentGabbais = ShulService.GetAllGabbais();
+            foreach (var gabbai in currentGabbais)
             {
+                Console.WriteLine(gabbai.Name);
+            }
+
+
+
                 Username = "dinkyp",
                 AccountType = "GABBAI",
                 DateOfBirth = "07272000",
                 Name = "Dinky P",
                 UserID = 0
             };
-            ShulService.DeleteEvent(7);
+            
+      ShulService.DeleteEvent(7);
 
             //ShulService.CreateNewUserAccount(testUser, "dinkyp");
             //User resultUser = ShulService.GetFollowedShulsForUser("dannyctest", "test123");

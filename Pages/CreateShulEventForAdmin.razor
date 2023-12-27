@@ -1,0 +1,91 @@
+﻿@page "/createshuleventforadmin"
+@inject NavigationManager Nav
+@inject ShulStateService ShulState
+@using Super_Jew_2._0.Backend.ShulRequests; 
+@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+
+<h3>Add Shul Event for @ShulState.CurrentShul?.ShulName</h3>
+
+<select @bind="selectedShulId" class="form-control">
+    <option value="">-- Select which Shul to add event for --</option>
+    @foreach (var category in eventCategories)
+    {
+        <option value="@category.ShulID">@category.ShulName</option>
+    }
+</select>
+
+<div class="container mt-4">
+    <EditForm Model="this" OnValidSubmit="HandleValidSubmit">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="name">Event Name:</label>
+                <InputText class="form-control" id="name" @bind-Value="eventName" required />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="name">Time Of event:</label>
+                <InputText type="username" class="form-control" id="email" @bind-Value="timeOfEvent" required />
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="name">Location:</label>
+                <InputText type="username" class="form-control" id="email" @bind-Value="location" required />
+                </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label for="shul">How to Sign Up: </label>
+                <InputText class="form-control" id="shul_name" @bind-Value="subscription" required />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="rabbi">Event Description:</label>
+                <InputText class="form-control" id="rabbi" @bind-Value="description" required />
+            </div>
+        </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-lg">
+                            <span>Add Event!</span>
+                        </button>
+                    </div>
+                </div>
+        
+    </EditForm>
+</div>
+
+@code {
+    private string eventName, timeOfEvent, location, subscription, description;
+    private List<Shul> eventCategories;
+    private int selectedShulId;
+
+
+    protected override void OnInitialized()
+    {
+        eventCategories = ShulService.GetAllAvailableShuls();
+    }
+    
+    
+    private void HandleValidSubmit()
+    {
+        
+        ShulEvent sEvent = new ShulEvent
+        {
+            ShulID = selectedShulId,
+            EventName = eventName,
+            TimeOfEvent = timeOfEvent,
+            Location = location,
+            Subscription = subscription,
+            Description = description,
+        };
+
+        ShulService.CreateEvent(sEvent);
+        
+        Nav.NavigateTo("/createeventfinal");
+    }
+    
+}

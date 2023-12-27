@@ -368,7 +368,7 @@ namespace Super_Jew_2._0.Backend.Database
                     var pending = new ShulRequest
                     {
                         RequestID = reader.GetInt32("RequestID"),
-                        ShulName = reader.GetString("ShulName"),
+                        ShulName = reader.GetString("RequestName"),
                         Location = reader.GetString("Location"),
                         Denomination = reader.GetString("Denomination"),
                         ContactInfo = reader.GetString("ContactInfo"),
@@ -555,6 +555,38 @@ namespace Super_Jew_2._0.Backend.Database
 
                 var result = command.ExecuteNonQuery();
                 return result > 0;
+            }
+        }
+        
+        public static List<User> GetAllGabbais() //string zipCode in future
+        {
+            List<User> gabbais = new List<User>();
+
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("GetAllGabbais", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    var user = new User
+                    {
+                        UserID = reader.GetInt32("UserID"),
+                        Username = reader.GetString("Username"),
+                        Name = reader.GetString("Name"),
+                        DateOfBirth = reader.GetString("DateOfBirth"),
+                        ReligiousDenomination = reader.GetString("ReligiousDenomination"),
+                        AccountType = reader.GetString("AccountType")
+                    };
+                    
+                    gabbais.Add(user);
+                }
+                
+                return gabbais;
             }
         }
 

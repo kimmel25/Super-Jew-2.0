@@ -1,0 +1,60 @@
+﻿@page "/shulsetup"
+@inject NavigationManager NavigationManager
+@inject ShulService ShulService
+@inject UserService UserService
+@using Super_Jew_2._0.Backend
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+
+<h3><span class="myshuls-title">Shul Setup</span>&trade;</h3>
+
+@if (shulList != null && shulList.Any())
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var shul in shulList)
+            {
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            @shul.ShulName
+                            <select @onchange="@(e => AssignGabbaiToShul(shul, e.Value.ToString()))" class="form-control">
+                                <option value="">-- Change Gabbai --</option>
+                                @foreach (var gabbai in gabbais)
+                                {
+                                    <option value="@gabbai.UserID">@gabbai.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <!-- Other shul details -->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No shuls available.</p>
+}
+
+@code {
+    private List<Shul> shulList; 
+    private List<User> gabbais; // Assuming User class represents a Gabbai and has GabbaiID
+
+    protected override async Task OnInitializedAsync()
+    {
+        shulList = ShulService.GetAllAvailableShuls(); // Replace with your method to get all shuls
+        gabbais = ShulService.GetAllGabbais(); // Replace with your method to get all gabbais
+    }
+
+    private async Task AssignGabbaiToShul(Shul shul, string selectedGabbaiId)
+    {
+        /*
+        if (int.TryParse(selectedGabbaiId, out var gabbaiId) && gabbaiId > 0)
+        {
+            await ShulService.AssignGabbaiToShul(shul.ShulID, gabbaiId);
+            // Optionally, refresh the shulList or the particular shul to reflect the new assignment
+        } */
+    }
+}
