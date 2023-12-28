@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Asn1.Ocsp;
@@ -82,7 +83,7 @@ namespace Super_Jew_2._0.Backend.Database
                         }
 
                     }
-                    
+
                     if (reader.NextResult())
                     {
                         while (reader.Read())
@@ -138,6 +139,9 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
+        
+        //Adds a Gabbi to a shul that DOES NOT have a Gabbai already
+        //IMPORTANT: THIS METHOD CANNOT BE CALLED BEFORE CHECKING THAT THE ShulId DOESN NOT ALREADY HAVE A GABBAI
         public static bool AddGabbaiToShul(int userId, int shulId)
         {
             using var connection = new MySqlConnection(ConnectionString);
@@ -553,7 +557,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0;
             }
         }
-        
+
         public static List<User> GetAllGabbais() //string zipCode in future
         {
             List<User> gabbais = new List<User>();
@@ -578,10 +582,10 @@ namespace Super_Jew_2._0.Backend.Database
                         ReligiousDenomination = reader.GetString("ReligiousDenomination"),
                         AccountType = reader.GetString("AccountType")
                     };
-                    
+
                     gabbais.Add(user);
                 }
-                
+
                 return gabbais;
             }
         }
@@ -601,7 +605,7 @@ namespace Super_Jew_2._0.Backend.Database
                 return result > 0;
             }
         }
-        
+
         public static List<ShulEvent> GetEventsByShul(int shulId)
         {
             List<ShulEvent> shulEvents = new List<ShulEvent>();
@@ -611,10 +615,10 @@ namespace Super_Jew_2._0.Backend.Database
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("shulId", shulId);
-                
+
                 using var reader = command.ExecuteReader();
-                
-                
+
+
                 while (reader.Read())
                 {
                     ShulEvent sEvent = new ShulEvent
@@ -627,10 +631,56 @@ namespace Super_Jew_2._0.Backend.Database
                         Subscription = reader.GetString("Subscription"),
                         Description = reader.GetString("Description"),
                     };
-                        shulEvents.Add(sEvent);
-                    }
+                    shulEvents.Add(sEvent);
                 }
+            }
+
             return shulEvents;
+        }
+
+        public static bool UpdateShulGabbai(int userId, int shulId)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            connection.Open();
+
+            //check to see if shul has gabbai and if it does, call the updateShulGabbai procedure
+            if (HasGabbai(shulId, connection))
+            {
+                using (var command = new MySqlCommand("UpdateShulGabbai", connection))
+                {
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("_userId", userId);
+                    command.Parameters.AddWithValue("_shulId", shulId);
+                    
+
+                    var result = command.ExecuteNonQuery();
+                    return result > 0;
+                    
+                    
+                }
+            }
+            //If the Shul does NOT have a Gabbai, then create a Gabbai for it
+            else
+            {
+                return AddGabbaiToShul(userId, shulId);
+            }
+        }
+
+        private static bool HasGabbai(int shulId, MySqlConnection connection)
+        {
+            using (var command = new MySqlCommand("CheckIfHasGabbai", connection))
+            {
+                
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("_shulId", shulId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    return reader.Read(); // If there's at least one row, it will return true
+                }
+                
+            }
         }
     }
 }

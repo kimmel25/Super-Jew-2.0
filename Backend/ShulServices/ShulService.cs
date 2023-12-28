@@ -159,6 +159,19 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.GetGabbaiRequestsForGabbai(gabbaiID);
         }
 
+        
+        /**
+         * Update Gabbai first checks to see if the shul has an existing Gabbai, if it does it updates it.
+         * If not it creates a new row in the Gabbai table and links a shul to it
+         */
+        public static bool UpdateGabbai(int userId, int shulId)
+        {
+            return DataBaseConnectivity.UpdateShulGabbai(userId, shulId);
+
+        }
+        
+        
+
         //Methods for Admins Only!
 
         //sends back all shul requests made by gabbai 
