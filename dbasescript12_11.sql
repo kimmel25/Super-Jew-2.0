@@ -1,79 +1,102 @@
-CREATE TABLE Users (
-    UserID INT PRIMARY KEY,
-    Username VARCHAR(255),
-    Password VARCHAR(255),
-    DateOfBirth DATE,
-    ReligiousDenomination VARCHAR(255),
-    AccountType VARCHAR(50) CHECK (AccountType IN ('ADMIN', 'GABBAI', 'USER'))
+create table FollowedShuls
+(
+    FollowID int auto_increment
+        primary key,
+    UserID   int null,
+    ShulID   int null
 );
 
-CREATE TABLE Shuls (
-    ShulID INT PRIMARY KEY,
-    Name VARCHAR(255),
-    Location VARCHAR(255),
-    Denomination VARCHAR(255),
-    ContactInfo TEXT,
-    ShachrisTime VARCHAR(255),
-	MinchaTime VARCHAR(255),
-	MaarivTime VARCHAR(255),
-    EventID INT 
+create table Gabbai
+(
+    GabbaiID int auto_increment
+        primary key,
+    UserID   int null,
+    ShulID   int null,
+    constraint Gabbai_pk
+        unique (GabbaiID)
 );
 
-CREATE TABLE FollowedShuls (
-    FollowID INT PRIMARY KEY,
-    UserID INT REFERENCES Users(UserID),
-    ShulID INT REFERENCES Shuls(ShulID)
+create table GabbaiShulRequests
+(
+    RequestID      int auto_increment
+        primary key,
+    RequestName    varchar(255) null,
+    Location       varchar(255) null,
+    Denomination   varchar(255) null,
+    ContactInfo    text         null,
+    ShachrisTime   varchar(255) null,
+    MinchaTime     varchar(255) null,
+    MaarivTime     varchar(255) null,
+    GabbaiID       int          null,
+    ApprovalStatus varchar(255) null,
+    UserID         int          null
 );
 
-CREATE TABLE ShulEvents (
-    EventID INT PRIMARY KEY,
-    ShulID INT REFERENCES Shuls(ShulID),
-    EventName TEXT,
-    TimeOfEvent DATETIME,
-    Location TEXT,
-    Speaker TEXT
+create index FK_GabbaiShulRequests_Gabbai
+    on GabbaiShulRequests (GabbaiID);
+
+create index FK_GabbaiShulRequests_Users
+    on GabbaiShulRequests (UserID);
+
+create table RabbAIInteractions
+(
+    InteractionID int auto_increment
+        primary key,
+    UserID        int      null,
+    Timestamp     datetime null,
+    UserTextEntry text     null,
+    RabbAIAnswer  text     null
 );
 
-CREATE TABLE Gabbai (
-    GabbaiID INT PRIMARY KEY,
-    UserID INT REFERENCES Users(UserID),
-    ShulID INT REFERENCES Shuls(ShulID),
-    GabbaiName TEXT
+create table Shuls
+(
+    ShulID       int auto_increment
+        primary key,
+    ShulName     varchar(255) null,
+    Location     varchar(255) null,
+    Denomination varchar(255) null,
+    ContactInfo  text         null,
+    ShachrisTime varchar(255) null,
+    MinchaTime   varchar(255) null,
+    MaarivTime   varchar(255) null
 );
 
-CREATE TABLE RabbAIInteractions (
-    InteractionID INT PRIMARY KEY,
-    UserID INT REFERENCES Users(UserID),
-    Timestamp DATETIME,
-    UserTextEntry TEXT,
-    RabbAIAnswer TEXT
+create table ShulEvents
+(
+    EventID      int auto_increment
+        primary key,
+    ShulID       int          null,
+    EventName    varchar(255) null,
+    TimeOfEvent  varchar(255) null,
+    Location     varchar(255) null,
+    Subscription varchar(255) null,
+    Description  varchar(255) null,
+    constraint ShulEvents_Shuls_ShulID_fk
+        foreign key (ShulID) references Shuls (ShulID)
 );
 
-CREATE TABLE YidGits (
-    PreferenceID INT PRIMARY KEY,
-    UserID INT REFERENCES Users(UserID),
-    SelectedWidgets VARCHAR(255)
+create table Users
+(
+    UserID                int auto_increment
+        primary key,
+    Name                  varchar(255) null,
+    Username              varchar(255) null,
+    Password              varchar(255) null,
+    Salt                  varchar(255) null,
+    DateOfBirth           varchar(255) null,
+    ReligiousDenomination varchar(255) null,
+    AccountType           varchar(50)  null,
+    check (`AccountType` in (_utf8mb4\'ADMIN\',_utf8mb4\'GABBAI\',_utf8mb4\'USER\'))
 );
 
-CREATE TABLE PendingShulsData(
-    ShulDataApprovalID INT PRIMARY KEY,
-    ShulID INT REFERENCES Shuls(ShulID),
-    Name VARCHAR(255),
-    Location VARCHAR(255),
-    Denomination VARCHAR(255),
-    ContactInfo TEXT,
-    ShachrisTime DATETIME,
-	MinchaTime DATETIME,
-	MaarivTime DATETIME,
-    EventID INT
-    );
-
-CREATE TABLE GabbaiRequests(
-    RequestID INT PRIMARY KEY,
-    GabbaiID INT REFERENCES Gabbai(GabbaiID),
-    ApprovalStatus VARCHAR(255),
-    ShulDataApprovalID INT references PendingShulsData(ShulDataApprovalID)
+create table YidGits
+(
+    PreferenceID    int auto_increment
+        primary key,
+    UserID          int          null,
+    SelectedWidgets varchar(255) null
 );
 
-ALTER TABLE Shuls
-ADD FOREIGN KEY (EventID) REFERENCES ShulEvents(EventID);
+
+
+
