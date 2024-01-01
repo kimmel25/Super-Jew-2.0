@@ -19,10 +19,17 @@
     }
 
     private void Submit()
-
     {
         Console.WriteLine("Selected gabai id: " + selectedGabbaiId);
         //ShulService.UpdateGabbai(editableShul.ShulID, selectedGabbaiId);
+        OnSubmit.InvokeAsync(editableShul);
+
+    }
+    
+    private void RemoveShul()
+    {
+        Console.WriteLine("Selected gabai id: " + selectedGabbaiId);
+    //ShulService.UpdateGabbai(editableShul.ShulID, selectedGabbaiId);
         OnSubmit.InvokeAsync(editableShul);
 
     }
@@ -33,6 +40,9 @@
     <div class="card-header">
         @editableShul.ShulName
     </div>
+    
+
+    
     <div class="card-body">
         <div class="field">
             <label>Location: </label>
@@ -66,8 +76,8 @@
     </div>
         
         <button class="btn btn-primary" @onclick="Submit">Submit</button>
-
-       
+        <button @onclick="RemoveShul" class="btn btn-secondary">Remove Shul</button>
+        ARE U SURE YOU WANT TO REMOVE???
        
     </div>
 

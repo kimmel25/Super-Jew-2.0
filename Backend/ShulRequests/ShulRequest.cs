@@ -8,6 +8,8 @@ public class ShulRequest
     //from GabbaiRequests
     public int GabbaiID { get; set; } //the Gabbai that made this request
     //from GabbaiRequests
+    
+    public string GabbaiName { get; set; }
     public string ApprovalStatus { get; set; }
 
     public string ShulName { get; set; }
