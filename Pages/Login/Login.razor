@@ -1,0 +1,109 @@
+@page "/login"
+@using Super_Jew_2._0.Models
+@using Super_Jew_2._0.Backend.Services
+@using Super_Jew_2._0.Backend.ShulServices
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
+
+@inject ShulService ShulService
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject NavigationManager Nav
+
+
+<div class="login-container">
+    <h3>Login</h3>
+
+    <EditForm Model="@loginModel" OnValidSubmit="@HandleLogin" class="login-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <InputText id="username" @bind-Value="@loginModel.Username" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" type="password" @bind-Value="@loginModel.Password" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </EditForm>
+
+    <button class="btn btn-secondary" @onclick="HandleCreateAccount">Create Account</button>
+</div>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+
+    private async Task HandleLogin()
+    {
+        
+        var user =  ShulService.GetFollowedShulsForUser(loginModel.Username, loginModel.Password);
+        Console.WriteLine("out of shul login method");
+        if (user != null)
+        {
+            UserService.SetCurrentUser(user);
+            UserService.SetPassword(loginModel.Password);
+
+    // Redirect the user to the home page or a dashboard
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("user null");
+            
+        }
+        {
+    // Handle login failure, show an error message, etc.
+        }
+    }
+
+
+    private void HandleCreateAccount()
+    {
+        Nav.NavigateTo("/createaccount");
+    }
+}
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background: #f3f3f3;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    .btn {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        margin-top: 10px;
+    }
+    .btn-secondary:hover {
+        background-color: #545b62;
+    }
+</style>

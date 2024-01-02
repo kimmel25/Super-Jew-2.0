@@ -135,7 +135,7 @@ namespace Super_Jew_2._0.Backend.Services
          * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
          * 
          */
-        public static bool ClearGabbaiShulAdditionStatus(int requestId)
+        public static async Task<bool> ClearGabbaiShulAdditionStatus(int requestId)
         {
             return DataBaseConnectivity.ClearGabbaiShulAdditionStatus(requestId);
         }
@@ -181,7 +181,7 @@ namespace Super_Jew_2._0.Backend.Services
         }
         
 
-        public static void AdminShulSubmitionDecision(int requestID, string decision, ShulRequest request)
+        public static async Task AdminShulSubmitionDecision(int requestID, string decision, ShulRequest request)
         {
             DataBaseConnectivity.AdminDecisionOnShul(requestID, decision, request);
         }

@@ -1,4 +1,4 @@
-﻿@page "/myupdates"
+﻿@page "/myupdatesforadmin"
 
 @inject NavigationManager NavigationManager
 @using Super_Jew_2._0.Backend.Services
@@ -11,13 +11,8 @@
 
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
-
-@if (ShulService.GetGabbaisShuls(UserService.CurrentUser.UserID.ToString()).Count != 0)
-{
-    <button @onclick="AddEvent" class="btn btn-secondary">Add Shul Event</button>
-    <button @onclick="DeleteEvent" class="btn btn-secondary">Delete Shul Event</button>
-}
-
+<button @onclick="AddEvent" class="btn btn-secondary">Add Shul Event</button>
+<button @onclick="DeleteEvent" class="btn btn-secondary">Delete Shul Event</button>
 
 @if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
@@ -26,8 +21,7 @@
             @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
-                    <!-- Pass the shul object to the EditableShulCard component -->
-                    <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" />
+                    <EditableShulCardForAdmin CurrentShul="@shul" OnSubmit="HandleSubmit" />
                 </div>
             }
         </div>
@@ -39,54 +33,49 @@ else
     // A message when no shuls are available
 }
 
+
+<h3>Admin Review Page</h3>
+
 @if (gabbaisSubmittedRequests.Count > 0)
 {
     <div class="container">
         <div class="row">
             @foreach (var request in gabbaisSubmittedRequests)
             {
-                <div class="col-sm-4">
-                    <ShulRequestCard Request="@request" OnRemove="HandleRemoveRequest" />
-                </div>
+                if (request.ApprovalStatus == "Awaiting Decision")
+                {
+                    <div class="col-sm-4">
+                        <AdminShulReviewCard Request="@request" OnDecisionMade="HandleDecision" />
+                    </div>
+                }
             }
         </div>
     </div>
 }
 else
 {
-    <p>No requests available to display.</p>
+    <div class="card-title">
+        <h5 class="card-title">No Requests at the moment!</h5>
+    </div>
 }
 
 
+
 @code {
-    //ShulService ShulService = new ShulService();
     List<Shul> shulList = new List<Shul>();
     List<ShulRequest> gabbaisSubmittedRequests;
     User user;
-    //UserService UserService = new UserService();
     User currentuser = UserService.CurrentUser; 
-
-
-    //private String password = "password123";
-    //private String username = "john_doe";
-
+    
     protected override void OnInitialized()
     {
-
+        shulList = ShulService.GetAllAvailableShuls();
         
-        shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
-        if (shulList.Count == 0)
-        {
-            //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
-            //
-        }
-
-        //check if greater than zero
-        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForGabbai(UserService.CurrentUser.UserID);
-        Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+        gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
+        //Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
     }
     
-
+    
     private async Task HandleSubmit(Shul updatedShul)
     {
         Console.WriteLine(updatedShul.ShulID);
@@ -108,16 +97,28 @@ else
         ShulService.ClearGabbaiShulAdditionStatus(requestId);
     }
     
-        
     private void AddEvent()
     {
-        Nav.NavigateTo("/createshulevent"); // Replace with the actual route
+        Nav.NavigateTo("/createshuleventforadmin"); // Replace with the actual route
     }
     
     private void DeleteEvent()
     {
-        Nav.NavigateTo("/deleteshulevent"); // Replace with the actual route
+        Nav.NavigateTo("/deleteshuleventforadmin"); // Replace with the actual route
+    }
+    
+    private async Task RefreshRequests()
+    {
+    // Logic to load requests, similar to RefreshUserShuls
+    }
+    
+    private async Task HandleDecision((int requestId, string decision, ShulRequest request) decisionInfo)
+    {
+    // Call the backend service with the decision
+        await ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
+        gabbaisSubmittedRequests = gabbaisSubmittedRequests.Where(r => r.RequestID != decisionInfo.requestId).ToList();
+        StateHasChanged();
     }
 
-
+    
 }

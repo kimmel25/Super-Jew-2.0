@@ -167,13 +167,19 @@ namespace Super_Jew_2._0
         public static void Main(string[] args)
         {
             //Console.WriteLine(DataBaseConnectivity.UpdateShulGabbai(9, 42));
+
+
+            Console.WriteLine("TESTING GABBAI SHULS FOR FRONT");
+            List<Shul> g1Shuls = ShulService.GetGabbaisShuls("4");
+            foreach (var shul in g1Shuls)
+            {
+                Console.WriteLine(shul.ShulName);
+            }
             
             
             
             
-            
-            
-            
+         /*   
             Console.WriteLine("SHOWING GABBAIS:::");
             List<User> currentGabbais = ShulService.GetAllGabbais();
             foreach (var gabbai in currentGabbais)
@@ -196,7 +202,7 @@ namespace Super_Jew_2._0
             foreach (var shulEvent in bethAbeevents)
             {
                 Console.WriteLine(shulEvent.EventName);
-            }
+            } */
 
 
 
@@ -312,9 +318,6 @@ namespace Super_Jew_2._0
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<WeatherForecastService>();
-
-            builder.Services.AddTransient<Class>();
 
             builder.Services.AddTransient<ShulService>();
 
