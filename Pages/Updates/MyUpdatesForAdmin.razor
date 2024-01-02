@@ -34,9 +34,9 @@ else
 }
 
 
-<h3>Admin Review Page</h3>
+<h3>Shul Submission Requests Made By Gabbai's</h3>
 
-@if (gabbaisSubmittedRequests.Count > 0)
+@if (awaitingDecisionRequests.Count > 0)
 {
     <div class="container">
         <div class="row">
@@ -64,6 +64,8 @@ else
 @code {
     List<Shul> shulList = new List<Shul>();
     List<ShulRequest> gabbaisSubmittedRequests;
+    List<ShulRequest> awaitingDecisionRequests;
+    
     User user;
     User currentuser = UserService.CurrentUser; 
     
@@ -73,6 +75,10 @@ else
         
         gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
         //Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+        
+        awaitingDecisionRequests = gabbaisSubmittedRequests
+            .Where(request => request.ApprovalStatus == "Awaiting Decision")
+            .ToList();
     }
     
     
