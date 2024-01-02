@@ -37,9 +37,13 @@
             </div>
             
             <div class="col-md-4 mb-3">
-                <label for="rabbi">ACCOUNT TYPE (ADMIN, GABBAI OR USER):</label>
-                <InputText class="form-control" id="rabbi" @bind-Value="accountType" required />
-                </div>
+                <label for="accountType">ACCOUNT TYPE:</label>
+                <InputSelect class="form-control" @bind-Value="accountType" required >
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="GABBAI">GABBAI</option>
+                    <option value="USER">USER</option>
+                </InputSelect>
+            </div>
             
         </div>
         
@@ -55,10 +59,18 @@
 </div>
 
 @code {
-    private string name, username, dob, religDenom, password, accountType; 
+    private string name = " ";
+    private string username;
+    private string dob = "";
+    private string religDenom = "";
+    private string password = "";
+    private string accountType = "";
 
     private void HandleValidSubmit()
     {
+        
+        Console.WriteLine("ACCOUNT TYPE:" + accountType);
+        
         User newUser = new User
         {
             Name = name,
@@ -67,6 +79,9 @@
             ReligiousDenomination = religDenom,
             AccountType = accountType
         };
+        
+        Console.WriteLine(newUser.Name);
+        Console.WriteLine(newUser.AccountType);
         
         ShulService.CreateNewUserAccount(newUser, password);
         

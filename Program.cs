@@ -170,7 +170,7 @@ namespace Super_Jew_2._0
 
 
             Console.WriteLine("TESTING GABBAI SHULS FOR FRONT");
-            List<Shul> g1Shuls = ShulService.GetGabbaisShuls("4");
+            List<Shul> g1Shuls = ShulService.GetGabbaisShuls("9");
             foreach (var shul in g1Shuls)
             {
                 Console.WriteLine(shul.ShulName);

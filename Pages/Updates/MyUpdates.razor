@@ -19,7 +19,7 @@
 }
 
 
-@if (shulList.Count > 0) // Ensure there are shuls to display
+@if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
 {
     <div class="container">
         <div class="row">
@@ -60,7 +60,7 @@ else
 
 @code {
     //ShulService ShulService = new ShulService();
-    List<Shul> shulList = new List<Shul>();
+    List<Shul> shulList;
     List<ShulRequest> gabbaisSubmittedRequests;
     User user;
     //UserService UserService = new UserService();
@@ -75,6 +75,7 @@ else
 
         
         shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
+        Console.WriteLine("GABBI SHUL COUNT*****: " + shulList.Count());
         if (shulList.Count == 0)
         {
             //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
