@@ -13,13 +13,17 @@
 {
     <div class="container">
         <div class="row">
+            
             @foreach (var shul in shulList)
             {
-                <div class="col-sm-4">
-                    <AddShulCard CurrentShul="@shul"
-                                 IsFullCard="@IsShulExpanded(shul.ShulName)"
-                                 OnCardClick="() => HandleCardClick(shul.ShulName)" />
-                </div>
+                if (!IsUserSubscribedToShul(shul))
+                {
+                    <div class="col-sm-4">
+                        <AddShulCard CurrentShul="@shul"
+                                     IsFullCard="@IsShulExpanded(shul.ShulName)"
+                                     OnCardClick="() => HandleCardClick(shul.ShulName)"/>
+                    </div>
+                }
             }
         </div>
     </div>
@@ -27,10 +31,10 @@
 }
 
 
-            @if (UserService.CurrentUser?.AccountType == "GABBAI")
-            {
-                <button class="button-92" role="button" @onclick="NavigateToGabbai">Don't see your Shul? Click here!</button>
-            }
+@if (UserService.CurrentUser?.AccountType == "GABBAI")
+{
+    <button class="button-92" role="button" @onclick="NavigateToGabbai">Don't see your Shul? Click here!</button>
+}
 
  @if (UserService.CurrentUser?.AccountType == "USER")
  {
@@ -64,6 +68,11 @@
     private void UpgradeAccount()
     {
         NavigationManager.NavigateTo("/becomeagabbai"); 
+    }
+    
+    private bool IsUserSubscribedToShul(Shul shul)
+    {
+        return UserService.CurrentUser.FollowedShuls.Any(followedShul => followedShul.ShulID == shul.ShulID);
     }
     
 }
