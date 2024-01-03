@@ -139,7 +139,7 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
-        
+
         //Adds a Gabbi to a shul that DOES NOT have a Gabbai already
         //IMPORTANT: THIS METHOD CANNOT BE CALLED BEFORE CHECKING THAT THE ShulId DOESN NOT ALREADY HAVE A GABBAI
         public static bool AddGabbaiToShul(int userId, int shulId)
@@ -653,12 +653,12 @@ namespace Super_Jew_2._0.Backend.Database
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("_userId", userId);
                     command.Parameters.AddWithValue("_shulId", shulId);
-                    
+
 
                     var result = command.ExecuteNonQuery();
                     return result > 0;
-                    
-                    
+
+
                 }
             }
             //If the Shul does NOT have a Gabbai, then create a Gabbai for it
@@ -668,11 +668,25 @@ namespace Super_Jew_2._0.Backend.Database
             }
         }
 
+        public static bool RemoveShul(int shulID)
+        {
+            using var connection = new MySqlConnection(ConnectionString);
+            using (var command = new MySqlCommand("RemoveShul", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("inputShulId", shulID);
+
+                var result = command.ExecuteNonQuery();
+                return result > 0; // returns true if it affected at least one record
+            }
+        }
+
         private static bool HasGabbai(int shulId, MySqlConnection connection)
         {
             using (var command = new MySqlCommand("CheckIfHasGabbai", connection))
             {
-                
+
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("_shulId", shulId);
 
@@ -680,8 +694,10 @@ namespace Super_Jew_2._0.Backend.Database
                 {
                     return reader.Read(); // If there's at least one row, it will return true
                 }
-                
+
             }
         }
+
+
     }
 }
