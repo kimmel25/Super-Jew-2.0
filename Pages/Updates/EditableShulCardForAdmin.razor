@@ -1,5 +1,7 @@
 ﻿@using Super_Jew_2._0.Backend
 @using Super_Jew_2._0.Backend.Services
+@inject IJSRuntime jsRuntime
+
 
 @code {
     [Parameter]
@@ -26,13 +28,22 @@
 
     }
     
-    private void RemoveShul()
+    private async Task RemoveShul()
     {
-        Console.WriteLine("Selected gabai id: " + selectedGabbaiId);
-    //ShulService.UpdateGabbai(editableShul.ShulID, selectedGabbaiId);
-        OnSubmit.InvokeAsync(editableShul);
-
+        var confirmed = await jsRuntime.InvokeAsync<bool>("confirm", new object[] { "Are you sure you want to remove this shul?" });
+        if (confirmed)
+        {
+            Console.WriteLine("Shul removal confirmed.");
+            Console.WriteLine("Shul removal ID ID: " + editableShul.ShulID);
+            ShulService.RemoveShul(CurrentShul.ShulID);
+            OnSubmit.InvokeAsync(editableShul);
+        }
+        else
+        {
+            Console.WriteLine("Shul removal cancelled.");
+        }
     }
+
     
 }
 
@@ -77,8 +88,6 @@
         
         <button class="btn btn-primary" @onclick="Submit">Submit</button>
         <button @onclick="RemoveShul" class="btn btn-secondary">Remove Shul</button>
-        ARE U SURE YOU WANT TO REMOVE???
-       
     </div>
 
     
