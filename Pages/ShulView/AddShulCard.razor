@@ -19,9 +19,10 @@
 
     [Parameter]
     public String ContactInfo { get; set; }
-
-
-
+    
+    [Parameter]
+    public EventCallback<int> OnShulAdded { get; set; }
+    
     [Parameter]
     public EventCallback OnCardClick { get; set; }
 
@@ -62,8 +63,8 @@
                 if (!exists)
                 {
                     ShulService.AddShulToUserProfile(user.UserID, CurrentShul.ShulID);
-                    await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");    
-                    //NavigationManager.NavigateTo("/MyShuls");   // can choose to nav to myshuls or stay on same page
+                    await JSRuntime.InvokeVoidAsync("alert", "Subscription successful!");
+                    await OnShulAdded.InvokeAsync(CurrentShul.ShulID);
                 }
             }
             else

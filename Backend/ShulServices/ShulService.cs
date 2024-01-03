@@ -140,10 +140,7 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.ClearGabbaiShulAdditionStatus(requestId);
         }
 
-
-
-
-
+        
         /**
          * @param The Shul object that had its details updated by the Gabbai. Method sends it to the backend for the Database to update it.
          * @returns boolean: True for a proper update, false if nothing was returned from the database call which means there is an issue
@@ -225,7 +222,7 @@ namespace Super_Jew_2._0.Backend.Services
             return DataBaseConnectivity.AddShul(shul);
         }
 
-        public static bool RemoveShul(int shulID)
+        public static async Task<bool> RemoveShul(int shulID)
         {
             return DataBaseConnectivity.RemoveShul(shulID);
         }

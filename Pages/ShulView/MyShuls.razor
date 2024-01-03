@@ -22,7 +22,8 @@
                 <div class="col-sm-4">
                     <ShulCard CurrentShul="@shul"
                               IsFullCard="@IsShulExpanded(shul.ShulName)"
-                              OnCardClick="() => HandleCardClick(shul.ShulName)" />
+                              OnCardClick="() => HandleCardClick(shul.ShulName)" 
+                              OnShulRemoved="OnShulRemoved" />
                 </div>
             }
         </div>
@@ -66,6 +67,12 @@
     private void NavigateToAddShuls()
     {
         NavigationManager.NavigateTo("/addshuls"); 
+    }
+    
+    private async Task OnShulRemoved(int shulID)
+    {
+        shulList.RemoveAll(shul => shul.ShulID == shulID);
+        await InvokeAsync(StateHasChanged);
     }
     
 }

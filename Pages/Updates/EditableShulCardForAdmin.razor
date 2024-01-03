@@ -25,7 +25,6 @@
         Console.WriteLine("Selected gabai id: " + selectedGabbaiId);
         //ShulService.UpdateGabbai(editableShul.ShulID, selectedGabbaiId);
         OnSubmit.InvokeAsync(editableShul);
-
     }
     
     private async Task RemoveShul()
@@ -33,16 +32,25 @@
         var confirmed = await jsRuntime.InvokeAsync<bool>("confirm", new object[] { "Are you sure you want to remove this shul?" });
         if (confirmed)
         {
-            Console.WriteLine("Shul removal confirmed.");
-            Console.WriteLine("Shul removal ID ID: " + editableShul.ShulID);
-            ShulService.RemoveShul(CurrentShul.ShulID);
-            OnSubmit.InvokeAsync(editableShul);
+            try
+            {
+                Console.WriteLine("Shul removal confirmed. Shul ID: " + editableShul.ShulID);
+                await ShulService.RemoveShul(CurrentShul.ShulID);
+                await OnSubmit.InvokeAsync(CurrentShul);
+                StateHasChanged(); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error during shul removal: " + ex.Message);
+                StateHasChanged(); 
+            }
         }
         else
         {
             Console.WriteLine("Shul removal cancelled.");
         }
     }
+    
 
     
 }

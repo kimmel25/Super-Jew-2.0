@@ -21,7 +21,8 @@
                     <div class="col-sm-4">
                         <AddShulCard CurrentShul="@shul"
                                      IsFullCard="@IsShulExpanded(shul.ShulName)"
-                                     OnCardClick="() => HandleCardClick(shul.ShulName)"/>
+                                     OnCardClick="() => HandleCardClick(shul.ShulName)"
+                                     OnShulAdded="OnShulAdded" />
                     </div>
                 }
             }
@@ -46,9 +47,8 @@
 @code {
     private List<Shul> shulList;
     private string expandedShulName;
-
-   
-
+    
+    
     protected override void OnInitialized() => shulList = ShulService.GetAllAvailableShuls();
 
 
@@ -74,5 +74,12 @@
     {
         return UserService.CurrentUser.FollowedShuls.Any(followedShul => followedShul.ShulID == shul.ShulID);
     }
+    
+    private async Task OnShulAdded(int shulID)
+    {
+        shulList.RemoveAll(shul => shul.ShulID == shulID);
+        await InvokeAsync(StateHasChanged);
+    }
+
     
 }

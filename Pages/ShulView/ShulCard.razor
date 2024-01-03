@@ -4,15 +4,11 @@
 @inject Super_Jew_2._0.Backend.Services.ShulService ShulService
 @inject NavigationManager Nav
 @inject ShulStateService ShulState
+@inject IJSRuntime jsRuntime
 
 
 
 @code {
-
-    //private User user;
-    //private String password = "password123";
-    //private static string username = UserService.CurrentUser.Username;
-
     [Parameter]
     public Shul CurrentShul { get; set; }
 
@@ -21,17 +17,28 @@
 
     [Parameter]
     public EventCallback OnCardClick { get; set; }
+    
+    [Parameter]
+    public EventCallback<int> OnShulRemoved { get; set; }
+
 
     private void CardClicked()
     {
         OnCardClick.InvokeAsync(null);
     }
-    private void RemoveShul()
+    private async Task RemoveShul()
     {
-        //user = ShulService.GetFollowedShulsForUser(UserService.CurrentUser.Username, UserService.UserPassword);
-        ShulService.RemoveShulFromUserProfile(UserService.CurrentUser.UserID, CurrentShul.ShulID); 
-        Nav.NavigateTo("/myshuls");
-       // StateHasChanged();
+        var confirmed = await jsRuntime.InvokeAsync<bool>("confirm", new object[] { "Are you sure you want to remove this shul?" });
+        if (confirmed)
+        {
+            ShulService.RemoveShulFromUserProfile(UserService.CurrentUser.UserID, CurrentShul.ShulID);
+            await OnShulRemoved.InvokeAsync(CurrentShul.ShulID);
+            StateHasChanged();
+        }
+        else
+            {
+                Console.WriteLine("Shul removal cancelled.");
+            }
     }
     
     private void GetShulEvents()
