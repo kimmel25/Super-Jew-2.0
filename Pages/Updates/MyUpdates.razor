@@ -27,7 +27,7 @@
             {
                 <div class="col-sm-4">
                     <!-- Pass the shul object to the EditableShulCard component -->
-                    <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" />
+                    <EditableShulCard CurrentShul="@shul" OnSubmit="HandleSubmit" OnShulRemoved="OnShulRemoved"/>
                 </div>
             }
         </div>
@@ -38,6 +38,8 @@ else
     <p>No shuls available to display.</p>
     // A message when no shuls are available
 }
+
+<h5><span class="myupdates-title">My Requests</span>&trade;</h5>
 
 @if (gabbaisSubmittedRequests.Count > 0)
 {
@@ -121,6 +123,12 @@ else
     private void DeleteEvent()
     {
         Nav.NavigateTo("/deleteshulevent"); // Replace with the actual route
+    }
+    
+    private async Task OnShulRemoved(int shulID)
+    {
+        shulList.RemoveAll(shul => shul.ShulID == shulID);
+        await InvokeAsync(StateHasChanged);
     }
 
 

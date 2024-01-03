@@ -8,6 +8,9 @@
 
     [Parameter]
     public EventCallback<Shul> OnSubmit { get; set; }
+    
+    [Parameter]
+    public EventCallback<int> OnShulRemoved { get; set; }
 
     private Shul editableShul;
 
@@ -29,8 +32,9 @@
         {
             Console.WriteLine("Shul removal confirmed.");
             Console.WriteLine("Shul removal ID ID: " + editableShul.ShulID);
-            ShulService.RemoveShul(CurrentShul.ShulID);
-            OnSubmit.InvokeAsync(editableShul);
+            await ShulService.RemoveShul(CurrentShul.ShulID);
+            await OnShulRemoved.InvokeAsync(CurrentShul.ShulID);
+            StateHasChanged();
         }
         else
         {

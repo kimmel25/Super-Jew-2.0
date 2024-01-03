@@ -21,7 +21,7 @@
             @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
-                    <EditableShulCardForAdmin CurrentShul="@shul" OnSubmit="HandleSubmit" />
+                    <EditableShulCardForAdmin CurrentShul="@shul" OnSubmit="HandleSubmit" OnShulRemoved="OnShulRemoved" />
                 </div>
             }
         </div>
@@ -125,6 +125,10 @@ else
         gabbaisSubmittedRequests = gabbaisSubmittedRequests.Where(r => r.RequestID != decisionInfo.requestId).ToList();
         StateHasChanged();
     }
-
     
+    private async Task OnShulRemoved(int shulID)
+    {
+        shulList.RemoveAll(shul => shul.ShulID == shulID);
+        await InvokeAsync(StateHasChanged);
+    }
 }
