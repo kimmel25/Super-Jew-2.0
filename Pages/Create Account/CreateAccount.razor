@@ -1,4 +1,4 @@
-﻿@page "/createaccountasadmin"
+﻿@page "/createaccount"
 @inject NavigationManager Nav
 @using Super_Jew_2._0.Backend.ShulRequests; 
 @using Super_Jew_2._0.Backend
@@ -19,10 +19,10 @@
                 <InputText type="username" class="form-control" id="email" @bind-Value="username" required />
             </div>
             
-                        <div class="col-md-4 mb-3">
-                            <label for="password">Password:</label>
-                            <InputText type="password" class="form-control" id="email" @bind-Value="password" required />
-                        </div>
+            <div class="col-md-4 mb-3">
+                <label for="password">Password:</label>
+                <InputText type="password" class="form-control" id="email" @bind-Value="password" required />
+            </div>
         </div>
 
         <div class="row">
@@ -35,27 +35,23 @@
                 <label for="rabbi">Religious Denomination:</label>
                 <InputText class="form-control" id="rabbi" @bind-Value="religDenom" required />
             </div>
-            
-            <div class="col-md-4 mb-3">
-                <label for="rabbi">ACCOUNT TYPE (ADMIN, GABBAI OR USER):</label>
-                <InputText class="form-control" id="rabbi" @bind-Value="accountType" required />
-                </div>
-            
         </div>
         
-                <div class="row">
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-lg">
-                            <span>Create Account!</span>
-                        </button>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-lg">
+                    <span>Create Account!</span>
+                </button>
+            </div>
+        </div>
         
     </EditForm>
+    
+        <button @onclick="login" class="btn btn-secondary">Already have an account</button>
 </div>
 
 @code {
-    private string name, username, dob, religDenom, password, accountType; 
+    private string name, username, dob, religDenom, password; 
 
     private void HandleValidSubmit()
     {
@@ -65,11 +61,16 @@
             Username = username,
             DateOfBirth = dob,
             ReligiousDenomination = religDenom,
-            AccountType = accountType
+            AccountType = "USER"
         };
         
         ShulService.CreateNewUserAccount(newUser, password);
         
         Nav.NavigateTo("/createaccountfinal");
+    }
+
+    private void login()
+    {
+        Nav.NavigateTo("/login");
     }
 }

@@ -54,13 +54,13 @@ else
 }
 else
 {
-    <p>No requests available to display.</p>
+    <p>You do not have any requests</p>
 }
 
 
 @code {
     //ShulService ShulService = new ShulService();
-    List<Shul> shulList = new List<Shul>();
+    List<Shul> shulList;
     List<ShulRequest> gabbaisSubmittedRequests;
     User user;
     //UserService UserService = new UserService();
@@ -75,6 +75,7 @@ else
 
         
         shulList = ShulService.GetGabbaisShuls(currentuser.UserID.ToString());
+        Console.WriteLine("GABBI SHUL COUNT*****: " + shulList.Count());
         if (shulList.Count == 0)
         {
             //TODO ADD MESSAGE ON PAGE THAT THIS GABBAI HAS NO PAGES, NOT A THROW EXCEPTION
@@ -105,13 +106,16 @@ else
     
     private async Task HandleRemoveRequest(int requestId)
     {
-        ShulService.ClearGabbaiShulAdditionStatus(requestId);
+        await ShulService.ClearGabbaiShulAdditionStatus(requestId);
+        gabbaisSubmittedRequests.RemoveAll(r => r.RequestID == requestId);
+        StateHasChanged();
+        
     }
     
         
     private void AddEvent()
     {
-        Nav.NavigateTo("/createshulevent"); // Replace with the actual route
+        Nav.NavigateTo("/createshulevent"); 
     }
     
     private void DeleteEvent()

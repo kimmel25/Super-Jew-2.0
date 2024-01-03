@@ -1,4 +1,4 @@
-﻿@page "/createaccount"
+﻿@page "/createaccountasadmin"
 @inject NavigationManager Nav
 @using Super_Jew_2._0.Backend.ShulRequests; 
 @using Super_Jew_2._0.Backend
@@ -35,6 +35,16 @@
                 <label for="rabbi">Religious Denomination:</label>
                 <InputText class="form-control" id="rabbi" @bind-Value="religDenom" required />
             </div>
+            
+            <div class="col-md-4 mb-3">
+                <label for="accountType">ACCOUNT TYPE:</label>
+                <InputSelect class="form-control" @bind-Value="accountType" required >
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="GABBAI">GABBAI</option>
+                    <option value="USER">USER</option>
+                </InputSelect>
+            </div>
+            
         </div>
         
                 <div class="row">
@@ -49,18 +59,29 @@
 </div>
 
 @code {
-    private string name, username, dob, religDenom, password; 
+    private string name = " ";
+    private string username;
+    private string dob = "";
+    private string religDenom = "";
+    private string password = "";
+    private string accountType = "";
 
     private void HandleValidSubmit()
     {
+        
+        Console.WriteLine("ACCOUNT TYPE:" + accountType);
+        
         User newUser = new User
         {
             Name = name,
             Username = username,
             DateOfBirth = dob,
             ReligiousDenomination = religDenom,
-            AccountType = "USER"
+            AccountType = accountType
         };
+        
+        Console.WriteLine(newUser.Name);
+        Console.WriteLine(newUser.AccountType);
         
         ShulService.CreateNewUserAccount(newUser, password);
         

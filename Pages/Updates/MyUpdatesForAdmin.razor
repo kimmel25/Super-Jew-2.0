@@ -11,7 +11,7 @@
 
 
 <h3><span class="myupdates-title">MyUpdates</span>&trade;</h3>
-<button @onclick="AddEvent" class="btn btn-secondary">Add Event to one of your Shuls</button>
+<button @onclick="AddEvent" class="btn btn-secondary">Add Shul Event</button>
 <button @onclick="DeleteEvent" class="btn btn-secondary">Delete Shul Event</button>
 
 @if (shulList != null && shulList.Count > 0) // Ensure there are shuls to display
@@ -21,7 +21,6 @@
             @foreach (var shul in shulList)
             {
                 <div class="col-sm-4">
-                    <!-- Pass the shul object to the EditableShulCard component -->
                     <EditableShulCardForAdmin CurrentShul="@shul" OnSubmit="HandleSubmit" />
                 </div>
             }
@@ -35,9 +34,9 @@ else
 }
 
 
-<h3>Admin Review Page</h3>
+<h3>Shul Submission Requests Made By Gabbai's</h3>
 
-@if (gabbaisSubmittedRequests.Count > 0)
+@if (awaitingDecisionRequests.Count > 0)
 {
     <div class="container">
         <div class="row">
@@ -65,6 +64,8 @@ else
 @code {
     List<Shul> shulList = new List<Shul>();
     List<ShulRequest> gabbaisSubmittedRequests;
+    List<ShulRequest> awaitingDecisionRequests;
+    
     User user;
     User currentuser = UserService.CurrentUser; 
     
@@ -74,6 +75,10 @@ else
         
         gabbaisSubmittedRequests = ShulService.GetGabbaiRequestsSubmissionsForAdmin();
         //Console.WriteLine("IN INIT FOR GABAI CUNT FOR HIS SHULLS: " + gabbaisSubmittedRequests.Count);
+        
+        awaitingDecisionRequests = gabbaisSubmittedRequests
+            .Where(request => request.ApprovalStatus == "Awaiting Decision")
+            .ToList();
     }
     
     
@@ -116,8 +121,9 @@ else
     private async Task HandleDecision((int requestId, string decision, ShulRequest request) decisionInfo)
     {
     // Call the backend service with the decision
-        ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
-        await RefreshRequests(); // Refresh the list to reflect the changes
+        await ShulService.AdminShulSubmitionDecision(decisionInfo.requestId, decisionInfo.decision, decisionInfo.request);
+        gabbaisSubmittedRequests = gabbaisSubmittedRequests.Where(r => r.RequestID != decisionInfo.requestId).ToList();
+        StateHasChanged();
     }
 
     
