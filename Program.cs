@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Components.Web;
 using MySql.Data.MySqlClient;
 using Super_Jew_2._0.Backend;
 using Super_Jew_2._0.Backend.Database;
-//using Super_Jew_2._0.Backend.DummyData;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 using Super_Jew_2._0.Backend.ShulServices;
-using Super_Jew_2._0.Data;
 using Super_Jew_2._0.Services;
 using ShulLoginService = Super_Jew_2._0.Backend.Services.ShulLoginService;
 
@@ -43,7 +41,7 @@ namespace Super_Jew_2._0
 
         }
 
-        
+
         private static void AllAvailableShuls()
         {
             Console.WriteLine("Test All Available Shuls");
@@ -175,39 +173,39 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName);
             }
-            
-            
-            
-            
-            
-         /*   
-            Console.WriteLine("SHOWING GABBAIS:::");
-            List<User> currentGabbais = ShulService.GetAllGabbais();
-            foreach (var gabbai in currentGabbais)
-            {
-                Console.WriteLine(gabbai.Name);
-            }
-            
-            Console.WriteLine("SHOWING shul:::");
-            List<Shul> cShuls = ShulService.GetAllAvailableShuls();
-            foreach (var shul in cShuls)
-            {
-                foreach (var eEvent in shul.shulEvents)
-                {
-                    Console.WriteLine(eEvent.EventName);
-                }
-            }
-
-            Console.WriteLine("EVENTY TEST!");
-            List<ShulEvent> bethAbeevents = ShulService.GetEventsByShul(1);
-            foreach (var shulEvent in bethAbeevents)
-            {
-                Console.WriteLine(shulEvent.EventName);
-            } */
 
 
 
-            
+
+
+            /*   
+               Console.WriteLine("SHOWING GABBAIS:::");
+               List<User> currentGabbais = ShulService.GetAllGabbais();
+               foreach (var gabbai in currentGabbais)
+               {
+                   Console.WriteLine(gabbai.Name);
+               }
+
+               Console.WriteLine("SHOWING shul:::");
+               List<Shul> cShuls = ShulService.GetAllAvailableShuls();
+               foreach (var shul in cShuls)
+               {
+                   foreach (var eEvent in shul.shulEvents)
+                   {
+                       Console.WriteLine(eEvent.EventName);
+                   }
+               }
+
+               Console.WriteLine("EVENTY TEST!");
+               List<ShulEvent> bethAbeevents = ShulService.GetEventsByShul(1);
+               foreach (var shulEvent in bethAbeevents)
+               {
+                   Console.WriteLine(shulEvent.EventName);
+               } */
+
+
+
+
             //ShulService.DeleteEvent(7);
 
             //ShulService.CreateNewUserAccount(testUser, "dinkyp");
@@ -221,24 +219,24 @@ namespace Super_Jew_2._0
 
             //runRequestSimulation();
 
-/*
-            User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
-            Console.WriteLine(u1.AccountType);
-            
-            
-            User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
-            Console.WriteLine(u2.AccountType); */
+            /*
+                        User u1 = ShulService.GetFollowedShulsForUser("john_doe", "password123");
+                        Console.WriteLine(u1.AccountType);
 
-/*
-            Console.WriteLine("gabbais shuls: ");
-            List<Shul> gShuls = ShulService.GetGabbaisShuls("4");
-            foreach (var shul in gShuls)
-            {
-                Console.WriteLine(shul.ShulName);
-            } */
-            
+
+                        User u2 = ShulService.GetFollowedShulsForUser("gabbai1", "gabbai_pass");
+                        Console.WriteLine(u2.AccountType); */
+
+            /*
+                        Console.WriteLine("gabbais shuls: ");
+                        List<Shul> gShuls = ShulService.GetGabbaisShuls("4");
+                        foreach (var shul in gShuls)
+                        {
+                            Console.WriteLine(shul.ShulName);
+                        } */
+
             //Shor Yoshuv,1 CedarLawn,Yeshivish kinda,"Rabbi Jaeger, (917)-223-Torah","5 am, 7:45 am",1:30 pm,"9:00 pm, 10:00 pm"
-            
+
             /*
             var shul1 = new Shul
             {
@@ -253,7 +251,7 @@ namespace Super_Jew_2._0
             };
             
             ShulService.UpdateShulDetails(shul1); */
-            
+
 
             /*
             ShulService.InitiateGabaiShulAddition(4, shul1);
@@ -287,32 +285,32 @@ namespace Super_Jew_2._0
             {
                 Console.WriteLine(shul.ShulName);
             } */
-/*
-            User userToTestEvent = ShulService.GetFollowedShulsForUser("john_doe", "password123");
-
-            List<Shul> userJohnsShuls = userToTestEvent.FollowedShuls;
-
-            foreach (var shul in userJohnsShuls)
-            {
-                Console.WriteLine(shul.ShulName);
-            }
-            
             /*
-            foreach (var shul in userJohnsShuls)
-            {
-                Console.WriteLine("Shul Name: " + shul.ShulName);
-                Console.WriteLine("Events: ");
-                foreach (var eShulEvent in shul.shulEvents)
-                {
-                    Console.WriteLine("Event Name: " + eShulEvent.EventName);
-                }
-            } */
+                        User userToTestEvent = ShulService.GetFollowedShulsForUser("john_doe", "password123");
 
-            
-            
+                        List<Shul> userJohnsShuls = userToTestEvent.FollowedShuls;
+
+                        foreach (var shul in userJohnsShuls)
+                        {
+                            Console.WriteLine(shul.ShulName);
+                        }
+
+                        /*
+                        foreach (var shul in userJohnsShuls)
+                        {
+                            Console.WriteLine("Shul Name: " + shul.ShulName);
+                            Console.WriteLine("Events: ");
+                            foreach (var eShulEvent in shul.shulEvents)
+                            {
+                                Console.WriteLine("Event Name: " + eShulEvent.EventName);
+                            }
+                        } */
+
+
+
             //DataBaseConnectivity.AddGabbaiToShul(4, 30);
-            
-            
+
+
             //Blazor Code
             var builder = WebApplication.CreateBuilder(args);
 
@@ -328,7 +326,7 @@ namespace Super_Jew_2._0
             builder.Services.AddScoped<UserService>();
 
             builder.Services.AddTransient<ShulService>();
-            
+
             builder.Services.AddScoped<ShulStateService>();
 
 
