@@ -10,7 +10,8 @@
   <ItemGroup>
     <None Include="Super Jew 2.0.sln" />
     <Compile Remove="Backend\Database\DatabaseConnectTest.cs" />
-    <None Include="Backend\Database\DatabaseConnectTest.cs" />
+    <Compile Remove="Pages\Admin\**" />
+    <None Remove="Pages\Admin\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\" />
+    <EmbeddedResource Remove="Pages\Admin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Admin\**" />
   </ItemGroup>
 
 </Project>

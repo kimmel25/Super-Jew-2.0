@@ -1,9 +1,5 @@
-﻿using System;
-using System.Data;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Data;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Ocsp;
 using Super_Jew_2._0.Backend.Services;
 using Super_Jew_2._0.Backend.ShulRequests;
 
@@ -511,32 +507,6 @@ namespace Super_Jew_2._0.Backend.Database
 
             }
         }
-
-        //public static Shul GetShulByID(int shulID)
-        //{
-        //    var shul = new Shul();
-        //    using var connection = new MySqlConnection(ConnectionString);
-        //    using (var command = new MySqlCommand("GetShulByID", connection))
-        //    {
-        //        command.CommandType = CommandType.StoredProcedure;
-        //        command.Parameters.AddWithValue("inputShulID", shulID);
-
-        //        connection.Open();
-        //        using var reader = command.ExecuteReader();
-        //        while (reader.Read())
-        //        {
-        //            shul = new Shul
-        //            {
-        //                ShulID = reader.GetInt32("ShulID"),
-        //                ShulName = reader.GetString("Name"),
-        //                Location = reader.GetString("Location"),
-        //                Denomination = reader.GetString("Denomination"),
-        //                ContactInfo = reader.GetString("ContactInfo"),
-        //                ShachrisTime = reader.GetString("ShachrisTime"),
-        //                MinchaTime = reader.GetString("MinchaTime"),
-        //                MaarivTime = reader.GetString("MaarivTime"),
-
-        //            };
 
         //EVENTS
         public static bool CreateEventDB(ShulEvent sEvent)
