@@ -1,1 +1,3 @@
 # Super Jew 2.0
+
+This is a capstone project designed to utilize all of our computer science skills to deliver a product called SuperJew. We aim to create an app designed to cater to the needs of Jewish communities around the world. This app will create a stronger bond between the user and Judaism's expansive heritage and traditions, making it accessible to all users with ease. Some high level descriptions of our ideas include a shul management app (MyShul), a chatbot trained on countless Jewish texts (RabbAI), and a miscellaneous of other Jewish functions with our Yid-gits. We hope you enjoy using SuperJew as much as we did making it!  
